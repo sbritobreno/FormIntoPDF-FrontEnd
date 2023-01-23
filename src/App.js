@@ -5,9 +5,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import Container from "./components/layout/Container";
+import Message from "./components/layout/Message";
 
 // pages
 import Home from "./components/pages/Home/Home";
+import Login from "./components/pages/Auth/Login";
 
 // context
 import { UserProvider } from "./context/UserContext";
@@ -17,9 +19,11 @@ function App() {
     <Router forceRefresh={true}>
       <UserProvider>
         <Navbar />
+        <Message />
         <Container>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </Container>
         <Footer />
