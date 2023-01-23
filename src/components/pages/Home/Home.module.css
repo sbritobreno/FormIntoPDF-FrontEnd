@@ -1,0 +1,102 @@
+.search_box {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1em;
+}
+
+.search {
+  height: 40px;
+  width: 320px;
+  margin: 0.5em;
+  text-align: center;
+  border-radius: 5px;
+  color: #833ab4;
+  font-size: 16px;
+  border: 2px solid #833ab4;
+}
+
+.home_header {
+  text-align: center;
+  margin-bottom: 2em;
+  border-bottom: 1px solid #833ab4;
+}
+
+.home_header h1 {
+  margin-bottom: 0.5em;
+}
+
+.home_header p {
+  margin-bottom: 1.5em;
+}
+
+.pdfs_container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.pdf_card {
+  display: flex;
+  width: 90%;
+  margin: 0.5em;
+  border-bottom: 1px solid #833ab4;
+  padding: 10px;
+  text-align: center;
+  background-color: #fff;
+}
+
+.pdf_card img {
+  margin: auto;
+  width: 4em;
+  height: 4em;
+}
+
+.pdf_card_subcontainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.pdf_details {
+  text-align: left;
+  margin-inline: 1em;
+}
+
+.pdf_details p {
+  margin: 0.2em;
+}
+
+.pdf_card_buttons {
+  margin-block: auto;
+}
+
+button {
+  width: 10em;
+  height: 3em;
+  margin: 0.3em;
+  border-radius: 10px;
+  color: #833ab4;
+  border-color: #833ab4;
+  background-color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.pdf_btn_edit:hover {
+  background-color: #e0a800;
+  border: none;
+  color: #fff;
+}
+
+.pdf_btn_remove:hover {
+  background-color: #db1a2e;
+  border: none;
+  color: #fff;
+}
+
+.pdf_btn_download:hover {
+  background-color: #25b456;
+  border: none;
+  color: #fff;
+}

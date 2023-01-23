@@ -14,7 +14,16 @@ function Navbar() {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/register">Register New User</Link>
+            <Link to="/new_form">New form</Link>
+          </li>
+          <li>
+            <Link to="/register">Register new user</Link>
+          </li>
+          <li>
+            <Link to="/all_users">Users</Link>
+          </li>
+          <li>
+            <Link to="/profile">Profile</Link>
           </li>
           <li>Log out</li>
         </ul>
