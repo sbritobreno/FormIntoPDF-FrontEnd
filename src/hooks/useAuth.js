@@ -17,6 +17,13 @@ export default function useAuth() {
   }
   
   async function logout() {
+    const msgText = "You are now logged out!";
+    const msgType = "success";
+
+    setAuthenticated(false);
+    navigate("/login");
+
+    setFlashMessage(msgText, msgType);
   }
 
   async function register(user) {

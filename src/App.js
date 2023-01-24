@@ -11,6 +11,7 @@ import Message from "./components/layout/Message";
 import Home from "./components/pages/Home/Home";
 import Login from "./components/pages/Auth/Login";
 import NewUser from "./components/pages/Auth/NewUser";
+import Users from "./components/pages/Users/Users";
 
 // context
 import { UserProvider } from "./context/UserContext";
@@ -26,6 +27,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/new_user" element={<NewUser />} />
+            <Route path="/all_users" element={<Users />} />
           </Routes>
         </Container>
         <Footer />

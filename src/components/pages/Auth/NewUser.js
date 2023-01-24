@@ -65,7 +65,7 @@ function NewUser() {
               type="checkbox"
               name="isadmin"
               checked={isAdmin}
-              handleOnChange={handleChange}
+              onChange={handleChange}
             />
             <span
               className={styles.slider}

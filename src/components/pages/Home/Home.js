@@ -4,15 +4,15 @@ import { pdfsData } from "../../../data";
 
 function Home() {
   const pdfs = pdfsData;
-  const [searchfieldName, setSearchfieldName] = useState("");
+  const [searchfieldType, setSearchfieldType] = useState("");
   const [searchfieldAddress, setSearchfieldAddress] = useState("");
   const [searchfieldDate, setSearchfieldDate] = useState("");
   const filteredPDFs = searchFilter();
 
   function searchFilter() {
-    // filter by Name
+    // filter by type
     let result = pdfs.filter((pdf) => {
-      return pdf.name.toLowerCase().startsWith(searchfieldName.toLowerCase());
+      return pdf.type.toLowerCase().startsWith(searchfieldType.toLowerCase());
     });
 
     // filter by Address
@@ -32,8 +32,8 @@ function Home() {
     return result;
   }
 
-  function onSearchChangeName(event) {
-    setSearchfieldName(event.target.value);
+  function onSearchChangeType(event) {
+    setSearchfieldType(event.target.value);
   }
   function onSearchChangeAddress(event) {
     setSearchfieldAddress(event.target.value);
@@ -52,8 +52,8 @@ function Home() {
         <input
           className={styles.search}
           type="search"
-          placeholder="Search by Name"
-          onChange={onSearchChangeName}
+          placeholder="Search by Type"
+          onChange={onSearchChangeType}
         />
         <input
           className={styles.search}

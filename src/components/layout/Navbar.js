@@ -1,8 +1,13 @@
 import { Link } from "react-router-dom";
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./Navbar.module.css";
 
+/* Contenxt */
+import {Context} from '../../context/UserContext'
+
 function Navbar() {
+  const {authenticated, logout} = useContext(Context)
+
   return (
     <nav className={styles.navbar_container}>
       <div className={styles.navbar}>
@@ -25,7 +30,7 @@ function Navbar() {
           <li>
             <Link to="/profile">Profile</Link>
           </li>
-          <li>Log out</li>
+          <li onClick={logout}>Log out</li>
         </ul>
       </div>
     </nav>

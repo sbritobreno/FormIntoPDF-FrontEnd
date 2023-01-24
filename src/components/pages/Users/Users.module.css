@@ -1,0 +1,151 @@
+.users_header {
+  text-align: center;
+  margin-bottom: 2em;
+  border-bottom: 1px solid #833ab4;
+}
+
+.users_header h1 {
+  margin-bottom: 0.5em;
+}
+
+.users_header p {
+  margin-bottom: 1.5em;
+}
+
+.search_box {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1em;
+}
+
+.search {
+  height: 40px;
+  width: 320px;
+  margin: 0.5em;
+  text-align: center;
+  border-radius: 5px;
+  color: #833ab4;
+  font-size: 16px;
+  border: 2px solid #833ab4;
+}
+
+.users_container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.users_card {
+  display: flex;
+  width: 90%;
+  margin: 0.5em;
+  border-bottom: 1px solid #833ab4;
+  padding: 5px;
+  text-align: center;
+  background-color: #fff;
+}
+
+.users_card img {
+  margin: auto;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.users_card_subcontainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.users_details {
+  text-align: left;
+  margin-inline: 1em;
+}
+
+.users_details p {
+  margin: 0.2em;
+}
+
+.users_card_buttons {
+  margin-block: auto;
+}
+
+button {
+  float: right;
+  width: 8em;
+  height: 2.5em;
+  margin: 0.3em;
+  border-radius: 10px;
+  color: #833ab4;
+  border-color: #833ab4;
+  background-color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.users_btn_remove:hover {
+  background-color: #db1a2e;
+  border: none;
+  color: #fff;
+}
+
+.toggle_switch {
+  margin-bottom: 0.3em;
+}
+
+.toggle_switch label {
+  font-weight: bold;
+  font-size: 1em;
+  color: #833ab4;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 45px;
+  height: 20px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  border-radius: 34px;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  border-radius: 50%;
+  content: "";
+  height: 13px;
+  width: 13px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #833ab4;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
