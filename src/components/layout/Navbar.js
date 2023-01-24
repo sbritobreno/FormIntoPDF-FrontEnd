@@ -17,7 +17,7 @@ function Navbar() {
             <Link to="/new_form">New form</Link>
           </li>
           <li>
-            <Link to="/register">Register new user</Link>
+            <Link to="/new_user">Register new user</Link>
           </li>
           <li>
             <Link to="/all_users">Users</Link>

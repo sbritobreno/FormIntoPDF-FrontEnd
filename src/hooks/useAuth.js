@@ -20,6 +20,11 @@ export default function useAuth() {
   }
 
   async function register(user) {
+    let msgText = "A new user was created!";
+    let msgType = "success";
+    
+    await authUser();
+    setFlashMessage(msgText, msgType);
   }
   
   async function deleteUserAccount() {
