@@ -47,38 +47,35 @@ function Profile() {
           text="Name"
           type="text"
           name="name"
-          placeholder="Type your name"
+          placeholder="Type user name"
           handleOnChange={handleChange}
-          value={user.name || ""}
         />
         <Input
           text="E-mail"
           type="email"
           name="email"
-          value={user.email || ""}
-          readOnly={"readonly"}
+          autoComplete={"email"}
+          placeholder="Type user email"
         />
         <Input
           text="Role"
           type="text"
           name="role"
-          value={user.username || ""}
-          autoComplete={"username"}
-          readOnly={"readonly"}
+          autoComplete={"role"}
+          placeholder="Type user role"
         />
         <Input
           text="Phone"
           type="text"
           name="phone"
-          placeholder="Type your phone number"
+          placeholder="Type user phone number"
           handleOnChange={handleChange}
-          value={user.phone || ""}
         />
         <Input
           text="Password"
           type="password"
           name="password"
-          placeholder="Type your password"
+          placeholder="Type temporary password"
           autoComplete={"new-password"}
           handleOnChange={handleChange}
         />
@@ -86,11 +83,11 @@ function Profile() {
           text="Password Confirmation"
           type="password"
           name="confirmpassword"
-          placeholder="Type your password again"
+          placeholder="Type temporary password again"
           autoComplete={"new-password"}
           handleOnChange={handleChange}
         />
-        <input type="submit" name="button_1" value="Edit" />
+        <input type="submit" value="Edit" />
         <button type="button" className={styles.btn2} onClick={() => {}}>
           Delete Account
         </button>

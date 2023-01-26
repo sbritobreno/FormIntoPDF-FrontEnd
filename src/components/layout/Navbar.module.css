@@ -10,7 +10,7 @@
 .navbar {
   display: flex;
   justify-content: space-between;
-  padding: 0.5em 1.5em;
+  padding: 0em 1.5em;
   background-color: #833AB4;
   color: #fff;
   
@@ -29,13 +29,13 @@
 
 .navbar li,
 .navbar a {
+  display:block;
   text-decoration: none;
   color: #fff;
   font-weight: bold;
   cursor: pointer;
   transition: 0.5s;
   padding: 0.5em 0.8em;
-  border-radius: 5px;
 }
 
 .navbar li:hover {
@@ -46,3 +46,30 @@
 .navbar li:hover > a {
   color: #833AB4;
 }
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown_content {
+  display: none;
+  position: absolute;
+  margin-top: 0.5em;
+  left: -.1em;
+  background-color: #fff;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown_content a {
+  color: #833AB4;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown_content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown_content {display: block;}

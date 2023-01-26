@@ -13,6 +13,7 @@ import Login from "./components/pages/Auth/Login";
 import NewUser from "./components/pages/Auth/NewUser";
 import Users from "./components/pages/User/Users";
 import Profile from "./components/pages/User/Profile";
+import Form1 from "./components/pages/Form/Form1";
 
 // context
 import { UserProvider } from "./context/UserContext";
@@ -30,6 +31,7 @@ function App() {
             <Route path="/new_user" element={<NewUser />} />
             <Route path="/all_users" element={<Users />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/new_form_1" element={<Form1/>} />
           </Routes>
         </Container>
         <Footer />

@@ -3,10 +3,10 @@ import React, { useContext } from "react";
 import styles from "./Navbar.module.css";
 
 /* Contenxt */
-import {Context} from '../../context/UserContext'
+import { Context } from "../../context/UserContext";
 
 function Navbar() {
-  const {authenticated, logout} = useContext(Context)
+  const { authenticated, logout } = useContext(Context);
 
   return (
     <nav className={styles.navbar_container}>
@@ -18,19 +18,27 @@ function Navbar() {
           <li>
             <Link to="/">Home</Link>
           </li>
-          <li>
-            <Link to="/new_form">New form</Link>
+          <li className={styles.dropdown}>
+            <Link>New form</Link>
+            <div className={styles.dropdown_content}>
+              <Link to="/new_form_1">New form 1</Link>
+              <Link to="/new_form_2">New form 2</Link>
+              <Link to="/new_form_3">New form 3</Link>
+            </div>
           </li>
-          <li>
-            <Link to="/new_user">Register new user</Link>
-          </li>
-          <li>
-            <Link to="/all_users">Users</Link>
+          <li className={styles.dropdown}>
+            <Link>Users</Link>
+            <div className={styles.dropdown_content}>
+              <Link to="/new_user">Create new user</Link>
+              <Link to="/all_users">See all users</Link>
+            </div>
           </li>
           <li>
             <Link to="/profile">Profile</Link>
           </li>
-          <li onClick={logout}>Log out</li>
+          <li onClick={logout}>
+            <Link>Log out</Link>
+          </li>
         </ul>
       </div>
     </nav>
