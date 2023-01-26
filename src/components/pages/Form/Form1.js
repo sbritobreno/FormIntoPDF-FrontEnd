@@ -58,7 +58,7 @@ function Form1() {
             handleOnChange={handleChange}
           />
           <Input
-            text="width"
+            text="Width"
             type="text"
             name="width"
             placeholder="Type hole width"
@@ -67,8 +67,8 @@ function Form1() {
           <Input
             text="Area"
             type="text"
-            name="Area"
-            placeholder="Type hole Area"
+            name="area"
+            placeholder="Type hole area"
             handleOnChange={handleChange}
           />
         </fieldset>
@@ -79,7 +79,6 @@ function Form1() {
           placeholder="e.g. Granite slabs, Concrete footpath etc."
           handleOnChange={handleChange}
         />
-
         <Select
           text="Reinstatement"
           name="reinstatement"
@@ -93,6 +92,13 @@ function Form1() {
           options={status}
           handleOnChange={handleStatus}
           value={form.status || ""}
+        />
+        <Input
+          text="Add new comment"
+          type="text"
+          name="comment"
+          placeholder="*Optional"
+          handleOnChange={handleChange}
         />
         <input type="submit" value="Submit" />
       </form>
