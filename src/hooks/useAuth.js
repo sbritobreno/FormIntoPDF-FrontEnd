@@ -3,10 +3,14 @@ import { useState } from "react";
 import useFlashMessage from "./useFlashMEssage";
 
 export default function useAuth() {
-  const [token] = useState(localStorage.getItem("token"));
+  //const [token] = useState(localStorage.getItem("token"));
   const [authenticated, setAuthenticated] = useState(false);
   const { setFlashMessage } = useFlashMessage();
   const navigate = useNavigate();
+
+  if(authenticated){
+    //this block can be deleted
+  }
   
   async function login(user) {
     let msgText = "You are now logged in!";

@@ -7,7 +7,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { Context } from "../../context/UserContext";
 
 function MobileNavbar() {
-  const { authenticated, logout } = useContext(Context);
+  const { logout } = useContext(Context);
   const [dropdownOpen, setMobileDropdownOpen] = useState(false);
   const style = { color: "#fff", fontSize: "2em", marginRight: "10px" };
 
