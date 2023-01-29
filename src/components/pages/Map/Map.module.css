@@ -1,0 +1,71 @@
+/* body {
+  overflow: hidden;
+} */
+
+.map_container {
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100vh;
+}
+
+.location_coordinates_container{
+  position: absolute; 
+  padding: 10px;
+  top: 60px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: 2;
+}
+
+.combobox{
+  z-index: 5;
+}
+
+.search {
+  height: 40px;
+  width: 400px;
+  margin: 0.2em;
+  padding-inline: 10px;
+  text-align: center;
+  border-radius: 5px;
+  color: #833ab4;
+  font-size: 20px;
+  border: 2px solid #833ab4;
+  box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
+}
+
+.combobox_input {
+  height: 40px;
+  width: 400px;
+  margin: 0.2em;
+  padding-inline: 10px;
+  text-align: center;
+  border-radius: 5px;
+  color: #833ab4;
+  font-size: 20px;
+  border: 2px solid #833ab4;
+  box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
+}
+
+.btn_save{
+  position: absolute; 
+  width: 160px;
+  background-color: #25b456;
+  color: #fff;
+  border: none;
+  bottom: 30px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  height: 2.5rem;
+  cursor: pointer;
+  font-size: 1.1em;
+  font-weight: bold;
+  box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
+}
+
+.btn_save:hover {
+  background-color: #1c8a42;
+}

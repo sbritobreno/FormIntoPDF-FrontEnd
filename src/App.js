@@ -16,6 +16,7 @@ import NewUser from "./components/pages/Auth/NewUser";
 import Users from "./components/pages/User/Users";
 import Profile from "./components/pages/User/Profile";
 import Form1 from "./components/pages/Form/Form1";
+import Map from "./components/pages/Map/Map";
 
 // context
 import { UserProvider } from "./context/UserContext";
@@ -36,6 +37,7 @@ function App() {
             <Route path="/all_users" element={<Users />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/new_form_1" element={<Form1 />} />
+            <Route path="/map" element={<Map />} />
           </Routes>
         </Container>
         <Footer />

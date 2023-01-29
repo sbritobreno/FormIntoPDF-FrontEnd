@@ -6,6 +6,7 @@ function Input({
   name,
   placeholder,
   handleOnChange,
+  onClick,
   value,
   multiple,
   autoComplete,
@@ -20,6 +21,7 @@ function Input({
         id={name}
         placeholder={placeholder}
         onChange={handleOnChange}
+        onClick={onClick}
         value={value}
         readOnly={readOnly}
         autoComplete={autoComplete}

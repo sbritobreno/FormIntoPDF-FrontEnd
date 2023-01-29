@@ -39,7 +39,6 @@ legend {
 
 .form_container input[type="button"] {
   margin-top: 0.3em;
-  margin-bottom: 0.8em;
   border-radius: 8px;
   background-color: #833ab4;
   border: none;
@@ -54,4 +53,22 @@ legend {
 
 .form_container input[type="button"]:hover {
   background-color: #5e2a82;
+}
+
+.form_control {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1em;
+}
+
+.form_control input {
+  padding: 0.7em;
+  border: 1px solid #777;
+  border-radius: 5px;
+}
+
+label {
+  margin-bottom: 0.3em;
+  font-weight: bold;
+  font-size: 1em;
 }
