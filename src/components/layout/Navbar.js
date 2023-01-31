@@ -16,7 +16,7 @@ function Navbar() {
         </div>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/FormIntoPDF-FrontEnd">Home</Link>
           </li>
           <li className={styles.dropdown}>
             <Link>New form</Link>

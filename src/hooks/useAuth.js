@@ -45,7 +45,7 @@ export default function useAuth() {
   }
   
   async function authUser() {
-    navigate("/");
+    navigate("/FormIntoPDF-FrontEnd");
   }
 
   return { register, logout, login, deleteUserAccount, resetPassword };

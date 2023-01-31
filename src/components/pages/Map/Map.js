@@ -2,13 +2,13 @@ import { useState } from "react";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import PlacesAutocomplete from "./PlacesAutocomplete";
 import styles from "./Map.module.css";
-import "@reach/combobox/styles.css";
+import Geocode from "react-geocode";
 
 function Map() {
-  const [ libraries ] = useState(['places']);
+  const [libraries] = useState(["places"]);
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    libraries
+    libraries,
   });
 
   if (!isLoaded) return <div>Loading...</div>;
@@ -16,23 +16,39 @@ function Map() {
 }
 
 function LoadMap() {
-  const [center, setCenter] = useState({lat: 53.3498, lng: -6.2603});
+  const [center, setCenter] = useState({ lat: 53.3498114, lng: -6.2602525 });
   const [zoom, setZoom] = useState(12);
   const [selected, setSelected] = useState(null);
+
+  Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
+
+  function onMarkerDragEnd(coord) {
+    const { latLng } = coord;
+    const lat = latLng.lat();
+    const lng = latLng.lng();
+
+    setSelected({ lat, lng });
+
+    Geocode.fromLatLng(lat, lng).then(
+      (response) => {
+        const address = response.results[0].formatted_address;
+        document.querySelector(".Map_combobox_input__ONzu7").value = address;
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
 
   return (
     <div className={styles.map_container}>
       <div className={styles.location_coordinates_container}>
-        <div className={styles.location}>
-          <PlacesAutocomplete setZoom={setZoom} setCenter={setCenter} setSelected={setSelected} />
-        </div>
-        <div className={styles.coordinates}>
-          <input
-            className={styles.search}
-            type="search"
-            placeholder="Coordinates"
+          <PlacesAutocomplete
+            setZoom={setZoom}
+            setCenter={setCenter}
+            setSelected={setSelected}
+            selected={selected}
           />
-        </div>
       </div>
 
       <GoogleMap
@@ -40,11 +56,15 @@ function LoadMap() {
         center={center}
         mapContainerClassName={styles.map_container}
       >
-        {selected && <Marker position={selected} />}
+        {selected && (
+          <Marker
+            position={selected}
+            draggable={true}
+            onDragEnd={(coord) => onMarkerDragEnd(coord)}
+          />
+        )}
       </GoogleMap>
-      <button className={styles.btn_save}>
-        Save
-      </button>
+      <button className={styles.btn_save}>Save</button>
     </div>
   );
 }
