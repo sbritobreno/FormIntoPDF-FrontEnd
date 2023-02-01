@@ -1,3 +1,55 @@
+.home_header {
+  text-align: center;
+  margin-bottom: 1em;
+  border-bottom: 1px solid #833ab4;
+}
+
+.home_header h1 {
+  margin-bottom: 0.5em;
+}
+
+.home_header p {
+  margin-bottom: 1.5em;
+}
+
+.home_selector {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 2em;
+  border-bottom: 1px solid #833ab4;
+}
+
+.btn_selector {
+  width: 250px;
+  height: 2em;
+  color: #833ab4;
+  margin: 0;
+  border-radius: 0px;
+  border: none;
+  border-bottom: 3px solid #833ab4;
+  background-color: #fff;
+  font-weight: bold;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.btn_selector_active {
+  width: 250px;
+  height: 2em;
+  color: #fff;
+  margin: 0;
+  border-radius: 0px;
+  border: none;
+  border-bottom: 3px solid #833ab4;
+  background-color: #833ab4;
+  font-weight: bold;
+  font-size: 1em;
+  cursor: pointer;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
 .search_box {
   display: flex;
   justify-content: center;
@@ -14,20 +66,6 @@
   color: #833ab4;
   font-size: 16px;
   border: 2px solid #833ab4;
-}
-
-.home_header {
-  text-align: center;
-  margin-bottom: 2em;
-  border-bottom: 1px solid #833ab4;
-}
-
-.home_header h1 {
-  margin-bottom: 0.5em;
-}
-
-.home_header p {
-  margin-bottom: 1.5em;
 }
 
 .pdfs_container {
@@ -75,7 +113,7 @@ button {
   float: right;
   width: 8em;
   height: 2.5em;
-  margin: 0.3em;
+  margin: 0.5em;
   border-radius: 10px;
   color: #833ab4;
   border-color: #833ab4;

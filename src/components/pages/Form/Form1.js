@@ -2,10 +2,13 @@ import { useState } from "react";
 import styles from "./Form1.module.css";
 import Input from "../../form/Input";
 import Select from "../../form/Select";
-import { useNavigate  } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function Form1() {
-  const [form, setForm] = useState({});
+function Form1({ location, coordinates }) {
+  const [form, setForm] = useState({
+    location: location,
+    coordinates: coordinates,
+  });
   const reinstatement = ["Permanent", "Temporary"];
   const status = ["Completed", "In progress"];
   const navigate = useNavigate();
@@ -40,11 +43,12 @@ function Form1() {
         text="Location / Coordinates"
         type="button"
         value="Set hole location / coordinates"
-        onClick={() => navigate('/map')}
+        onClick={() => navigate("/map")}
       />
       <form onSubmit={handleSubmit}>
         <div className={styles.form_control}>
           <input
+            value={form.location || ""}
             type="text"
             name="location"
             placeholder="Location address"
@@ -53,6 +57,7 @@ function Form1() {
         </div>
         <div className={styles.form_control}>
           <input
+            value={form.coordinates || ""}
             type="text"
             name="coordinates"
             placeholder="Coordinates"

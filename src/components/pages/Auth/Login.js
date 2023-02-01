@@ -19,6 +19,7 @@ function Login() {
 
   return (
     <section className={styles.overlay}>
+      <h1 className={styles.logo}>Form Into PDF</h1>
       <div className={styles.form_container}>
         <h1>Login</h1>
         <form onSubmit={handleSubmit}>

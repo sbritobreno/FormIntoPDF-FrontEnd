@@ -8,6 +8,7 @@ import MobileNavbar from "./components/layout/MobileNavbar";
 import Footer from "./components/layout/Footer";
 import Container from "./components/layout/Container";
 import Message from "./components/layout/Message";
+import ScrollToTop from "../src/components/layout/ScrollToTop";
 
 // pages
 import Home from "./components/pages/Home/Home";
@@ -26,22 +27,24 @@ function App() {
 
   return (
     <Router forceRefresh={true}>
-      <UserProvider>
-        {isMobile ? <MobileNavbar/> : <Navbar/>}
-        <Message />
-        <Container>
-          <Routes>
-            <Route path="/FormIntoPDF-FrontEnd" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/new_user" element={<NewUser />} />
-            <Route path="/all_users" element={<Users />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/new_form_1" element={<Form1 />} />
-            <Route path="/map" element={<Map />} />
-          </Routes>
-        </Container>
-        <Footer />
-      </UserProvider>
+      <ScrollToTop>
+        <UserProvider>
+          {isMobile ? <MobileNavbar /> : <Navbar />}
+          <Message />
+          <Container>
+            <Routes>
+              <Route path="/FormIntoPDF-FrontEnd" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/new_user" element={<NewUser />} />
+              <Route path="/all_users" element={<Users />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/new_form_1" element={<Form1 />} />
+              <Route path="/map" element={<Map />} />
+            </Routes>
+          </Container>
+          <Footer />
+        </UserProvider>
+      </ScrollToTop>
     </Router>
   );
 }

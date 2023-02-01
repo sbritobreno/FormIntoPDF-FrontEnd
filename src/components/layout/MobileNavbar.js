@@ -9,7 +9,7 @@ import { Context } from "../../context/UserContext";
 function MobileNavbar() {
   const { logout } = useContext(Context);
   const [dropdownOpen, setMobileDropdownOpen] = useState(false);
-  const style = { color: "#fff", fontSize: "2em", marginRight: "10px" };
+  const style = { color: "#fff", fontSize: "2em" };
 
   return (
     <nav className={styles.navbar_container}>
@@ -24,7 +24,7 @@ function MobileNavbar() {
             </Link>
             {dropdownOpen && (
               <div className={styles.dropdown_content}>
-                <Link to="/">Home</Link>
+                <Link to="/FormIntoPDF-FrontEnd">Home</Link>
                 <Link to="/new_form_1">New form 1</Link>
                 <Link to="/new_form_2">New form 2</Link>
                 <Link to="/new_form_3">New form 3</Link>
