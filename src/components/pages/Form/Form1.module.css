@@ -12,7 +12,7 @@ h1 {
 fieldset {
     padding: 0.5em;
     margin-bottom: 1em;
-    border: 2px dashed #833ab4;
+    border: 2px dashed var(--primary-color);
 }
 
 legend {
@@ -40,7 +40,7 @@ legend {
 .form_container input[type="button"] {
   margin-top: 0.3em;
   border-radius: 8px;
-  background-color: #833ab4;
+  background-color: var(--primary-color);
   border: none;
   color: #fff;
   min-width: 100px;

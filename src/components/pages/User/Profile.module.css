@@ -35,8 +35,8 @@
   font-size: 1.1em;
   font-weight: bold;
   background-color: #fff;
-  color: #833ab4;
-  border: 2px solid #833ab4;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
 }
 
 .btn2:hover {

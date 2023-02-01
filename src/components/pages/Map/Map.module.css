@@ -29,9 +29,9 @@
   padding-inline: 10px;
   text-align: center;
   border-radius: 5px;
-  color: #833ab4;
+  color: var(--primary-color);
   font-size: 20px;
-  border: 2px solid #833ab4;
+  border: 2px solid var(--primary-color);
   box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
 }
 
@@ -42,9 +42,9 @@
   padding-inline: 10px;
   text-align: center;
   border-radius: 5px;
-  color: #833ab4;
+  color: var(--primary-color);
   font-size: 20px;
-  border: 2px solid #833ab4;
+  border: 2px solid var(--primary-color);
   box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
 }
 
