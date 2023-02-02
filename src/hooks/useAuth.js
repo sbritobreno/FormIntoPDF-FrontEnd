@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import useFlashMessage from "./useFlashMEssage";
+import useFlashMessage from "./useFlashMessage";
 
 export default function useAuth() {
   //const [token] = useState(localStorage.getItem("token"));

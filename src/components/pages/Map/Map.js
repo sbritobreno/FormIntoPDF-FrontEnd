@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import PlacesAutocomplete from "./PlacesAutocomplete";
 import styles from "./Map.module.css";
-import Geocode from "react-geocode";
 import { useNavigate } from "react-router-dom";
+import useFlashMessage from "../../../hooks/useFlashMessage";
+import { RiCloseLine } from "react-icons/ri";
 
 function Map() {
   const [libraries] = useState(["places"]);
@@ -22,6 +23,7 @@ function LoadMap() {
   const [selected, setSelected] = useState(null);
   const [location, setLocation] = useState("");
   const navigate = useNavigate();
+  const { setFlashMessage } = useFlashMessage();
 
   useEffect(() => {
     // Anything in here is fired on component mount.
@@ -33,39 +35,56 @@ function LoadMap() {
     };
   }, []);
 
-  Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
-
   function onMarkerDragEnd(coord) {
     const { latLng } = coord;
     const lat = latLng.lat();
     const lng = latLng.lng();
-
     setSelected({ lat, lng });
-
-    Geocode.fromLatLng(lat, lng).then(
-      (response) => {
-        const address = response.results[0].formatted_address;
-        document.querySelector(".Map_combobox_input__ONzu7").value = address;
-        setLocation(address)
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
   }
+
+  const onMapClick = (e) => {
+    setSelected({
+      lat: e.latLng.lat(),
+      lng: e.latLng.lng(),
+    });
+  };
 
   function onSave() {
-    navigate('/new_form_1', {location: location, coordinates: `${selected.lat} ${selected.lng}`});
+    if (location && selected) {
+      navigate("/new_form_1", {
+        state: {
+          location: location,
+          coordinates: `${selected.lat} ${selected.lng}`,
+        },
+      });
+    } else {
+      let msgType = "error";
+      let msgText = "Set address and coordinates before saving!";
+
+      setFlashMessage(msgText, msgType);
+    }
   }
+
+  const style = {
+    position: "absolute",
+    top: "10px",
+    right: "5px",
+    zIndex: 15,
+    fontSize: "40px",
+    color: "var(--primary-color)",
+    cursor: "pointer",
+  };
 
   return (
     <div className={styles.map_container}>
+      <RiCloseLine style={style} onClick={() => navigate(-1)} />
       <div className={styles.location_coordinates_container}>
         <PlacesAutocomplete
           setZoom={setZoom}
           setCenter={setCenter}
           setSelected={setSelected}
           selected={selected}
+          setLocation={setLocation}
         />
       </div>
 
@@ -73,6 +92,7 @@ function LoadMap() {
         zoom={zoom}
         center={center}
         mapContainerClassName={styles.map_container}
+        onClick={onMapClick}
         options={{
           fullscreenControl: false,
           streetViewControl: false,
@@ -87,7 +107,9 @@ function LoadMap() {
           />
         )}
       </GoogleMap>
-      <button className={styles.btn_save} onClick={onSave}>Save</button>
+      <button className={styles.btn_save} onClick={onSave}>
+        Save
+      </button>
     </div>
   );
 }

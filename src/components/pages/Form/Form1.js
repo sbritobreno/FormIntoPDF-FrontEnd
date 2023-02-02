@@ -2,12 +2,14 @@ import { useState } from "react";
 import styles from "./Form1.module.css";
 import Input from "../../form/Input";
 import Select from "../../form/Select";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
-function Form1({ location, coordinates }) {
+function Form1() {
+  // This state come from map component with location and coordinates
+  const { state } = useLocation();
   const [form, setForm] = useState({
-    location: location,
-    coordinates: coordinates,
+    location: state?.location,
+    coordinates: state?.coordinates,
   });
   const reinstatement = ["Permanent", "Temporary"];
   const status = ["Completed", "In progress"];
@@ -72,6 +74,7 @@ function Form1({ location, coordinates }) {
             name="length"
             placeholder="Type hole length"
             handleOnChange={handleChange}
+            autoComplete="off"
           />
           <Input
             text="Width"
@@ -79,6 +82,7 @@ function Form1({ location, coordinates }) {
             name="width"
             placeholder="Type hole width"
             handleOnChange={handleChange}
+            autoComplete="off"
           />
           <Input
             text="Area"
@@ -86,6 +90,7 @@ function Form1({ location, coordinates }) {
             name="area"
             placeholder="Type hole area"
             handleOnChange={handleChange}
+            autoComplete="off"
           />
         </fieldset>
         <Input
@@ -94,6 +99,7 @@ function Form1({ location, coordinates }) {
           name="local_authority_license"
           placeholder="e.g. Granite slabs, Concrete footpath etc."
           handleOnChange={handleChange}
+          autoComplete="off"
         />
         <Select
           text="Reinstatement"
@@ -115,6 +121,7 @@ function Form1({ location, coordinates }) {
           name="comment"
           placeholder="*Optional"
           handleOnChange={handleChange}
+          autoComplete="off"
         />
         <input type="submit" value="Submit" />
       </form>

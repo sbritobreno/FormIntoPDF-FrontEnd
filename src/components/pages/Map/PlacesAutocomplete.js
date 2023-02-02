@@ -12,7 +12,13 @@ import {
 import "@reach/combobox/styles.css";
 import styles from "./Map.module.css";
 
-function PlacesAutocomplete({ setSelected, setZoom, setCenter, selected }) {
+function PlacesAutocomplete({
+  setSelected,
+  setZoom,
+  setCenter,
+  selected,
+  setLocation,
+}) {
   const {
     ready,
     value,
@@ -23,6 +29,7 @@ function PlacesAutocomplete({ setSelected, setZoom, setCenter, selected }) {
 
   const handleSelect = async (address) => {
     setValue(address, false);
+    setLocation(address);
     clearSuggestions();
 
     const results = await getGeocode({ address });
