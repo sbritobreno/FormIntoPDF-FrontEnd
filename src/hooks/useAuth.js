@@ -5,10 +5,11 @@ import useFlashMessage from "./useFlashMessage";
 export default function useAuth() {
   //const [token] = useState(localStorage.getItem("token"));
   const [authenticated, setAuthenticated] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true);
   const { setFlashMessage } = useFlashMessage();
   const navigate = useNavigate();
 
-  if(authenticated){
+  if(authenticated && isAdmin){
     //this block can be deleted
   }
   
@@ -17,6 +18,7 @@ export default function useAuth() {
     let msgType = "success";
     
     await authUser();
+    await checkIfUserIsAdmin();
     setFlashMessage(msgText, msgType);
   }
   
@@ -48,5 +50,11 @@ export default function useAuth() {
     navigate("/FormIntoPDF-FrontEnd");
   }
 
-  return { register, logout, login, deleteUserAccount, resetPassword };
+  async function checkIfUserIsAdmin(){
+    if(true){
+      setIsAdmin(true)
+    }
+  }
+
+  return { register, logout, login, deleteUserAccount, resetPassword, isAdmin };
 }

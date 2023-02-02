@@ -1,9 +1,11 @@
 import styles from "./Home.module.css";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { pdfsData } from "../../../data";
+import { Context } from "../../../context/UserContext";
 
 function DisplayPDF() {
   const pdfs = pdfsData;
+  const { isAdmin } = useContext(Context);
   const [searchfieldType, setSearchfieldType] = useState("");
   const [searchfieldAddress, setSearchfieldAddress] = useState("");
   const [searchfieldDate, setSearchfieldDate] = useState("");
@@ -16,15 +18,15 @@ function DisplayPDF() {
     });
 
     // filter by Address
-    result = result.filter((activity) => {
-      return activity.address
+    result = result.filter((pdf) => {
+      return pdf.address
         .toLowerCase()
         .startsWith(searchfieldAddress.toLowerCase());
     });
 
     // filter by Date
-    result = result.filter((activity) => {
-      return activity.date
+    result = result.filter((pdf) => {
+      return pdf.date
         .toLowerCase()
         .startsWith(searchfieldDate.toLowerCase());
     });
@@ -82,9 +84,9 @@ function DisplayPDF() {
                   </p>
                 </div>
                 <div className={styles.pdf_card_buttons}>
-                  <button className={styles.pdf_btn_edit}>Edit</button>
-                  <button className={styles.pdf_btn_remove}>Remove</button>
-                  <button className={styles.pdf_btn_download}>Download</button>
+                  <button className={styles.pdf_btn_edit} disabled={!isAdmin}>Edit</button>
+                  <button className={styles.pdf_btn_remove} disabled={!isAdmin}>Remove</button>
+                  <button className={styles.pdf_btn_download} disabled={!isAdmin}>Download</button>
                 </div>
               </div>
             </div>

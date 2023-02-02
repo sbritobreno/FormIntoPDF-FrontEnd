@@ -6,6 +6,7 @@ const Context = createContext();
 function UserProvider({ children }) {
   const {
     authenticated,
+    isAdmin,
     register,
     logout,
     login,
@@ -17,6 +18,7 @@ function UserProvider({ children }) {
     <Context.Provider
       value={{
         authenticated,
+        isAdmin,
         register,
         logout,
         login,

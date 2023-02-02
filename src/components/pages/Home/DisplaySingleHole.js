@@ -1,30 +1,22 @@
 import styles from "./Home.module.css";
 import { useState } from "react";
-import { pdfsData } from "../../../data";
+import { formsData } from "../../../data";
 
 function DisplaySingleHole() {
-  const pdfs = pdfsData;
-  const [searchfieldType, setSearchfieldType] = useState("");
+  const forms = formsData;
   const [searchfieldAddress, setSearchfieldAddress] = useState("");
   const [searchfieldDate, setSearchfieldDate] = useState("");
-  const filteredPDFs = searchFilter();
+  const filteredForms = searchFilter();
 
   function searchFilter() {
-    // filter by type
-    let result = pdfs.filter((pdf) => {
-      return pdf.type.toLowerCase().startsWith(searchfieldType.toLowerCase());
-    });
-
     // filter by Address
-    result = result.filter((activity) => {
-      return activity.address
-        .toLowerCase()
-        .startsWith(searchfieldAddress.toLowerCase());
+    let result = forms.filter((form) => {
+      return form.address.toLowerCase().includes(searchfieldAddress.toLowerCase());
     });
 
     // filter by Date
-    result = result.filter((activity) => {
-      return activity.date
+    result = result.filter((form) => {
+      return form.date
         .toLowerCase()
         .startsWith(searchfieldDate.toLowerCase());
     });
@@ -32,9 +24,6 @@ function DisplaySingleHole() {
     return result;
   }
 
-  function onSearchChangeType(event) {
-    setSearchfieldType(event.target.value);
-  }
   function onSearchChangeAddress(event) {
     setSearchfieldAddress(event.target.value);
   }
@@ -45,12 +34,6 @@ function DisplaySingleHole() {
   return (
     <section>
       <div className={styles.search_box}>
-        <input
-          className={styles.search}
-          type="search"
-          placeholder="Search by Type"
-          onChange={onSearchChangeType}
-        />
         <input
           className={styles.search}
           type="search"
@@ -65,20 +48,26 @@ function DisplaySingleHole() {
         />
       </div>
       <div className={styles.pdfs_container}>
-        {pdfs.length > 0 &&
-          filteredPDFs.map((pdf) => (
-            <div className={styles.pdf_card} key={pdf.id}>
-              <img src={pdf.image} alt="PDF_image" />
+        {forms.length > 0 &&
+          filteredForms.map((form) => (
+            <div className={styles.pdf_card} key={form.id}>
+              <img src={form.image} alt="PDF_image" />
               <div className={styles.pdf_card_subcontainer}>
                 <div className={styles.pdf_details}>
                   <p>
-                    <span className="bold">PDF name: </span> {pdf.name}
+                    <span className="bold">Address: </span> {form.address}
                   </p>
                   <p>
-                    <span className="bold">Date: </span> {pdf.date}
+                    <span className="bold">Coordinates: </span> {form.coordinates}
                   </p>
                   <p>
-                    <span className="bold">Address: </span> {pdf.address}
+                    <span className="bold">Reinstatement: </span> {form.reinstatement}
+                  </p>
+                  <p>
+                    <span className="bold">Status: </span> {form.status}
+                  </p>
+                  <p>
+                    <span className="bold">Date: </span> {form.date}
                   </p>
                 </div>
                 <div className={styles.pdf_card_buttons}>
@@ -89,7 +78,7 @@ function DisplaySingleHole() {
               </div>
             </div>
           ))}
-        {pdfs.length === 0 && <p>There is no PDF...</p>}
+        {forms.length === 0 && <p>There is no Single hole form...</p>}
       </div>
     </section>
   );
