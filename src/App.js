@@ -38,7 +38,7 @@ function App() {
               <Route path="/new_user" element={<NewUser />} />
               <Route path="/all_users" element={<Users />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/new_form_1" element={<Form1 />} />
+              <Route path="/new_form" element={<Form1 />} />
               <Route path="/map" element={<Map />} />
             </Routes>
           </Container>

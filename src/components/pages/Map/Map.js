@@ -51,7 +51,7 @@ function LoadMap() {
 
   function onSave() {
     if (location && selected) {
-      navigate("/new_form_1", {
+      navigate("/new_form", {
         state: {
           location: location,
           coordinates: `${selected.lat} ${selected.lng}`,
