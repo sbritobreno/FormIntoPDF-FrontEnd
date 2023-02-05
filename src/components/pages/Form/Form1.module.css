@@ -72,3 +72,19 @@ label {
   font-weight: bold;
   font-size: 1em;
 }
+
+.preview_form_images {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  border: 1px solid #777;
+  border-radius: 10px;
+  margin-bottom: 1em;
+}
+
+.preview_form_images img {
+  width: 130px;
+  height: 130px;
+  border-radius: 10px;
+  margin: 0.5em;
+}

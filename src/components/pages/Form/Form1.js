@@ -11,6 +11,7 @@ function Form1() {
     location: state?.location,
     coordinates: state?.coordinates,
   });
+  const [preview, setPreview] = useState([]);
   const reinstatement = ["Permanent", "Temporary"];
   const status = ["Completed", "In progress"];
   const navigate = useNavigate();
@@ -31,6 +32,11 @@ function Form1() {
       ...form,
       status: e.target.options[e.target.selectedIndex].text,
     });
+  }
+
+  function onFileChange(e) {
+    setPreview(Array.from(e.target.files));
+    setForm({ ...form, images: [...e.target.files] });
   }
 
   async function handleSubmit(e) {
@@ -123,6 +129,32 @@ function Form1() {
           handleOnChange={handleChange}
           autoComplete="off"
         />
+        <Input
+          text="Job image"
+          type="file"
+          name="images"
+          handleOnChange={onFileChange}
+          multiple={true}
+        />
+        <div className={styles.preview_form_images}>
+          {preview.length > 0
+            ? preview.map((image, index) => (
+                <img
+                  src={URL.createObjectURL(image)}
+                  alt="job_image"
+                  key={`${index}`}
+                />
+              ))
+            : form.images &&
+              form.images.map((image, index) => (
+                <img
+                  src={`${process.env.REACT_APP_API}/images/forms/${image}`}
+                  alt="job_image"
+                  key={`${index}`}
+                />
+              ))}
+        </div>
+        
         <input type="submit" value="Submit" />
       </form>
     </section>
