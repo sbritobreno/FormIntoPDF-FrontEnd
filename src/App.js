@@ -16,8 +16,10 @@ import Login from "./components/pages/Auth/Login";
 import NewUser from "./components/pages/Auth/NewUser";
 import Users from "./components/pages/User/Users";
 import Profile from "./components/pages/User/Profile";
-import Form1 from "./components/pages/Form/Form1";
+import NewForm from "./components/pages/Form/NewForm";
 import Map from "./components/pages/Map/Map";
+import LoadSingleHoles from "./components/pages/PDF/LoadSingleHoles";
+
 
 // context
 import { UserProvider } from "./context/UserContext";
@@ -38,7 +40,8 @@ function App() {
               <Route path="/new_user" element={<NewUser />} />
               <Route path="/all_users" element={<Users />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/new_form" element={<Form1 />} />
+              <Route path="/new_form" element={<NewForm />} />
+              <Route path="/new_pdf" element={<LoadSingleHoles />} />
               <Route path="/map" element={<Map />} />
             </Routes>
           </Container>

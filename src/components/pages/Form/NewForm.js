@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "./Form1.module.css";
+import styles from "./NewForm.module.css";
 import Input from "../../form/Input";
 import Select from "../../form/Select";
 import { useNavigate, useLocation } from "react-router-dom";
