@@ -1,6 +1,8 @@
 import styles from "./Pdf.module.css";
 import { useState } from "react";
 import { formsData } from "../../../data";
+import { useNavigate } from "react-router-dom";
+import useFlashMessage from "../../../hooks/useFlashMessage";
 
 function LoadSingleHoles() {
   const forms = formsData;
@@ -8,6 +10,8 @@ function LoadSingleHoles() {
   const [searchfieldAddress, setSearchfieldAddress] = useState("");
   const [searchfieldDate, setSearchfieldDate] = useState("");
   const filteredForms = searchFilter();
+  const { setFlashMessage } = useFlashMessage();
+  const navigate = useNavigate();
 
   function searchFilter() {
     // filter by Address
@@ -48,6 +52,18 @@ function LoadSingleHoles() {
     }
   }
 
+  function completePdf() {
+    if (selected <= 0) {
+      setFlashMessage("There is no hole selected!", "error");
+      return;
+    }
+    navigate("/new_pdf_completeform", {
+      state: {
+        holesSelected: selected,
+      },
+    });
+  }
+
   return (
     <>
       <section>
@@ -70,10 +86,10 @@ function LoadSingleHoles() {
               onChange={onSearchChangeDate}
             />
           </div>
-          <div className={styles._container}>
+          <div className={styles.container}>
             {forms.length > 0 &&
               filteredForms.map((form) => (
-                <div className={styles._card} key={form.id}>
+                <div className={styles.card} key={form.id}>
                   <div className={styles.checkbox}>
                     <input
                       type="checkbox"
@@ -82,7 +98,7 @@ function LoadSingleHoles() {
                     />
                     <img src={form.image} alt="form_image" />
                   </div>
-                  <div className={styles._card_subcontainer}>
+                  <div className={styles.card_subcontainer}>
                     <div>
                       <p>
                         <span className="bold">Address: </span> {form.address}
@@ -110,7 +126,9 @@ function LoadSingleHoles() {
         </div>
       </section>
       <div className={styles.btn_container}>
-        <button className={styles.btn_create}>Create new PDF</button>
+        <button className={styles.btn} onClick={completePdf}>
+          Create new PDF
+        </button>
       </div>
     </>
   );

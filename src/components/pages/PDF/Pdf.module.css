@@ -30,13 +30,13 @@
   border: 2px solid var(--primary-color);
 }
 
-._container {
+.container {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 }
 
-._card {
+.card {
   display: flex;
   width: 90%;
   margin: 0.5em;
@@ -48,20 +48,20 @@
   opacity: 0.7;
 }
 
-._card img {
+.card img {
   margin: auto;
   width: 50px;
   height: 50px;
   margin-left: 1em;
 }
 
-._card_subcontainer {
+.card_subcontainer {
   width: 100%;
   text-align: left;
   margin-inline: 1em;
 }
 
-._details p {
+.details p {
   margin: 0.2em;
 }
 
@@ -84,7 +84,12 @@
   left: 0;
 }
 
-.btn_create {
+.btn_submit_container {
+  text-align: center;
+}
+
+input[type="submit"],
+.btn {
   border-radius: 8px;
   background-color: #25b456;
   color: #fff;
@@ -94,8 +99,17 @@
   cursor: pointer;
   font-size: 1.1em;
   font-weight: bold;
+  margin-top: 1em;
 }
 
-.btn_create:hover {
+input[type="submit"]:hover,
+.btn:hover {
   background-color: #1c8a42;
+}
+
+.form_container {
+  max-width: 500px;
+  margin: 3em auto;
+  background-color: #fff;
+  border-radius: 15px;
 }

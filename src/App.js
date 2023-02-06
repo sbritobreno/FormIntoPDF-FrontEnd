@@ -19,7 +19,7 @@ import Profile from "./components/pages/User/Profile";
 import NewForm from "./components/pages/Form/NewForm";
 import Map from "./components/pages/Map/Map";
 import LoadSingleHoles from "./components/pages/PDF/LoadSingleHoles";
-
+import CompletePefForm from "./components/pages/PDF/CompletePdfForm";
 
 // context
 import { UserProvider } from "./context/UserContext";
@@ -42,6 +42,10 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/new_form" element={<NewForm />} />
               <Route path="/new_pdf" element={<LoadSingleHoles />} />
+              <Route
+                path="/new_pdf_completeform"
+                element={<CompletePefForm />}
+              />
               <Route path="/map" element={<Map />} />
             </Routes>
           </Container>
