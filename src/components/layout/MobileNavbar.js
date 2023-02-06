@@ -25,13 +25,14 @@ function MobileNavbar() {
             {dropdownOpen && (
               <div className={styles.dropdown_content}>
                 <Link to="/FormIntoPDF-FrontEnd">Home</Link>
-                <Link to="/new_form_1">New form 1</Link>
-                <Link to="/new_form_2">New form 2</Link>
-                <Link to="/new_form_3">New form 3</Link>
+                <Link to="/new_form">New form</Link>
+                <Link to="/new_pdf">New pdf</Link>
                 <Link to="/new_user">Create new user</Link>
                 <Link to="/all_users">See all users</Link>
                 <Link to="/profile">Profile</Link>
-                <Link to="/login" onClick={logout}>Logout</Link>
+                <Link to="/login" onClick={logout}>
+                  Logout
+                </Link>
               </div>
             )}
           </div>
