@@ -17,6 +17,7 @@ import NewUser from "./components/pages/Auth/NewUser";
 import Users from "./components/pages/User/Users";
 import Profile from "./components/pages/User/Profile";
 import NewForm from "./components/pages/Form/NewForm";
+import EditForm from "./components/pages/Form/EditForm";
 import Map from "./components/pages/Map/Map";
 import LoadSingleHoles from "./components/pages/PDF/LoadSingleHoles";
 import CompletePefForm from "./components/pages/PDF/CompletePdfForm";
@@ -37,13 +38,14 @@ function App() {
             <Routes>
               <Route path="/FormIntoPDF-FrontEnd" element={<Home />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/new_user" element={<NewUser />} />
-              <Route path="/all_users" element={<Users />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/new_form" element={<NewForm />} />
-              <Route path="/new_pdf" element={<LoadSingleHoles />} />
+              <Route path="/user/new" element={<NewUser />} />
+              <Route path="/user/all_users" element={<Users />} />
+              <Route path="/user/profile" element={<Profile />} />
+              <Route path="/form/new" element={<NewForm />} />
+              <Route path="/form/edit/:id" element={<EditForm />} />
+              <Route path="/pdf/new" element={<LoadSingleHoles />} />
               <Route
-                path="/new_pdf_completeform"
+                path="/pdf/new/completepdf"
                 element={<CompletePefForm />}
               />
               <Route path="/map" element={<Map />} />

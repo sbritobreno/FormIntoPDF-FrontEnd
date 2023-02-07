@@ -1,20 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./NewForm.module.css";
 import Input from "../../form/Input";
 import Select from "../../form/Select";
 import { useNavigate, useLocation } from "react-router-dom";
+import { formsData } from "../../../data";
 
-function NewForm() {
+function EditForm() {
+  const forms = formsData;
   // This state come from map component with location and coordinates
   const { state } = useLocation();
-  const [form, setForm] = useState({
-    address: state?.location,
-    coordinates: state?.coordinates,
-  });
+  const [form, setForm] = useState(forms[1]);
   const [preview, setPreview] = useState([]);
   const reinstatement = ["Permanent", "Temporary"];
   const status = ["Completed", "In progress"];
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (state) {
+      setForm({
+        ...form,
+        address: state?.location,
+        coordinates: state?.coordinates,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -45,13 +55,15 @@ function NewForm() {
 
   return (
     <section className={styles.form_container}>
-      <h1>Create Form</h1>
+      <h1>Edit Form</h1>
       {/* That would be actually a simple button to set location and coordinates on the form */}
       <Input
         text="Location / Coordinates"
         type="button"
         value="Set hole location / coordinates"
-        onClick={() => navigate("/map", { state: { page_link: "/form/new" } })}
+        onClick={() =>
+          navigate("/map", { state: { page_link: `/form/edit/${form.id}` } })
+        }
       />
       <form onSubmit={handleSubmit}>
         <div className={styles.form_control}>
@@ -78,6 +90,7 @@ function NewForm() {
             text="Length"
             type="text"
             name="length"
+            value={form.length || ""}
             placeholder="Type hole length"
             handleOnChange={handleChange}
             autoComplete="off"
@@ -86,6 +99,7 @@ function NewForm() {
             text="Width"
             type="text"
             name="width"
+            value={form.width || ""}
             placeholder="Type hole width"
             handleOnChange={handleChange}
             autoComplete="off"
@@ -95,15 +109,16 @@ function NewForm() {
             type="text"
             name="area"
             value={form.length && form.width && form.length * form.width}
-            placeholder="Area will be calculated automatically"
+            placeholder="Type hole area"
             handleOnChange={handleChange}
-            readOnly
+            autoComplete="off"
           />
         </fieldset>
         <Input
           text="Surface Category"
           type="text"
-          name="local_authority_license"
+          name="surface_category"
+          value={form.surface_category || ""}
           placeholder="e.g. Granite slabs, Concrete footpath etc."
           handleOnChange={handleChange}
           autoComplete="off"
@@ -125,7 +140,8 @@ function NewForm() {
         <Input
           text="Add new comment"
           type="text"
-          name="comment"
+          name="comments"
+          value={form.comments.map((comment) => `${comment} `) || ""}
           placeholder="*Optional"
           handleOnChange={handleChange}
           autoComplete="off"
@@ -162,4 +178,4 @@ function NewForm() {
   );
 }
 
-export default NewForm;
+export default EditForm;

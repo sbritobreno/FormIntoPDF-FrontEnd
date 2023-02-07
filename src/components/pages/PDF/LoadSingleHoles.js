@@ -57,7 +57,7 @@ function LoadSingleHoles() {
       setFlashMessage("There is no hole selected!", "error");
       return;
     }
-    navigate("/new_pdf_completeform", {
+    navigate("/pdf/new/completepdf", {
       state: {
         holesSelected: selected,
       },

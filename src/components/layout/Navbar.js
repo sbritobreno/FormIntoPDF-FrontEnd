@@ -21,19 +21,19 @@ function Navbar() {
           <li className={styles.dropdown}>
             <Link>Create</Link>
             <div className={styles.dropdown_content}>
-              <Link to="/new_form">New form</Link>
-              <Link to="/new_pdf">New pdf</Link>
+              <Link to="/form/new">New form</Link>
+              <Link to="/pdf/new">New pdf</Link>
             </div>
           </li>
           <li className={styles.dropdown}>
             <Link>Users</Link>
             <div className={styles.dropdown_content}>
-              <Link to="/new_user">Create new user</Link>
-              <Link to="/all_users">See all users</Link>
+              <Link to="/user/new">Create new user</Link>
+              <Link to="/user/all_users">See all users</Link>
             </div>
           </li>
           <li>
-            <Link to="/profile">Profile</Link>
+            <Link to="/user/profile">Profile</Link>
           </li>
           <li onClick={logout}>
             <Link>Log out</Link>

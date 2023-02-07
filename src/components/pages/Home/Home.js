@@ -6,14 +6,6 @@ import DisplaySingleHole from "./DisplaySingleHole";
 function Home() {
   const [homeDisplay, setHomeDisplay] = useState("PDF");
 
-  function handleBtnSelector() {
-    if (homeDisplay === "PDF") {
-      setHomeDisplay("SINGLE HOLE");
-    } else {
-      setHomeDisplay("PDF");
-    }
-  }
-
   return (
     <section>
       <div className={styles.home_header}>
@@ -26,7 +18,7 @@ function Home() {
               ? styles.btn_selector_active
               : styles.btn_selector
           }
-          onClick={handleBtnSelector}
+          onClick={() => setHomeDisplay("PDF")}
         >
           PDF's
         </button>
@@ -36,7 +28,7 @@ function Home() {
               ? styles.btn_selector_active
               : styles.btn_selector
           }
-          onClick={handleBtnSelector}
+          onClick={() => setHomeDisplay("SINGLE HOLE")}
         >
           Single Hole
         </button>

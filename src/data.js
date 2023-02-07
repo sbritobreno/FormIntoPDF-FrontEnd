@@ -12,9 +12,12 @@ const formsData = [
     width: 2,
     area: 2,
     surface_category: "granite slabs",
-    reinstatement: "permanent",
-    status: "completed",
-    comment: "No comment",
+    reinstatement: "Permanent",
+    status: "Completed",
+    comments: [
+      "No comment",
+      "Nothing to say"
+    ],
     date: "01/01/2023",
   },
   {
@@ -26,9 +29,12 @@ const formsData = [
     width: 2,
     area: 2,
     surface_category: "granite slabs",
-    reinstatement: "permanent",
-    status: "completed",
-    comment: "No comment",
+    reinstatement: "Permanent",
+    status: "Completed",
+    comments: [
+      "No comment",
+      "The two basic components required to load a simple map are: LoadScript - Loads the Google Maps API script GoogleMap - The map component inside which all other components renderThe simplest way to get a functional map is:Make sure you cache the props passed to GoogleMap to avoid re-renders that may harm the performance. to say"
+    ],
     date: "01/01/2023",
   },
 ];

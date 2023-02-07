@@ -1,12 +1,14 @@
 import styles from "./Home.module.css";
 import { useState } from "react";
 import { formsData } from "../../../data";
+import { useNavigate } from "react-router-dom";
 
 function DisplaySingleHole() {
   const forms = formsData;
   const [searchfieldAddress, setSearchfieldAddress] = useState("");
   const [searchfieldDate, setSearchfieldDate] = useState("");
   const filteredForms = searchFilter();
+  const navigate = useNavigate();
 
   function searchFilter() {
     // filter by Address
@@ -71,7 +73,7 @@ function DisplaySingleHole() {
                   </p>
                 </div>
                 <div className={styles.pdf_card_buttons}>
-                  <button className={styles.pdf_btn_edit}>Edit</button>
+                  <button className={styles.pdf_btn_edit} onClick={() => navigate(`/form/edit/${form.id}`)}>Edit</button>
                   <button className={styles.pdf_btn_remove}>Remove</button>
                   <button className={styles.pdf_btn_download}>Download</button>
                 </div>

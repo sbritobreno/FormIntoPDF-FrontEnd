@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import PlacesAutocomplete from "./PlacesAutocomplete";
 import styles from "./Map.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import useFlashMessage from "../../../hooks/useFlashMessage";
 import { RiCloseLine } from "react-icons/ri";
 
 function Map() {
+  // use this state to return to the previous page (NewForm or EditForm)
+  const { state } = useLocation();
   const [libraries] = useState(["places"]);
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -14,10 +16,11 @@ function Map() {
   });
 
   if (!isLoaded) return <div>Loading...</div>;
-  return <LoadMap />;
+
+  return <LoadMap page_link={state?.page_link} />;
 }
 
-function LoadMap() {
+function LoadMap({ page_link }) {
   const [center, setCenter] = useState({ lat: 53.3498114, lng: -6.2602525 });
   const [zoom, setZoom] = useState(12);
   const [selected, setSelected] = useState(null);
@@ -51,7 +54,7 @@ function LoadMap() {
 
   function onSave() {
     if (location && selected) {
-      navigate("/new_form", {
+      navigate(page_link, {
         state: {
           location: location,
           coordinates: `${selected.lat} ${selected.lng}`,

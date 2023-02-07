@@ -14,6 +14,8 @@
   padding: 0.7em;
   border: 1px solid #777;
   border-radius: 5px;
+  max-height: 100px;
+  overflow-y: scroll;
 }
 
 .form_control input::placeholder {
