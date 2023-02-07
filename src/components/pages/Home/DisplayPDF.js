@@ -2,6 +2,7 @@ import styles from "./Home.module.css";
 import { useState, useContext } from "react";
 import { pdfsData } from "../../../data";
 import { Context } from "../../../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 function DisplayPDF() {
   const pdfs = pdfsData;
@@ -10,6 +11,7 @@ function DisplayPDF() {
   const [searchfieldAddress, setSearchfieldAddress] = useState("");
   const [searchfieldDate, setSearchfieldDate] = useState("");
   const filteredPDFs = searchFilter();
+  const navigate = useNavigate();
 
   function searchFilter() {
     // filter by type
@@ -26,9 +28,7 @@ function DisplayPDF() {
 
     // filter by Date
     result = result.filter((pdf) => {
-      return pdf.date
-        .toLowerCase()
-        .startsWith(searchfieldDate.toLowerCase());
+      return pdf.date.toLowerCase().startsWith(searchfieldDate.toLowerCase());
     });
 
     return result;
@@ -84,9 +84,27 @@ function DisplayPDF() {
                   </p>
                 </div>
                 <div className={styles.pdf_card_buttons}>
-                  <button className={styles.pdf_btn_edit} disabled={!isAdmin}>Edit</button>
-                  <button className={styles.pdf_btn_remove} disabled={!isAdmin}>Remove</button>
-                  <button className={styles.pdf_btn_download} disabled={!isAdmin}>Download</button>
+                  <button
+                    className={styles.pdf_btn_edit}
+                    disabled={!isAdmin}
+                    onClick={() => navigate(`/pdf/edit/${pdf.id}`)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className={styles.pdf_btn_remove}
+                    disabled={!isAdmin}
+                    onClick={() => navigate(`/pdf/edit/${pdf.id}`)}
+                  >
+                    Remove
+                  </button>
+                  <button
+                    className={styles.pdf_btn_download}
+                    disabled={!isAdmin}
+                    onClick={() => navigate(`/pdf/edit/${pdf.id}`)}
+                  >
+                    Download
+                  </button>
                 </div>
               </div>
             </div>

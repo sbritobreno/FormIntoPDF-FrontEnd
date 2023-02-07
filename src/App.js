@@ -19,8 +19,10 @@ import Profile from "./components/pages/User/Profile";
 import NewForm from "./components/pages/Form/NewForm";
 import EditForm from "./components/pages/Form/EditForm";
 import Map from "./components/pages/Map/Map";
-import LoadSingleHoles from "./components/pages/PDF/LoadSingleHoles";
-import CompletePefForm from "./components/pages/PDF/CompletePdfForm";
+import NewPdf from "./components/pages/PDF/Create/NewPdf";
+import CompleteNewPdf from "./components/pages/PDF/Create/CompleteNewPdf";
+import EditPdf from "./components/pages/PDF/Edit/EditPdf";
+import CompleteEditPdf from "./components/pages/PDF/Edit/CompleteEditPdf";
 
 // context
 import { UserProvider } from "./context/UserContext";
@@ -43,10 +45,12 @@ function App() {
               <Route path="/user/profile" element={<Profile />} />
               <Route path="/form/new" element={<NewForm />} />
               <Route path="/form/edit/:id" element={<EditForm />} />
-              <Route path="/pdf/new" element={<LoadSingleHoles />} />
+              <Route path="/pdf/new" element={<NewPdf />} />
+              <Route path="/pdf/new/completepdf" element={<CompleteNewPdf />} />
+              <Route path="/pdf/edit/:id" element={<EditPdf />} />
               <Route
-                path="/pdf/new/completepdf"
-                element={<CompletePefForm />}
+                path="/pdf/edit/:id/completepdf"
+                element={<CompleteEditPdf />}
               />
               <Route path="/map" element={<Map />} />
             </Routes>

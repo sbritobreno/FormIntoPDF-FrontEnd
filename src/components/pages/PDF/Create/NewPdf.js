@@ -1,10 +1,10 @@
-import styles from "./Pdf.module.css";
+import styles from "../Pdf.module.css";
 import { useState } from "react";
-import { formsData } from "../../../data";
+import { formsData } from "../../../../data";
 import { useNavigate } from "react-router-dom";
-import useFlashMessage from "../../../hooks/useFlashMessage";
+import useFlashMessage from "../../../../hooks/useFlashMessage";
 
-function LoadSingleHoles() {
+function NewPdf() {
   const forms = formsData;
   const [selected, setSelected] = useState([]);
   const [searchfieldAddress, setSearchfieldAddress] = useState("");
@@ -134,4 +134,4 @@ function LoadSingleHoles() {
   );
 }
 
-export default LoadSingleHoles;
+export default NewPdf;

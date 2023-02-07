@@ -1,9 +1,9 @@
-import styles from "./Pdf.module.css";
+import styles from "../Pdf.module.css";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import Input from "../../form/Input";
+import Input from "../../../form/Input";
 
-function CompletePefForm() {
+function CompleteNewPdf() {
   // This state come from LoadSingleHoles component with selected holes for pdf
   const { state } = useLocation();
   const [pdf, setPdf] = useState({
@@ -20,7 +20,7 @@ function CompletePefForm() {
 
   return (
     <section>
-      <h1>PDF 1</h1>
+      <h1>Edit PDF</h1>
       <form onSubmit={handleSubmit} className={styles.form_container}>
         <Input
           text="ESBH Hole No."
@@ -91,4 +91,4 @@ function CompletePefForm() {
   );
 }
 
-export default CompletePefForm;
+export default CompleteNewPdf;
