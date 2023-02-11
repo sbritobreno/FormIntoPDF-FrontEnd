@@ -1,17 +1,26 @@
 import styles from "../Pdf.module.css";
-import { useState } from "react";
-import { formsData } from "../../../../data";
+import { useState, useRef, useEffect } from "react";
+import { formsData, pdfsData } from "../../../../data";
 import { useNavigate } from "react-router-dom";
 import useFlashMessage from "../../../../hooks/useFlashMessage";
 
-function NewPdf() {
+function EditPdf() {
+  const itemEls = useRef([]);
   const forms = formsData;
-  const [selected, setSelected] = useState([]);
+  const pdfs = pdfsData;
+  const [selected, setSelected] = useState([...pdfs[1].holes]);
   const [searchfieldAddress, setSearchfieldAddress] = useState("");
   const [searchfieldDate, setSearchfieldDate] = useState("");
   const filteredForms = searchFilter();
   const { setFlashMessage } = useFlashMessage();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    forms.forEach((form) => {
+      const f = selected.filter((f) => f.id === form.id)[0];
+      if (f) itemEls.current[f.id].style.opacity = 1;
+    });
+  }, [forms, selected]);
 
   function searchFilter() {
     // filter by Address
@@ -20,7 +29,6 @@ function NewPdf() {
         .toLowerCase()
         .includes(searchfieldAddress.toLowerCase());
     });
-
     // filter by Date
     result = result.filter((form) => {
       return form.date.toLowerCase().startsWith(searchfieldDate.toLowerCase());
@@ -32,13 +40,13 @@ function NewPdf() {
   function onSearchChangeAddress(event) {
     setSearchfieldAddress(event.target.value);
   }
+
   function onSearchChangeDate(event) {
     setSearchfieldDate(event.target.value);
   }
 
   function handleChange(e, formId) {
-    // div "Pdf__card__2fSa-"
-    const container = e.target.parentElement.parentElement;
+    const container = itemEls.current[formId];
     const form = forms.filter((form) => form.id === formId);
 
     if (e.target.checked) {
@@ -52,12 +60,17 @@ function NewPdf() {
     }
   }
 
+  function checkIfSelected(formId) {
+    const form = selected.filter((form) => form.id === formId)[0];
+    return form ? true : false;
+  }
+
   function completePdf() {
     if (selected <= 0) {
       setFlashMessage("There is no hole selected!", "error");
       return;
     }
-    navigate("/pdf/new/completepdf", {
+    navigate(`/pdf/edit/1/completepdf`, {
       state: {
         holesSelected: selected,
       },
@@ -89,11 +102,16 @@ function NewPdf() {
           <div className={styles.container}>
             {forms.length > 0 &&
               filteredForms.map((form) => (
-                <div className={styles.card} key={form.id}>
+                <div
+                  style={{ opacity: 0.7 }}
+                  className={styles.card}
+                  key={form.id}
+                  ref={(el) => (itemEls.current[form.id] = el)}
+                >
                   <div className={styles.checkbox}>
                     <input
                       type="checkbox"
-                      defaultChecked={false}
+                      defaultChecked={checkIfSelected(form.id)}
                       onChange={(e) => handleChange(e, form.id)}
                     />
                     <img src={form.image} alt="form_image" />
@@ -134,4 +152,4 @@ function NewPdf() {
   );
 }
 
-export default NewPdf;
+export default EditPdf;

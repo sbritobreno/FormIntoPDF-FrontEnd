@@ -2,12 +2,14 @@ import styles from "../Pdf.module.css";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import Input from "../../../form/Input";
+import { pdfsData } from "../../../../data";
 
 function CompleteNewPdf() {
   // This state come from LoadSingleHoles component with selected holes for pdf
   const { state } = useLocation();
   const [pdf, setPdf] = useState({
-    holes_selected: state?.holesSelected,
+    ...pdfsData[1],
+    holes: state?.holesSelected,
   });
 
   function handleChange(e) {
@@ -23,6 +25,7 @@ function CompleteNewPdf() {
       <h1>Edit PDF</h1>
       <form onSubmit={handleSubmit} className={styles.form_container}>
         <Input
+          value={pdf.esbh_hole_no || ""}
           text="ESBH Hole No."
           type="text"
           name="esbh_hole_no"
@@ -31,6 +34,7 @@ function CompleteNewPdf() {
           autoComplete="off"
         />
         <Input
+          value={pdf.address || ""}
           text="Street"
           type="text"
           name="street"
@@ -39,6 +43,7 @@ function CompleteNewPdf() {
           autoComplete="off"
         />
         <Input
+          value={pdf.local_authority_licence_number || ""}
           text="Local Authority Licence No. T4/T2"
           type="text"
           name="local_authority_licence_number"
@@ -47,6 +52,7 @@ function CompleteNewPdf() {
           autoComplete="off"
         />
         <Input
+          value={pdf.traffic_impact_number || ""}
           text="Traffic Impact No."
           type="text"
           name="traffic_impact_number"
@@ -56,7 +62,7 @@ function CompleteNewPdf() {
         />
         <label>Single Holes Selected:</label>
         <div className={styles.container}>
-          {pdf.holes_selected.map((hole) => (
+          {pdf.holes.map((hole) => (
             <div className={styles.card} key={hole.id}>
               <img src={hole.image} alt="hole_image" />
               <div className={styles.card_subcontainer}>

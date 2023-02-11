@@ -137,15 +137,16 @@ function EditForm() {
           handleOnChange={handleStatus}
           value={form.status || ""}
         />
-        <Input
-          text="Add new comment"
-          type="text"
+        <label>Add new comment:</label>
+        <textarea
+          className={styles.comments_textarea}
+          rows="2"
           name="comments"
-          value={form.comments.map((comment) => `${comment} `) || ""}
+          value={form.comments || ""}
           placeholder="*Optional"
-          handleOnChange={handleChange}
+          onChange={handleChange}
           autoComplete="off"
-        />
+        ></textarea>
         <Input
           text="Job image"
           type="file"

@@ -1,10 +1,11 @@
 import styles from "../Pdf.module.css";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { formsData } from "../../../../data";
 import { useNavigate } from "react-router-dom";
 import useFlashMessage from "../../../../hooks/useFlashMessage";
 
 function NewPdf() {
+  const itemEls = useRef([]);
   const forms = formsData;
   const [selected, setSelected] = useState([]);
   const [searchfieldAddress, setSearchfieldAddress] = useState("");
@@ -20,7 +21,6 @@ function NewPdf() {
         .toLowerCase()
         .includes(searchfieldAddress.toLowerCase());
     });
-
     // filter by Date
     result = result.filter((form) => {
       return form.date.toLowerCase().startsWith(searchfieldDate.toLowerCase());
@@ -37,8 +37,7 @@ function NewPdf() {
   }
 
   function handleChange(e, formId) {
-    // div "Pdf__card__2fSa-"
-    const container = e.target.parentElement.parentElement;
+    const container = itemEls.current[formId];
     const form = forms.filter((form) => form.id === formId);
 
     if (e.target.checked) {
@@ -89,7 +88,12 @@ function NewPdf() {
           <div className={styles.container}>
             {forms.length > 0 &&
               filteredForms.map((form) => (
-                <div className={styles.card} key={form.id}>
+                <div
+                  style={{ opacity: 0.7 }}
+                  className={styles.card}
+                  key={form.id}
+                  ref={(el) => (itemEls.current[form.id] = el)}
+                >
                   <div className={styles.checkbox}>
                     <input
                       type="checkbox"

@@ -10,9 +10,9 @@ h1 {
 }
 
 fieldset {
-    padding: 0.5em;
-    margin-bottom: 1em;
-    border: 2px dashed var(--primary-color);
+  padding: 0.5em;
+  margin-bottom: 1em;
+  border: 2px dashed var(--primary-color);
 }
 
 legend {
@@ -87,4 +87,15 @@ label {
   height: 130px;
   border-radius: 10px;
   margin: 0.5em;
+}
+
+.comments_textarea {
+  width: 100%;
+  padding: 0.7em;
+  border: 1px solid #777;
+  border-radius: 5px;
+  margin-top: 0.3em;
+  margin-bottom: 1em;
+  resize: none;
+  height: 8em;
 }
