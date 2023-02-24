@@ -5,7 +5,6 @@
   justify-content: center;
   background-color: var(--primary-color);
   color: #ccc;
-  border-top: 1px solid #ccc;
 }
 
 .bold {

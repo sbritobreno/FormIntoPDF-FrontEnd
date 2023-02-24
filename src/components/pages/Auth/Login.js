@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import Input from "../../form/Input";
 import { Link } from "react-router-dom";
 import styles from "./Login.module.css";
@@ -7,6 +7,16 @@ import { Context } from "../../../context/UserContext";
 function Login() {
   const [user, setUser] = useState({});
   const { login, resetPassword } = useContext(Context);
+
+  useEffect(() => {
+    // Anything in here is fired on component mount.
+    document.body.style.overflowY = "hidden";
+
+    return () => {
+      // Anything in here is fired on component unmount.
+      document.body.style.overflowY = "unset";
+    };
+  }, []);
 
   function handleChange(e) {
     setUser({ ...user, [e.target.name]: e.target.value });

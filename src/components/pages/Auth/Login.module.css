@@ -2,6 +2,7 @@
   position: fixed;
   top: 0;
   left: 0;
+  right: 0;
   width: 100%;
   height: 100%;
   background-color: var(--primary-color);
@@ -53,4 +54,5 @@
 
 .form_container label {
     color: #fff;
+    text-align: left;
   }

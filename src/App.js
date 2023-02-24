@@ -26,6 +26,7 @@ import CompleteEditPdf from "./components/pages/PDF/Edit/CompleteEditPdf";
 
 // context
 import { UserProvider } from "./context/UserContext";
+import HomeSelector from "./components/HomeSelector/HomeSelector";
 
 function App() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
@@ -38,7 +39,8 @@ function App() {
           <Message />
           <Container>
             <Routes>
-              <Route path="/FormIntoPDF-FrontEnd" element={<Home />} />
+              <Route path="/FormIntoPDF-FrontEnd/home" element={<Home />} />
+              <Route path="/FormIntoPDF-FrontEnd" element={<HomeSelector />} />
               <Route path="/login" element={<Login />} />
               <Route path="/user/new" element={<NewUser />} />
               <Route path="/user/all_users" element={<Users />} />
