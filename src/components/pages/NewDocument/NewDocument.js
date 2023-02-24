@@ -23,16 +23,20 @@ function NewDocument() {
     };
   }, []);
 
-  function sectionCompleted(sectionBtnIndex) {
-    sectionBtns[sectionBtnIndex].textContent = sectionBtns[
-      sectionBtnIndex
-    ].textContent
-      .toString()
-      .replace("...", "✔️");
+  // function sectionCompleted(sectionBtnIndex) {
+  //   sectionBtns[sectionBtnIndex].textContent = sectionBtns[
+  //     sectionBtnIndex
+  //   ].textContent
+  //     .toString()
+  //     .replace("...", "✔️");
 
-    // change the opacity of the next button and make it clickable
-    sectionBtns[sectionBtnIndex++].style.opacity = 1;
-    sectionBtns[sectionBtnIndex++].disabled = false;
+  //   // change the opacity of the next button and make it clickable
+  //   sectionBtns[sectionBtnIndex++].style.opacity = 1;
+  //   sectionBtns[sectionBtnIndex++].disabled = false;
+  // }
+
+  function saveDocument() {
+
   }
 
   return (
@@ -46,7 +50,7 @@ function NewDocument() {
           ref={(el) => (sectionBtns[0] = el)}
           className={styles.sitesetup_btn}
           onClick={() => {
-            navigate("");
+            navigate("/document/new/sitesetup");
           }}
         >
           Site Setup ...
@@ -56,7 +60,7 @@ function NewDocument() {
           disabled={true}
           className={styles.forms_btn}
           onClick={() => {
-            navigate("");
+            navigate("/document/new/forms");
           }}
         >
           Forms ...
@@ -66,17 +70,17 @@ function NewDocument() {
           disabled={true}
           className={styles.methodstatements_btn}
           onClick={() => {
-            navigate("");
+            navigate("/document/new/methodstatements");
           }}
         >
           Method Statements ...
         </button>
         <button
           ref={(el) => (sectionBtns[3] = el)}
-          disabled={true}
+          disabled={false}
           className={styles.statementssheet_btn}
           onClick={() => {
-            navigate("");
+            navigate("/document/new/reinstatementsheet");
           }}
         >
           Reinstatement Sheet ...
@@ -85,10 +89,10 @@ function NewDocument() {
           ref={(el) => (sectionBtns[4] = el)}
           className={styles.submit_btn}
           onClick={() => {
-            navigate("");
+            saveDocument();
           }}
         >
-          Submit
+          Save
         </button>
       </div>
     </section>

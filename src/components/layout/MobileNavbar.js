@@ -25,8 +25,6 @@ function MobileNavbar() {
             {dropdownOpen && (
               <div className={styles.dropdown_content}>
                 <Link to="/FormIntoPDF-FrontEnd">Home</Link>
-                <Link to="/form/new">New form</Link>
-                <Link to="/pdf/new">New pdf</Link>
                 <Link to="/user/new">Create new user</Link>
                 <Link to="/user/all_users">See all users</Link>
                 <Link to="/user/profile">Profile</Link>

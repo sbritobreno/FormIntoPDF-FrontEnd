@@ -12,19 +12,17 @@ import ScrollToTop from "../src/components/layout/ScrollToTop";
 
 // pages
 import Home from "./components/pages/Home/Home";
+import HomeSelector from "./components/pages/HomeSelector/HomeSelector";
 import Login from "./components/pages/Auth/Login";
+import Profile from "./components/pages/User/Profile";
 import NewUser from "./components/pages/Auth/NewUser";
 import Users from "./components/pages/User/Users";
-import Profile from "./components/pages/User/Profile";
-import NewForm from "./components/pages/Form/NewForm";
-import EditForm from "./components/pages/Form/EditForm";
-import Map from "./components/pages/Map/Map";
-import NewPdf from "./components/pages/PDF/Create/NewPdf";
-import CompleteNewPdf from "./components/pages/PDF/Create/CompleteNewPdf";
-import EditPdf from "./components/pages/PDF/Edit/EditPdf";
-import CompleteEditPdf from "./components/pages/PDF/Edit/CompleteEditPdf";
-import HomeSelector from "./components/pages/HomeSelector/HomeSelector";
 import NewDocument from "./components/pages/NewDocument/NewDocument";
+import SiteSetup from "./components/pages/DocumentSection/SiteSetup";
+import Forms from "./components/pages/DocumentSection/Forms";
+import MethodStatements from "./components/pages/DocumentSection/MethodStatements";
+import ReinstatementSheet from "./components/pages/DocumentSection/ReinstatementSheet";
+import Map from "./components/pages/Map/Map";
 
 // context
 import { UserProvider } from "./context/UserContext";
@@ -47,15 +45,10 @@ function App() {
               <Route path="/user/all_users" element={<Users />} />
               <Route path="/user/profile" element={<Profile />} />
               <Route path="/document/new" element={<NewDocument />} />
-              <Route path="/form/new" element={<NewForm />} />
-              <Route path="/form/edit/:id" element={<EditForm />} />
-              <Route path="/pdf/new" element={<NewPdf />} />
-              <Route path="/pdf/new/completepdf" element={<CompleteNewPdf />} />
-              <Route path="/pdf/edit/:id" element={<EditPdf />} />
-              <Route
-                path="/pdf/edit/:id/completepdf"
-                element={<CompleteEditPdf />}
-              />
+              <Route path="/document/new/sitesetup" element={<SiteSetup />} />
+              <Route path="/document/new/forms" element={<Forms />} />
+              <Route path="/document/new/methodstatements" element={<MethodStatements />} />
+              <Route path="/document/new/reinstatementsheet" element={<ReinstatementSheet />} />
               <Route path="/map" element={<Map />} />
             </Routes>
           </Container>

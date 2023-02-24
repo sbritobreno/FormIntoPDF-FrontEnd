@@ -19,13 +19,6 @@ function Navbar() {
             <Link to="/FormIntoPDF-FrontEnd">Home</Link>
           </li>
           <li className={styles.dropdown}>
-            <Link>Create</Link>
-            <div className={styles.dropdown_content}>
-              <Link to="/form/new">New form</Link>
-              <Link to="/pdf/new">New pdf</Link>
-            </div>
-          </li>
-          <li className={styles.dropdown}>
             <Link>Users</Link>
             <div className={styles.dropdown_content}>
               <Link to="/user/new">Create new user</Link>
