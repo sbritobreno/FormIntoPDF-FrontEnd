@@ -1,30 +1,20 @@
-import { useEffect, useState } from "react";
-import styles from "./NewForm.module.css";
+import { useState } from "react";
+import styles from "./Doc.module.css";
 import Input from "../../form/Input";
 import Select from "../../form/Select";
 import { useNavigate, useLocation } from "react-router-dom";
-import { formsData } from "../../../data";
 
-function EditForm() {
-  const forms = formsData;
+function ReinstatementSheet() {
   // This state come from map component with location and coordinates
   const { state } = useLocation();
-  const [form, setForm] = useState(forms[1]);
+  const [form, setForm] = useState({
+    address: state?.location,
+    coordinates: state?.coordinates,
+  });
   const [preview, setPreview] = useState([]);
   const reinstatement = ["Permanent", "Temporary"];
   const status = ["Completed", "In progress"];
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (state) {
-      setForm({
-        ...form,
-        address: state?.location,
-        coordinates: state?.coordinates,
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -55,15 +45,13 @@ function EditForm() {
 
   return (
     <section className={styles.form_container}>
-      <h1>Edit Form</h1>
+      <h1>Create Form</h1>
       {/* That would be actually a simple button to set location and coordinates on the form */}
       <Input
         text="Location / Coordinates"
         type="button"
         value="Set hole location / coordinates"
-        onClick={() =>
-          navigate("/map", { state: { page_link: `/form/edit/${form.id}` } })
-        }
+        onClick={() => navigate("/map", { state: { page_link: "/form/new" } })}
       />
       <form onSubmit={handleSubmit}>
         <div className={styles.form_control}>
@@ -90,7 +78,6 @@ function EditForm() {
             text="Length"
             type="text"
             name="length"
-            value={form.length || ""}
             placeholder="Type hole length"
             handleOnChange={handleChange}
             autoComplete="off"
@@ -99,7 +86,6 @@ function EditForm() {
             text="Width"
             type="text"
             name="width"
-            value={form.width || ""}
             placeholder="Type hole width"
             handleOnChange={handleChange}
             autoComplete="off"
@@ -109,16 +95,15 @@ function EditForm() {
             type="text"
             name="area"
             value={form.length && form.width && form.length * form.width}
-            placeholder="Type hole area"
+            placeholder="Area will be calculated automatically"
             handleOnChange={handleChange}
-            autoComplete="off"
+            readOnly
           />
         </fieldset>
         <Input
           text="Surface Category"
           type="text"
-          name="surface_category"
-          value={form.surface_category || ""}
+          name="local_authority_license"
           placeholder="e.g. Granite slabs, Concrete footpath etc."
           handleOnChange={handleChange}
           autoComplete="off"
@@ -179,4 +164,4 @@ function EditForm() {
   );
 }
 
-export default EditForm;
+export default ReinstatementSheet;
