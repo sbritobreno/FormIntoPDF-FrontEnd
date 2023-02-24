@@ -23,10 +23,11 @@ import NewPdf from "./components/pages/PDF/Create/NewPdf";
 import CompleteNewPdf from "./components/pages/PDF/Create/CompleteNewPdf";
 import EditPdf from "./components/pages/PDF/Edit/EditPdf";
 import CompleteEditPdf from "./components/pages/PDF/Edit/CompleteEditPdf";
+import HomeSelector from "./components/pages/HomeSelector/HomeSelector";
+import NewDocument from "./components/pages/NewDocument/NewDocument";
 
 // context
 import { UserProvider } from "./context/UserContext";
-import HomeSelector from "./components/HomeSelector/HomeSelector";
 
 function App() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
@@ -45,6 +46,7 @@ function App() {
               <Route path="/user/new" element={<NewUser />} />
               <Route path="/user/all_users" element={<Users />} />
               <Route path="/user/profile" element={<Profile />} />
+              <Route path="/document/new" element={<NewDocument />} />
               <Route path="/form/new" element={<NewForm />} />
               <Route path="/form/edit/:id" element={<EditForm />} />
               <Route path="/pdf/new" element={<NewPdf />} />

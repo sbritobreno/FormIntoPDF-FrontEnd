@@ -26,9 +26,9 @@ function HomeSelector() {
         <h1>Welcome {"username"}!</h1>
       </div>
       <div className={styles.btns_container}>
-        <button onClick={navigate("")}>New Document</button>
-        <button onClick={navigate("")}>Update Document</button>
-        <button onClick={navigate("")}>Access All Document</button>
+        <button onClick={() => {navigate("/document/new")}}>New Document</button>
+        <button onClick={() => {navigate("/FormIntoPDF-FrontEnd/home")}}>Update Document</button>
+        <button onClick={() => {navigate("/FormIntoPDF-FrontEnd/home")}}>Access All Document</button>
       </div>
     </section>
   );

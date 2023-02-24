@@ -3,11 +3,11 @@
   margin: 0;
   font-family: Helvetica, Arial, sans-serif;
   box-sizing: border-box;
-  --primary-color: #1466B6;
+  --primary-color: #1466b6;
 }
 
 body {
-  background-color: #EBEDF0;
+  background-color: #ebedf0;
   overflow-x: hidden;
 }
 
@@ -22,3 +22,11 @@ h1 {
   color: var(--primary-color);
 }
 
+h1,
+h2,
+h3,
+p,
+input,
+button {
+  letter-spacing: 1px;
+}
