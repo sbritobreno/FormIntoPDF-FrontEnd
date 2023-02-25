@@ -4,10 +4,13 @@
   font-family: Helvetica, Arial, sans-serif;
   box-sizing: border-box;
   --primary-color: #1466b6;
+  --primary-color-dark: #5e2a82;
+  --button-green: #25b456;
+  --button-green-dark: #1c8a42;
 }
 
 body {
-  background-color: #ebedf0;
+  background-color: var(--primary-color);
   overflow-x: hidden;
 }
 

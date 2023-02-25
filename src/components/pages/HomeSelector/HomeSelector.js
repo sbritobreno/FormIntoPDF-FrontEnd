@@ -7,13 +7,11 @@ function HomeSelector() {
 
   useEffect(() => {
     // Anything in here is fired on component mount.
-    document.body.style.backgroundColor = "#1466B6";
     document.querySelector("main").style.backgroundColor = "#1466B6";
     document.querySelector("main").style.boxShadow = "unset";
 
     return () => {
       // Anything in here is fired on component unmount.
-      document.body.style.backgroundColor = "#EBEDF0";
       document.querySelector("main").style.backgroundColor = "#fff";
       document.querySelector("main").style.boxShadow =
         "0 0.5rem 1rem rgb(0 0 0 / 15%)";

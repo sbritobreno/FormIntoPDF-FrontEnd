@@ -18,6 +18,7 @@ import Profile from "./components/pages/User/Profile";
 import NewUser from "./components/pages/Auth/NewUser";
 import Users from "./components/pages/User/Users";
 import NewDocument from "./components/pages/NewDocument/NewDocument";
+import SiteAttendance from "./components/pages/DocumentSection/SiteAttendance";
 import SiteSetup from "./components/pages/DocumentSection/SiteSetup";
 import Forms from "./components/pages/DocumentSection/Forms";
 import MethodStatements from "./components/pages/DocumentSection/MethodStatements";
@@ -45,6 +46,7 @@ function App() {
               <Route path="/user/all_users" element={<Users />} />
               <Route path="/user/profile" element={<Profile />} />
               <Route path="/document/new" element={<NewDocument />} />
+              <Route path="/document/new/siteattendance" element={<SiteAttendance />} />
               <Route path="/document/new/sitesetup" element={<SiteSetup />} />
               <Route path="/document/new/forms" element={<Forms />} />
               <Route path="/document/new/methodstatements" element={<MethodStatements />} />
