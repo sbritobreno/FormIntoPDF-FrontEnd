@@ -22,6 +22,11 @@
     align-items: center;
     margin-inline: 0.5em;
   }
+
+  .navbar_logo h2{
+    color: #fff;
+    margin: 0;
+  }
   
   .navbar a {
     display:block;

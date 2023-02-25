@@ -1,13 +1,10 @@
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./Doc.module.css";
 import Input from "../../form/Input";
 import { RiCloseLine, RiDeleteBin5Line } from "react-icons/ri";
 
 function SiteAttendance() {
-  const { state } = useLocation();
-  const sectionCompleted = state?.sectionCompleted;
-  console.log(state)
   const navigate = useNavigate();
   const [displayAttendanceList, setDisplayAttendanceList] = useState(false);
   const [newAttendance, setNewAttendance] = useState({});
@@ -28,10 +25,9 @@ function SiteAttendance() {
     e.preventDefault();
     setAttendanceList([...attendanceList, newAttendance]);
   }
-  
+
   function saveAttendanceStage() {
-    sectionCompleted(0);
-    navigate(-1)
+    navigate("/document/new", { state: { sectionIndex: 0 } });
   }
 
   function deleteRowAttendance(index) {

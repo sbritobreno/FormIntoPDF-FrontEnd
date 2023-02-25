@@ -42,7 +42,8 @@ svg {
   border-radius: 15px;
 }
 
-h1 {
+h1,
+h2 {
   text-align: center;
 }
 
@@ -121,7 +122,8 @@ label {
   margin: 0.5em;
 }
 
-.comments_textarea {
+.comments_textarea,
+.hazard_comments {
   width: 100%;
   padding: 0.7em;
   border: 1px solid #777;
@@ -129,5 +131,67 @@ label {
   margin-top: 0.3em;
   margin-bottom: 1em;
   resize: none;
+}
+
+.comments_textarea {
   height: 8em;
+}
+
+/* ################################## Site Setup ################################## */
+
+.form_subheading {
+  margin: 40px 0px 15px 0px;
+  padding: 10px;
+  border-top: 2px dashed var(--primary-color);
+}
+
+.hazard_comments {
+  height: 3em;
+}
+
+.hazard_check_container,
+.check_container {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
+
+.check_container {
+  margin-block: 15px;
+}
+
+.hazard_check_container label,
+.check_container label {
+  margin: 3px;
+}
+
+.check_container label {
+  width: 90%;
+  font-weight: normal;
+}
+
+.hazard_check_container input,
+.check_container input {
+  margin: 2px;
+  margin-right: 5px;
+  width: 20px;
+  height: 20px;
+}
+
+.sketch_image {
+  width: 100%;
+  padding: 0.7em;
+  margin-top: 0.3em;
+  border: 1px solid #777;
+  border-radius: 5px;
+}
+
+.preview_images {
+  text-align: center;
+}
+
+.preview_images img{
+  width: 70%;
+  border-radius: 10px;
+  margin: 0.5em;
 }
