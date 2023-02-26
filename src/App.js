@@ -20,6 +20,7 @@ import Users from "./components/pages/User/Users";
 import NewDocument from "./components/pages/NewDocument/NewDocument";
 import SiteAttendance from "./components/pages/DocumentSection/SiteAttendance";
 import SiteSetup from "./components/pages/DocumentSection/SiteSetup";
+import ApprovedForm from "./components/pages/DocumentSection/ApprovedForm";
 import Forms from "./components/pages/DocumentSection/Forms";
 import MethodStatements from "./components/pages/DocumentSection/MethodStatements";
 import ReinstatementSheet from "./components/pages/DocumentSection/ReinstatementSheet";
@@ -46,11 +47,24 @@ function App() {
               <Route path="/user/all_users" element={<Users />} />
               <Route path="/user/profile" element={<Profile />} />
               <Route path="/document/new" element={<NewDocument />} />
-              <Route path="/document/new/siteattendance" element={<SiteAttendance />} />
+              <Route
+                path="/document/new/siteattendance"
+                element={<SiteAttendance />}
+              />
               <Route path="/document/new/sitesetup" element={<SiteSetup />} />
+              <Route
+                path="/document/new/approvedform"
+                element={<ApprovedForm />}
+              />
               <Route path="/document/new/forms" element={<Forms />} />
-              <Route path="/document/new/methodstatements" element={<MethodStatements />} />
-              <Route path="/document/new/reinstatementsheet" element={<ReinstatementSheet />} />
+              <Route
+                path="/document/new/methodstatements"
+                element={<MethodStatements />}
+              />
+              <Route
+                path="/document/new/reinstatementsheet"
+                element={<ReinstatementSheet />}
+              />
               <Route path="/map" element={<Map />} />
             </Routes>
           </Container>

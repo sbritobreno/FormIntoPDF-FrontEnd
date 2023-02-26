@@ -74,6 +74,16 @@ function NewDocument() {
         <button
           ref={(el) => (sectionBtns[2] = el)}
           disabled={false}
+          className={styles.approvedform_btn}
+          onClick={() => {
+            navigate("/document/new/approvedform");
+          }}
+        >
+          Approved Form (AF3) ...
+        </button>
+        <button
+          ref={(el) => (sectionBtns[3] = el)}
+          disabled={false}
           className={styles.forms_btn}
           onClick={() => {
             navigate("/document/new/forms");
@@ -82,7 +92,7 @@ function NewDocument() {
           Forms ...
         </button>
         <button
-          ref={(el) => (sectionBtns[3] = el)}
+          ref={(el) => (sectionBtns[4] = el)}
           disabled={false}
           className={styles.methodstatements_btn}
           onClick={() => {
@@ -92,7 +102,7 @@ function NewDocument() {
           Method Statements ...
         </button>
         <button
-          ref={(el) => (sectionBtns[4] = el)}
+          ref={(el) => (sectionBtns[5] = el)}
           disabled={false}
           className={styles.statementssheet_btn}
           onClick={() => {
@@ -102,7 +112,7 @@ function NewDocument() {
           Reinstatement Sheet ...
         </button>
         <button
-          ref={(el) => (sectionBtns[5] = el)}
+          ref={(el) => (sectionBtns[6] = el)}
           className={styles.submit_btn}
           onClick={() => {
             saveDocument();
