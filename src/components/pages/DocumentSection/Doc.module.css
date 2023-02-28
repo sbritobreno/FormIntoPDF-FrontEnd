@@ -149,29 +149,17 @@ label {
   height: 3em;
 }
 
-.hazard_check_container,
-.check_container {
+.hazard_check_container {
   display: flex;
   justify-items: center;
   align-items: center;
 }
 
-.check_container {
-  margin-block: 15px;
-}
-
-.hazard_check_container label,
-.check_container label {
+.hazard_check_container label {
   margin: 3px;
 }
 
-.check_container label {
-  width: 90%;
-  font-weight: normal;
-}
-
-.hazard_check_container input,
-.check_container input {
+.hazard_check_container input {
   margin: 2px;
   margin-right: 5px;
   width: 20px;
