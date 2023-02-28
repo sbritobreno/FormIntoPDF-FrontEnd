@@ -1,0 +1,19 @@
+.comments_textarea {
+  width: 100%;
+  padding: 0.7em;
+  border: 1px solid #777;
+  border-radius: 5px;
+  margin-top: 0.3em;
+  margin-bottom: 1em;
+  resize: none;
+}
+
+.comments_textarea {
+  height: 8em;
+}
+
+label {
+  margin-bottom: 0.3em;
+  font-weight: bold;
+  font-size: 1em;
+}

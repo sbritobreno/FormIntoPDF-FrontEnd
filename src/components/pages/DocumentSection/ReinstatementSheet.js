@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styles from "./Doc.module.css";
 import Input from "../../form/Input";
+import TextArea from "../../form/TextArea";
 import Select from "../../form/Select";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -122,16 +123,11 @@ function ReinstatementSheet() {
           handleOnChange={handleStatus}
           value={form.status || ""}
         />
-        <label>Add new comment:</label>
-        <textarea
-          className={styles.comments_textarea}
-          rows="2"
-          name="comments"
-          value={form.comments || ""}
-          placeholder="*Optional"
-          onChange={handleChange}
-          autoComplete="off"
-        ></textarea>
+        <TextArea 
+          title={"Add new comment"} 
+          name={"comments"} 
+          handleOnChange={handleChange}
+          />
         <Input
           text="Job image"
           type="file"

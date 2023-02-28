@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "../../form/Input";
 import DPICheckboxForm from "../../form/DailyPlantInspectionCheckboxForm";
-import styles from "./Doc.module.css";
 import CheckboxContainer from "../../form/CheckboxContainer";
+import styles from "./Doc.module.css";
+import TextArea from "../../form/TextArea";
 
 function Forms() {
   const navigate = useNavigate();
@@ -173,6 +174,30 @@ function Forms() {
         <DPICheckboxForm title={"28. Water"} name={"water"}/>
         <DPICheckboxForm title={"29. Fuel"} name={"fuel"}/>
         <DPICheckboxForm title={"30. Brake Fluid"} name={"brake_fluid"}/>
+
+        <h2 className={styles.form_subheading}>Near Miss Report</h2>
+        <TextArea 
+          title={"Details of Near Miss"} 
+          name={"near_mis_details_comments"} 
+          handleOnChange={handleChange}
+        />
+        <TextArea 
+          title={"Actions Taken (if any)"} 
+          name={"actions_taken_comments"} 
+          handleOnChange={handleChange}
+        />
+        <TextArea 
+          title={"Suggestions to prevent Reoccurance"} 
+          name={"suggestion_to_prevent_reoccurance_comments"} 
+          handleOnChange={handleChange}
+        />
+        <TextArea 
+          title={"Signature"} 
+          name={"near_miss_report_signature_comments"} 
+          handleOnChange={handleChange}
+        />
+
+        <h2 className={styles.form_subheading}>Identify any futher Hazards and what controls are required</h2>
         <input type="submit" value="Submit" />
       </form>
     </section>
