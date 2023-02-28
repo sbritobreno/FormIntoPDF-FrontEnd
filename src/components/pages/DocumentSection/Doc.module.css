@@ -35,6 +35,9 @@ svg {
   width: 50px;
 }
 
+
+/* ################################## Form ################################## */
+
 .form_container {
   max-width: 500px;
   margin: 0 auto;
@@ -45,6 +48,11 @@ svg {
 h1,
 h2 {
   text-align: center;
+}
+
+.form_container h3,
+.form_container h4 {
+  margin-block: 20px 10px;
 }
 
 fieldset {
@@ -122,8 +130,7 @@ label {
   margin: 0.5em;
 }
 
-.comments_textarea,
-.hazard_comments {
+.comments_textarea {
   width: 100%;
   padding: 0.7em;
   border: 1px solid #777;
@@ -145,27 +152,6 @@ label {
   border-top: 2px dashed var(--primary-color);
 }
 
-.hazard_comments {
-  height: 3em;
-}
-
-.hazard_check_container {
-  display: flex;
-  justify-items: center;
-  align-items: center;
-}
-
-.hazard_check_container label {
-  margin: 3px;
-}
-
-.hazard_check_container input {
-  margin: 2px;
-  margin-right: 5px;
-  width: 20px;
-  height: 20px;
-}
-
 .sketch_image {
   width: 100%;
   padding: 0.7em;
@@ -182,11 +168,4 @@ label {
   width: 70%;
   border-radius: 10px;
   margin: 0.5em;
-}
-
-/* ################################## Forms ################################## */
-
-.form_container h3,
-.form_container h4 {
-  margin-block: 20px 10px;
 }
