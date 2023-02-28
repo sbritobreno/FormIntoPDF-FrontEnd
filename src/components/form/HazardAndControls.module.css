@@ -1,0 +1,25 @@
+.hazard_and_controls {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  border-bottom: 2px dashed #777;
+}
+
+.hazard_and_controls input {
+  padding: 0.7em;
+  border: 1px solid #777;
+  border-radius: 5px;
+  margin-bottom: 1em;
+}
+
+.hazard_and_controls textarea {
+  height: 3em;
+}
+
+.hazard_and_controls textarea {
+  width: 100%;
+  padding: 0.7em;
+  border: 1px solid #777;
+  border-radius: 5px;
+  resize: none;
+}

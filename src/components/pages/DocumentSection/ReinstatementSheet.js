@@ -46,15 +46,17 @@ function ReinstatementSheet() {
 
   return (
     <section className={styles.form_container}>
-      <h1>Create Form</h1>
-      {/* That would be actually a simple button to set location and coordinates on the form */}
-      <Input
-        text="Location / Coordinates"
-        type="button"
-        value="Set hole location / coordinates"
-        onClick={() => navigate("/map", { state: { page_link: "/form/new" } })}
-      />
+      <h1>Reinstatement Sheet</h1>
       <form onSubmit={handleSubmit}>
+        {/* That would be actually a simple button to set location and coordinates on the form */}
+        <Input
+          text="Location / Coordinates"
+          type="button"
+          value="Set hole location / coordinates"
+          onClick={() =>
+            navigate("/map", { state: { page_link: "/form/new" } })
+          }
+        />
         <div className={styles.form_control}>
           <input
             value={form.address || ""}
@@ -123,11 +125,11 @@ function ReinstatementSheet() {
           handleOnChange={handleStatus}
           value={form.status || ""}
         />
-        <TextArea 
-          title={"Add new comment"} 
-          name={"comments"} 
+        <TextArea
+          title={"Add new comment"}
+          name={"comments"}
           handleOnChange={handleChange}
-          />
+        />
         <Input
           text="Job image"
           type="file"

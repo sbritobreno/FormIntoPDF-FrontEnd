@@ -39,3 +39,9 @@ input,
 button {
   letter-spacing: 1px;
 }
+
+label {
+  margin-bottom: 0.3em;
+  font-weight: bold;
+  font-size: 1em;
+}

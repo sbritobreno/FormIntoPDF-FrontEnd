@@ -1,4 +1,5 @@
-/* Attendance table style */
+/* ################################## Attendance table style ################################## */
+
 svg {
   float: right;
   margin: 5px;
@@ -35,7 +36,6 @@ svg {
   width: 50px;
 }
 
-
 /* ################################## Form ################################## */
 
 .form_container {
@@ -45,8 +45,8 @@ svg {
   border-radius: 15px;
 }
 
-h1,
-h2 {
+.form_container h1,
+.form_container h2 {
   text-align: center;
 }
 
@@ -55,13 +55,13 @@ h2 {
   margin-block: 20px 10px;
 }
 
-fieldset {
+.form_container fieldset {
   padding: 0.5em;
   margin-bottom: 1em;
   border: 2px dashed var(--primary-color);
 }
 
-legend {
+.form_container legend {
   font-weight: bold;
   font-size: 1em;
 }
@@ -96,6 +96,20 @@ legend {
   background-color: var(--primary-color-dark);
 }
 
+label {
+  margin-bottom: 0.3em;
+  font-weight: bold;
+  font-size: 1em;
+}
+
+.form_subheading {
+  margin: 40px 0px 15px 0px;
+  padding: 10px;
+  border-top: 2px dashed var(--primary-color);
+}
+
+/* ################################## ReinstatementSheet ################################## */
+
 .form_control {
   display: flex;
   flex-direction: column;
@@ -106,12 +120,6 @@ legend {
   padding: 0.7em;
   border: 1px solid #777;
   border-radius: 5px;
-}
-
-label {
-  margin-bottom: 0.3em;
-  font-weight: bold;
-  font-size: 1em;
 }
 
 .preview_form_images {
@@ -132,12 +140,6 @@ label {
 
 /* ################################## Site Setup ################################## */
 
-.form_subheading {
-  margin: 40px 0px 15px 0px;
-  padding: 10px;
-  border-top: 2px dashed var(--primary-color);
-}
-
 .sketch_image {
   width: 100%;
   padding: 0.7em;
@@ -150,8 +152,26 @@ label {
   text-align: center;
 }
 
-.preview_images img{
+.preview_images img {
   width: 70%;
   border-radius: 10px;
   margin: 0.5em;
+}
+
+
+/* ################################## Forms ################################## */
+
+.add_hazard_controls {
+  float: right;
+  margin: 0.5em 0 1em 0;
+  border-radius: 8px;
+  background-color: var(--primary-color);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.add_hazard_controls:hover {
+  background-color: var(--primary-color-dark);
 }
