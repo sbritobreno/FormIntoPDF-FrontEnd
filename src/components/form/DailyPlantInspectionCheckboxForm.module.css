@@ -1,0 +1,27 @@
+.dpi_checkbox_form {
+  margin-bottom: 1.5em;
+}
+
+.week_checkbox_form {
+  display: flex;
+  justify-content: space-around;
+  padding: 0.7em;
+  border: 1px solid #777;
+  border-radius: 5px;
+}
+
+.week_checkbox_form label {
+  font-weight: normal;
+  font-size: 1em;
+}
+
+.day_checkbox_form {
+  display: flex;
+  flex-direction: column;
+}
+
+.day_checkbox_form input {
+  margin-inline: auto;
+  width: 20px;
+  height: 20px;
+}
