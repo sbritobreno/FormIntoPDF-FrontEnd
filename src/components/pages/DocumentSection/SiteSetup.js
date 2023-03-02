@@ -399,7 +399,7 @@ function SiteSetup() {
         </label>
         <br />
         <input
-          className={styles.sketch_image}
+          className={styles.single_image}
           text="Image"
           type="file"
           name="sketch_image"
