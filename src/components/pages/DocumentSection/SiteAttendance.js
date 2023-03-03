@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Doc.module.css";
 import Input from "../../form/Input";
+import Signature from "../../form/Signature";
 import { RiCloseLine, RiDeleteBin5Line } from "react-icons/ri";
 
 function SiteAttendance() {
@@ -96,14 +97,15 @@ function SiteAttendance() {
               handleOnChange={handleChange}
               autoComplete="off"
             />
-            <Input
+            <Signature/>
+            {/* <Input
               text="Signature"
               type="text"
               name="staff_signature"
               placeholder="Type staff signature"
               handleOnChange={handleChange}
               autoComplete="off"
-            />
+            /> */}
             <Input
               text="Location"
               type="text"

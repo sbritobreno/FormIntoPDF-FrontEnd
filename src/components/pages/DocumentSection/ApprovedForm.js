@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Doc.module.css";
 import Input from "../../form/Input";
 import { RiCloseLine, RiDeleteBin5Line } from "react-icons/ri";
+import Signature from "../../form/Signature";
 
 function ApprovedForm() {
   const navigate = useNavigate();
@@ -109,14 +110,15 @@ function ApprovedForm() {
               handleOnChange={handleChange}
               autoComplete="off"
             />
-            <Input
+            <Signature title="Signature of person who made the inspection:"/>
+            {/* <Input
               text="Signature of person who made the inspection"
               type="text"
               name="inspector_signature"
               placeholder="Type description or location"
               handleOnChange={handleChange}
               autoComplete="off"
-            />
+            /> */}
             <input type="submit" value="Submit" />
             <input
               type="button"

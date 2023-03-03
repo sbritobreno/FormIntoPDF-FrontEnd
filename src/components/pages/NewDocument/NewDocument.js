@@ -13,7 +13,7 @@ function NewDocument() {
     if (state) {
       setLastSectionCompleted(state.sectionIndex);
       sectionCompleted(Number(lastSectionCompleted));
-    };
+    }
 
     // Anything in here is fired on component mount.
     document.querySelector("main").style.backgroundColor = "#1466B6";
@@ -25,18 +25,24 @@ function NewDocument() {
       document.querySelector("main").style.boxShadow =
         "0 0.5rem 1rem rgb(0 0 0 / 15%)";
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state, lastSectionCompleted]);
 
-  function sectionCompleted(sectionBtnIndex) {
-    sectionBtns[sectionBtnIndex].textContent = sectionBtns[
-      sectionBtnIndex
-    ].textContent
-      .toString()
-      .replace("...", "✔️");
+  function sectionCompleted() {
+    const sections = Object.keys(sectionBtns);
+    sections.forEach((index) => {
+      if (index <= lastSectionCompleted) {
+        // After at least one section being completed allow user to save it
+        sectionBtns[6].style.opacity = 1;
+        sectionBtns[6].disabled = false;
 
-    // change the opacity of the next button and make it clickable
-    sectionBtns[sectionBtnIndex + 1].style.opacity = 1;
-    sectionBtns[sectionBtnIndex + 1].disabled = false;
+        sectionBtns[Number(index) + 1].style.opacity = 1;
+        sectionBtns[Number(index) + 1].disabled = false;
+        sectionBtns[index].textContent = sectionBtns[index].textContent
+          .toString()
+          .replace("...", "✔️");
+      }
+    });
   }
 
   function saveDocument() {}

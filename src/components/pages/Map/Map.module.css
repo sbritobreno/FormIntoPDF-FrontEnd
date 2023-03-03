@@ -1,15 +1,15 @@
 .map_container {
-  position: absolute;
+  position: fixed;
   right: 0;
   left: 0;
   bottom: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 7;
+  width: 100vw;
+  height: 100vh;
+  z-index: 5;
 }
 
 .location_coordinates_container {
-  position: absolute;
+  position: fixed;
   padding: 10px;
   top: 80px;
   left: 50%;
@@ -49,7 +49,7 @@
 }
 
 .btn_save {
-  position: absolute;
+  position: fixed;
   width: 160px;
   background-color: #25b456;
   color: #fff;

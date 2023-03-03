@@ -50,6 +50,10 @@ svg {
   text-align: center;
 }
 
+.form_container h2 {
+  margin-top: 60px;
+}
+
 .form_container h3,
 .form_container h4 {
   margin-block: 20px 10px;
@@ -158,7 +162,6 @@ label {
   border-radius: 10px;
   margin: 0.5em;
 }
-
 
 /* ################################## Forms ################################## */
 

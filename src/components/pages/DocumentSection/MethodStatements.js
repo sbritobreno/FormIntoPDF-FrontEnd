@@ -28,7 +28,6 @@ function MethodStatements() {
       <h1>Method Statements</h1>
       <form onSubmit={handleSubmit}>
         <h2 className={styles.form_subheading}>Job Information</h2>
-        <h3>Job</h3>
         <Input
           text="MS ID"
           type="text"

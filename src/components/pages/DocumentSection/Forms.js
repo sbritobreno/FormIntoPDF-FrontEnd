@@ -6,6 +6,7 @@ import CheckboxContainer from "../../form/CheckboxContainer";
 import styles from "./Doc.module.css";
 import TextArea from "../../form/TextArea";
 import HazardAndControls from "../../form/HazardAndControls";
+import Signature from "../../form/Signature";
 
 function Forms() {
   const navigate = useNavigate();
@@ -14,7 +15,6 @@ function Forms() {
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
-    console.log("eee");
   }
 
   async function handleSubmit(e) {
@@ -117,14 +117,15 @@ function Forms() {
           handleOnChange={handleChange}
           autoComplete="off"
         />
-        <Input
+        <Signature />
+        {/* <Input
           text="Signature"
           type="text"
           name="issued_by_signature"
           placeholder="Type signature"
           handleOnChange={handleChange}
           autoComplete="off"
-        />
+        /> */}
         <Input
           text="Company"
           type="text"
@@ -255,12 +256,12 @@ function Forms() {
           name={"suggestion_to_prevent_reoccurance_comments"}
           handleOnChange={handleChange}
         />
-        <TextArea
+        <Signature />
+        {/* <TextArea
           title={"Signature"}
           name={"near_miss_report_signature_comments"}
           handleOnChange={handleChange}
-        />
-
+        /> */}
         <h2 className={styles.form_subheading}>
           Identify any futher Hazards and what controls are required
         </h2>

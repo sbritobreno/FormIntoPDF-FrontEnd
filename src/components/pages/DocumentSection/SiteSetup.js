@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "../../form/Input";
+import Signature from "../../form/Signature";
 import styles from "./Doc.module.css";
 import CheckboxContainer from "../../form/CheckboxContainer";
 import HazardCheckboxContainer from "../../form/HazardCheckboxContainer";
@@ -246,14 +247,15 @@ function SiteSetup() {
           title={"4.Are all required traffic management measures in plate?"}
           name={"traffic_management_compliance_checksheet_question_sub_four"}
         />
-        <Input
+        <Signature/>
+        {/* <Input
           text="Signature"
           type="text"
           name="traffic_management_compliance_checksheet_signature"
           placeholder="Sign here..."
           handleOnChange={handleChange}
           autoComplete="off"
-        />
+        /> */}
         <h2 className={styles.form_subheading}>
           Traffic Management/SLG Checklist
         </h2>
@@ -395,7 +397,7 @@ function SiteSetup() {
         />
         <h2 className={styles.form_subheading}>Permit To Dig Checklist</h2>
         <label>
-          Sketch indicating location and number of Services (Attach picture):{" "}
+          Sketch indicating location and number of Services (Attach picture):
         </label>
         <br />
         <input

@@ -42,6 +42,7 @@ function ReinstatementSheet() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    navigate("/document/new", { state: { sectionIndex: 5 } });
   }
 
   return (
