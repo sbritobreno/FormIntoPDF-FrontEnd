@@ -36,6 +36,16 @@ svg {
   width: 50px;
 }
 
+.table img {
+  width: 100px;
+}
+
+@media (max-width: 767px) {
+  .table img {
+    width: 50px;
+  }
+}
+
 /* ################################## Form ################################## */
 
 .form_container {

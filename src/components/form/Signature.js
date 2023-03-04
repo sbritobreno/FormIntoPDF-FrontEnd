@@ -2,9 +2,10 @@ import styles from "./Signature.module.css";
 import SignaturePad from "react-signature-canvas";
 import { useRef } from "react";
 
-function Signature({ title = "Signature:", name, handleChange }) {
+function Signature({ title = "Signature:", handleChange }) {
   let sigPad = useRef({});
   let data = "";
+  const handler = handleChange;
 
   function clear(e) {
     e.preventDefault();
@@ -14,6 +15,8 @@ function Signature({ title = "Signature:", name, handleChange }) {
   function save(e) {
     e.preventDefault();
     data = sigPad.current.getTrimmedCanvas().toDataURL("image/png");
+    handler(data);
+    data = '';
   }
 
   return (

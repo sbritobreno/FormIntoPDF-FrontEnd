@@ -27,6 +27,21 @@ function Forms() {
     setHazardAndControlsQuantity(hazardAndControlsQuantity + 1);
   }
 
+  function handlerIssuedByCompanySign(data) {
+    handler(data, "issued_by_company");
+  }
+
+  function handlerNearMissReportSign(data) {
+    handler(data, "near_miss_report_signature_comments");
+  }
+
+  function handler(data, name) {
+    setForm({
+      ...form,
+      [name]: data.toString(),
+    });
+  }
+
   return (
     <section className={styles.form_container}>
       <h1>Forms</h1>
@@ -117,15 +132,7 @@ function Forms() {
           handleOnChange={handleChange}
           autoComplete="off"
         />
-        <Signature />
-        {/* <Input
-          text="Signature"
-          type="text"
-          name="issued_by_signature"
-          placeholder="Type signature"
-          handleOnChange={handleChange}
-          autoComplete="off"
-        /> */}
+        <Signature handleChange={handlerIssuedByCompanySign} />
         <Input
           text="Company"
           type="text"
@@ -256,12 +263,7 @@ function Forms() {
           name={"suggestion_to_prevent_reoccurance_comments"}
           handleOnChange={handleChange}
         />
-        <Signature />
-        {/* <TextArea
-          title={"Signature"}
-          name={"near_miss_report_signature_comments"}
-          handleOnChange={handleChange}
-        /> */}
+        <Signature handleChange={handlerNearMissReportSign} />
         <h2 className={styles.form_subheading}>
           Identify any futher Hazards and what controls are required
         </h2>

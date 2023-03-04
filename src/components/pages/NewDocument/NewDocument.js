@@ -1,11 +1,13 @@
 import styles from "./NewDocument.module.css";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import useFlashMessage from "../../../hooks/useFlashMessage";
 
 function NewDocument() {
   const { state } = useLocation();
   const navigate = useNavigate();
   const sectionBtns = useRef([]);
+  const { setFlashMessage } = useFlashMessage();
   const [lastSectionCompleted, setLastSectionCompleted] = useState(null);
 
   useEffect(() => {
@@ -45,7 +47,13 @@ function NewDocument() {
     });
   }
 
-  function saveDocument() {}
+  function saveDocument() {
+    let msgText = "A new PDF was created!";
+    let msgType = "success";
+
+    navigate("/FormIntoPDF-FrontEnd");
+    setFlashMessage(msgText, msgType);
+  }
 
   return (
     <section className={styles.newdocument_section}>

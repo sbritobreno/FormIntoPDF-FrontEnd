@@ -10,7 +10,7 @@ function SiteAttendance() {
   const [displayAttendanceList, setDisplayAttendanceList] = useState(false);
   const [newAttendance, setNewAttendance] = useState({});
   const [attendanceList, setAttendanceList] = useState([
-    { name_print: "brenf", time_in: 10, time_out: 12 },
+    { name_print: "brddd", time_in: 10, time_out: 12 },
     { name_print: "breno", time_in: 10, time_out: 12 },
     { name_print: "breno", time_in: 10, time_out: 12 },
     { name_print: "breno", time_in: 10, time_out: 12 },
@@ -38,6 +38,10 @@ function SiteAttendance() {
     setNewAttendance({});
   }
 
+  function handler(data) {
+    setNewAttendance({ ...newAttendance, staff_signature: data.toString() });
+  }
+
   const style = {
     position: "absolute",
     top: "0px",
@@ -63,12 +67,17 @@ function SiteAttendance() {
                   <th>Name</th>
                   <th>Time In</th>
                   <th>Time Out</th>
+                  <th>Signature</th>
+                  <th>Delete</th>
                 </tr>
                 {attendanceList.map((person, key) => (
                   <tr key={key}>
                     <td>{person.name_print}</td>
                     <td>{person.time_in}</td>
                     <td>{person.time_out}</td>
+                    <td>
+                      <img src={person.signature} alt="signature" />
+                    </td>
                     <td className={styles.remove_btn}>
                       <RiDeleteBin5Line
                         style={{
@@ -97,7 +106,7 @@ function SiteAttendance() {
               handleOnChange={handleChange}
               autoComplete="off"
             />
-            <Signature/>
+            <Signature handleChange={handler} />
             {/* <Input
               text="Signature"
               type="text"

@@ -25,6 +25,13 @@ function SiteSetup() {
     navigate("/document/new", { state: { sectionIndex: 1 } });
   }
 
+  function handler(data) {
+    setSiteSetup({
+      ...siteSetup,
+      traffic_management_compliance_checksheet_signature: data.toString(),
+    });
+  }
+
   return (
     <section className={styles.form_container}>
       <h1>Site Setup</h1>
@@ -247,15 +254,7 @@ function SiteSetup() {
           title={"4.Are all required traffic management measures in plate?"}
           name={"traffic_management_compliance_checksheet_question_sub_four"}
         />
-        <Signature/>
-        {/* <Input
-          text="Signature"
-          type="text"
-          name="traffic_management_compliance_checksheet_signature"
-          placeholder="Sign here..."
-          handleOnChange={handleChange}
-          autoComplete="off"
-        /> */}
+        <Signature handleChange={handler} />
         <h2 className={styles.form_subheading}>
           Traffic Management/SLG Checklist
         </h2>

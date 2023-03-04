@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Doc.module.css";
 import Input from "../../form/Input";
@@ -10,9 +10,29 @@ function ApprovedForm() {
   const [displayApprovedFormList, setDisplayApprovedFormList] = useState(false);
   const [newApprovedForm, setNewApprovedForm] = useState({});
   const [approvedFormList, setApprovedFormList] = useState([
-    { description_location: "D01", date_examination: "10/10/2020", examination_result_state: "okay", inspector_signature: "Breno" },
-    { description_location: "D01", date_examination: "10/10/2020", examination_result_state: "okay", inspector_signature: "Breno" },
+    {
+      description_location: "D01",
+      date_examination: "10/10/2020",
+      examination_result_state: "okay",
+      inspector_signature: "Breno",
+    },
+    {
+      description_location: "D01",
+      date_examination: "10/10/2020",
+      examination_result_state: "okay",
+      inspector_signature: "Breno",
+    },
   ]);
+
+  useEffect(() => {
+    // Anything in here is fired on component mount.
+    document.querySelector("body").style.overflowX = "auto";
+
+    return () => {
+      // Anything in here is fired on component unmount.
+      document.querySelector("body").style.overflowX = "hidden";
+    };
+  }, []);
 
   function handleChange(e) {
     setNewApprovedForm({ ...newApprovedForm, [e.target.name]: e.target.value });
@@ -32,6 +52,13 @@ function ApprovedForm() {
     array.splice(index, 1);
     setApprovedFormList(array);
     setNewApprovedForm({});
+  }
+
+  function handler(data) {
+    setNewApprovedForm({
+      ...newApprovedForm,
+      inspector_signature: data.toString(),
+    });
   }
 
   const style = {
@@ -59,14 +86,16 @@ function ApprovedForm() {
                   <th>Description or Location</th>
                   <th>Date of Examination</th>
                   <th>Results of thorough examination</th>
-                  <th>Signature of person who made the inspection</th>
+                  <th>Inspector Signature</th>
                 </tr>
                 {approvedFormList.map((formRow, key) => (
                   <tr key={key}>
                     <td>{formRow.description_location}</td>
                     <td>{formRow.date_examination}</td>
                     <td>{formRow.examination_result_state}</td>
-                    <td>{formRow.inspector_signature}</td>
+                    <td>
+                      <img src={formRow.inspector_signature} alt="signature" />
+                    </td>
                     <td className={styles.remove_btn}>
                       <RiDeleteBin5Line
                         style={{
@@ -110,15 +139,10 @@ function ApprovedForm() {
               handleOnChange={handleChange}
               autoComplete="off"
             />
-            <Signature title="Signature of person who made the inspection:"/>
-            {/* <Input
-              text="Signature of person who made the inspection"
-              type="text"
-              name="inspector_signature"
-              placeholder="Type description or location"
-              handleOnChange={handleChange}
-              autoComplete="off"
-            /> */}
+            <Signature
+              title="Signature of person who made the inspection:"
+              handleChange={handler}
+            />
             <input type="submit" value="Submit" />
             <input
               type="button"
