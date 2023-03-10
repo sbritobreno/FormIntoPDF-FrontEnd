@@ -12,6 +12,8 @@ function UserProvider({ children }) {
     login,
     deleteUserAccount,
     resetPassword,
+    setCurrentPdf,
+    getCurrentPdf,
   } = useAuth();
 
   return (
@@ -24,6 +26,8 @@ function UserProvider({ children }) {
         login,
         deleteUserAccount,
         resetPassword,
+        setCurrentPdf,
+        getCurrentPdf,
       }}
     >
       {children}

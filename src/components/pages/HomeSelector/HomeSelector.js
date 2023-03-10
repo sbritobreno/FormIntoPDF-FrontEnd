@@ -7,7 +7,7 @@ function HomeSelector() {
 
   useEffect(() => {
     // Anything in here is fired on component mount.
-    document.querySelector("main").style.backgroundColor = "#1466B6";
+    document.querySelector("main").style.backgroundColor = "transparent";
     document.querySelector("main").style.boxShadow = "unset";
 
     return () => {
@@ -25,7 +25,7 @@ function HomeSelector() {
       </div>
       <div className={styles.btns_container}>
         <button onClick={() => {navigate("/document/new")}}>New Document</button>
-        <button onClick={() => {navigate("/FormIntoPDF-FrontEnd/home")}}>Update Document</button>
+        <button onClick={() => {navigate("/FormIntoPDF-FrontEnd/update_doc")}}>Update Document</button>
         <button onClick={() => {navigate("/FormIntoPDF-FrontEnd/home")}}>Access All Document</button>
       </div>
     </section>

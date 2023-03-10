@@ -10,7 +10,7 @@
 }
 
 body {
-  background-color: var(--primary-color);
+  background: linear-gradient(90deg, rgba(30,133,235,1) 0%, rgba(20,102,182,1) 100%);
   overflow-x: hidden;
 }
 

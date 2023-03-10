@@ -5,48 +5,40 @@ import { useNavigate } from "react-router-dom";
 
 function DisplaySingleHole() {
   const forms = formsData;
-  const [searchfieldAddress, setSearchfieldAddress] = useState("");
-  const [searchfieldDate, setSearchfieldDate] = useState("");
+  const [searchfield, setSearchfield] = useState("");
   const filteredForms = searchFilter();
   const navigate = useNavigate();
 
   function searchFilter() {
     // filter by Address
-    let result = forms.filter((form) => {
-      return form.address.toLowerCase().includes(searchfieldAddress.toLowerCase());
+    let resultAddress = forms.filter((form) => {
+      return form.address
+        .toLowerCase()
+        .includes(searchfield.toLowerCase().trim());
     });
 
     // filter by Date
-    result = result.filter((form) => {
+    let resultDate = forms.filter((form) => {
       return form.date
         .toLowerCase()
-        .startsWith(searchfieldDate.toLowerCase());
+        .startsWith(searchfield.toLowerCase().trim());
     });
 
-    return result;
+    return resultAddress.length > resultDate.length ? resultAddress : resultDate;
   }
 
-  function onSearchChangeAddress(event) {
-    setSearchfieldAddress(event.target.value);
-  }
-  function onSearchChangeDate(event) {
-    setSearchfieldDate(event.target.value);
+  function onSearchChange(event) {
+    setSearchfield(event.target.value);
   }
 
   return (
     <section>
       <div className={styles.search_box}>
-        <input
+      <input
           className={styles.search}
           type="search"
-          placeholder="Search by Address"
-          onChange={onSearchChangeAddress}
-        />
-        <input
-          className={styles.search}
-          type="search"
-          placeholder="Search by Date"
-          onChange={onSearchChangeDate}
+          placeholder="Search by Address or Date"
+          onChange={onSearchChange}
         />
       </div>
       <div className={styles.pdfs_container}>

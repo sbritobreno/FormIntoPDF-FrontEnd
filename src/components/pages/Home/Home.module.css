@@ -41,8 +41,8 @@
   margin: 0;
   border-radius: 0px;
   border: none;
-  border-bottom: 3px solid var(--primary-color);
-  background-color: var(--primary-color);
+  border-bottom: 3px solid linear-gradient(90deg, rgba(30,133,235,1) 0%, rgba(20,102,182,1) 100%);
+  background: linear-gradient(90deg, rgba(30,133,235,1) 0%, rgba(20,102,182,1) 100%);
   font-weight: bold;
   font-size: 1em;
   cursor: pointer;
@@ -50,6 +50,7 @@
   border-top-left-radius: 10px;
 }
 
+.filter,
 .search_box {
   display: flex;
   justify-content: center;
@@ -66,6 +67,18 @@
   color: var(--primary-color);
   font-size: 16px;
   border: 2px solid var(--primary-color);
+}
+
+.filter label {
+  font-size: 1.2em;
+  color: var(--primary-color);
+  margin: 0;
+}
+
+.filter input {
+  margin: 0px 10px;
+  height: auto;
+  width: 1.5em;
 }
 
 .pdfs_container {
@@ -141,6 +154,12 @@ button:disabled {
 
 .pdf_btn_download:hover {
   background-color: #25b456;
+  border: none;
+  color: #fff;
+}
+
+.pdf_btn_attach_file:hover {
+  background-color: var(--primary-color);
   border: none;
   color: #fff;
 }

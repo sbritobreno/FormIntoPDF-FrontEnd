@@ -17,7 +17,7 @@ import Login from "./components/pages/Auth/Login";
 import Profile from "./components/pages/User/Profile";
 import NewUser from "./components/pages/Auth/NewUser";
 import Users from "./components/pages/User/Users";
-import NewDocument from "./components/pages/NewDocument/NewDocument";
+import CreateOrUpdateDocument from "./components/pages/CreateOrUpdateDocument/CreateOrUpdateDocument";
 import SiteAttendance from "./components/pages/DocumentSection/SiteAttendance";
 import SiteSetup from "./components/pages/DocumentSection/SiteSetup";
 import ApprovedForm from "./components/pages/DocumentSection/ApprovedForm";
@@ -46,7 +46,9 @@ function App() {
               <Route path="/user/new" element={<NewUser />} />
               <Route path="/user/all_users" element={<Users />} />
               <Route path="/user/profile" element={<Profile />} />
-              <Route path="/document/new" element={<NewDocument />} />
+              <Route path="/FormIntoPDF-FrontEnd/update_doc" element={<Home />} />
+              <Route path="/document/new" element={<CreateOrUpdateDocument />} />
+              <Route path="/document/update/:id" element={<CreateOrUpdateDocument />} />
               <Route
                 path="/document/new/siteattendance"
                 element={<SiteAttendance />}

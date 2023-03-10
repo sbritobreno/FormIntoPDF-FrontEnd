@@ -1,24 +1,26 @@
-import styles from "./NewDocument.module.css";
-import { useEffect, useRef, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import styles from "./CreateOrUpdateDocument.module.css";
+import { useEffect, useRef, useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import useFlashMessage from "../../../hooks/useFlashMessage";
+import { Context } from "../../../context/UserContext";
+import { pdfsData } from "../../../data";
 
-function NewDocument() {
-  const { state } = useLocation();
+function CreateOrUpdateDocument() {
+  const { setCurrentPdf } = useContext(Context);
+  const { id } = useParams();
   const navigate = useNavigate();
   const sectionBtns = useRef([]);
   const { setFlashMessage } = useFlashMessage();
-  const [lastSectionCompleted, setLastSectionCompleted] = useState(null);
 
   useEffect(() => {
-    sectionBtns[0].style.opacity = 1;
-    if (state) {
-      setLastSectionCompleted(state.sectionIndex);
-      sectionCompleted(Number(lastSectionCompleted));
+    if (id) {
+      setCurrentPdf(id);
+      sectionsCompleted(id);
     }
+    sectionBtns[0].style.opacity = 1;
 
     // Anything in here is fired on component mount.
-    document.querySelector("main").style.backgroundColor = "#1466B6";
+    document.querySelector("main").style.backgroundColor = "transparent";
     document.querySelector("main").style.boxShadow = "unset";
 
     return () => {
@@ -26,14 +28,17 @@ function NewDocument() {
       document.querySelector("main").style.backgroundColor = "#fff";
       document.querySelector("main").style.boxShadow =
         "0 0.5rem 1rem rgb(0 0 0 / 15%)";
+        setCurrentPdf(0) // Unset currentPdf when leaving this page
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state, lastSectionCompleted]);
+  }, [id, setCurrentPdf]);
 
-  function sectionCompleted() {
-    const sections = Object.keys(sectionBtns);
-    sections.forEach((index) => {
-      if (index <= lastSectionCompleted) {
+  function sectionsCompleted(id) {
+    const secCompleted = pdfsData.filter((doc) => {return doc.id === +id})[0]
+
+    const sectionsNumber = Object.keys(sectionBtns);
+    sectionsNumber.forEach((index) => {
+      if (index <= secCompleted.pdf_sections_completed - 1) {
         // After at least one section being completed allow user to save it
         sectionBtns[6].style.opacity = 1;
         sectionBtns[6].disabled = false;
@@ -139,4 +144,4 @@ function NewDocument() {
   );
 }
 
-export default NewDocument;
+export default CreateOrUpdateDocument;

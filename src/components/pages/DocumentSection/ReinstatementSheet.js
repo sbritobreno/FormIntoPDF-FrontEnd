@@ -55,7 +55,7 @@ function ReinstatementSheet() {
           type="button"
           value="Set hole location / coordinates"
           onClick={() =>
-            navigate("/map", { state: { page_link: "/form/new" } })
+            navigate("/map", { state: { page_link: "/document/new/reinstatementsheet" } })
           }
         />
         <div className={styles.form_control}>

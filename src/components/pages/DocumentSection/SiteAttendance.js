@@ -76,7 +76,7 @@ function SiteAttendance() {
                     <td>{person.time_in}</td>
                     <td>{person.time_out}</td>
                     <td>
-                      <img src={person.signature} alt="signature" />
+                      <img src={person.staff_signature} alt="signature" />
                     </td>
                     <td className={styles.remove_btn}>
                       <RiDeleteBin5Line

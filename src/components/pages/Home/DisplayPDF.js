@@ -1,47 +1,72 @@
 import styles from "./Home.module.css";
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import { pdfsData } from "../../../data";
 import { Context } from "../../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
-function DisplayPDF() {
+
+function DisplayPDF({ updateDocUrl }) {
+  const checkbox = useRef(null);
   const pdfs = pdfsData;
   const { isAdmin } = useContext(Context);
-  const [searchfieldType, setSearchfieldType] = useState("");
-  const [searchfieldAddress, setSearchfieldAddress] = useState("");
-  const [searchfieldDate, setSearchfieldDate] = useState("");
+  const [searchfield, setSearchfield] = useState("");
+  const [filter, setFilter] = useState(false);
   const filteredPDFs = searchFilter();
   const navigate = useNavigate();
 
   function searchFilter() {
-    // filter by type
-    let result = pdfs.filter((pdf) => {
-      return pdf.type.toLowerCase().startsWith(searchfieldType.toLowerCase());
-    });
-
     // filter by Address
-    result = result.filter((pdf) => {
+    let resultAddress = pdfs.filter((pdf) => {
       return pdf.address
         .toLowerCase()
-        .startsWith(searchfieldAddress.toLowerCase());
+        .includes(searchfield.toLowerCase().trim());
     });
 
     // filter by Date
-    result = result.filter((pdf) => {
-      return pdf.date.toLowerCase().startsWith(searchfieldDate.toLowerCase());
+    let resultDate = pdfs.filter((pdf) => {
+      return pdf.date
+        .toLowerCase()
+        .startsWith(searchfield.toLowerCase().trim());
+    });
+
+    let result =
+      resultAddress.length > resultDate.length ? resultAddress : resultDate;
+
+    if (filter) result = setupFilter(result);
+
+    return result;
+  }
+
+  function setupFilter(list) {
+    const result = list.filter((pdf) => {
+      return pdf.final_file_attached !== null;
     });
 
     return result;
   }
 
-  function onSearchChangeType(event) {
-    setSearchfieldType(event.target.value);
+  function onSearchChange(event) {
+    setSearchfield(event.target.value);
   }
-  function onSearchChangeAddress(event) {
-    setSearchfieldAddress(event.target.value);
+
+  function checkFilter() {
+    setFilter(checkbox.current.checked);
   }
-  function onSearchChangeDate(event) {
-    setSearchfieldDate(event.target.value);
+
+  function downloadPDF(id){
+
+  }
+
+  function deletePDF(id){
+
+  }
+
+  function attachFile(id) {
+
+  }
+
+  function updatePdf(id) {
+    navigate(`/document/update/${id}`)
   }
 
   return (
@@ -50,20 +75,17 @@ function DisplayPDF() {
         <input
           className={styles.search}
           type="search"
-          placeholder="Search by Type"
-          onChange={onSearchChangeType}
+          placeholder="Search by Address or Date"
+          onChange={onSearchChange}
         />
+      </div>
+      <div className={styles.filter}>
+        <label>Filter PDFs with no file attached:</label>
         <input
+          ref={checkbox}
           className={styles.search}
-          type="search"
-          placeholder="Search by Address"
-          onChange={onSearchChangeAddress}
-        />
-        <input
-          className={styles.search}
-          type="search"
-          placeholder="Search by Date"
-          onChange={onSearchChangeDate}
+          type="checkbox"
+          onChange={checkFilter}
         />
       </div>
       <div className={styles.pdfs_container}>
@@ -84,27 +106,44 @@ function DisplayPDF() {
                   </p>
                 </div>
                 <div className={styles.pdf_card_buttons}>
+                  {!updateDocUrl ? (
+                    <>
+                      <button
+                        className={styles.pdf_btn_remove}
+                        disabled={!isAdmin}
+                        onClick={() => deletePDF(pdf.id)}
+                      >
+                        Remove
+                      </button>
+                      <button
+                        className={styles.pdf_btn_download}
+                        disabled={!isAdmin}
+                        onClick={() => downloadPDF(pdf.id)}
+                      >
+                        Download
+                      </button>
+                    </>
+                  ) : (
+                    ""
+                  )}
                   <button
                     className={styles.pdf_btn_edit}
                     disabled={!isAdmin}
-                    onClick={() => navigate(`/pdf/edit/${pdf.id}`)}
+                    onClick={() => updatePdf(pdf.id)}
                   >
-                    Edit
+                    Update
                   </button>
-                  <button
-                    className={styles.pdf_btn_remove}
-                    disabled={!isAdmin}
-                    onClick={() => navigate(`/pdf/edit/${pdf.id}`)}
-                  >
-                    Remove
-                  </button>
-                  <button
-                    className={styles.pdf_btn_download}
-                    disabled={!isAdmin}
-                    onClick={() => navigate(`/pdf/edit/${pdf.id}`)}
-                  >
-                    Download
-                  </button>
+                  {pdf.final_file_attached ? (
+                    <button
+                      className={styles.pdf_btn_attach_file}
+                      disabled={!isAdmin}
+                      onClick={() => attachFile(pdf.id)}
+                    >
+                      Attach File
+                    </button>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
             </div>
