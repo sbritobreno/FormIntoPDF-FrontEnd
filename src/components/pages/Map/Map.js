@@ -5,6 +5,7 @@ import styles from "./Map.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import useFlashMessage from "../../../hooks/useFlashMessage";
 import { RiCloseLine } from "react-icons/ri";
+import { BsLayersHalf } from "react-icons/bs";
 
 function Map() {
   // use this state to return to the previous page (NewForm or EditForm)
@@ -25,6 +26,7 @@ function LoadMap({ page_link }) {
   const [zoom, setZoom] = useState(12);
   const [selected, setSelected] = useState(null);
   const [location, setLocation] = useState("");
+  const [mapType, setMapType] = useState("roadmap");
   const navigate = useNavigate();
   const { setFlashMessage } = useFlashMessage();
 
@@ -68,19 +70,34 @@ function LoadMap({ page_link }) {
     }
   }
 
+  function changeMapView() {
+    if (mapType === "roadmap") setMapType("satellite");
+    if (mapType === "satellite") setMapType("roadmap");
+  }
+
   const style = {
     position: "absolute",
-    top: "10px",
-    right: "5px",
     zIndex: 15,
-    fontSize: "40px",
+    top: "0px",
+    margin: "10px",
+    fontSize: "calc(28px + (40 - 28) * ((100vw - 320px) / (1920 - 320)))",
     color: "var(--primary-color)",
     cursor: "pointer",
+    backgroundColor: "white",
+    borderRadius: "10px",
+    boxShadow: "0 0.5rem 1rem rgb(0 0 0 / 15%)",
   };
 
   return (
     <div className={styles.map_container}>
-      <RiCloseLine style={style} onClick={() => navigate(-1)} />
+      <RiCloseLine
+        style={{ ...style, right: "0px" }}
+        onClick={() => navigate(-1)}
+      />
+      <BsLayersHalf
+        style={{ ...style, left: "0px", width: "70px" }}
+        onClick={changeMapView}
+      />
       <div className={styles.location_coordinates_container}>
         <PlacesAutocomplete
           setZoom={setZoom}
@@ -100,6 +117,10 @@ function LoadMap({ page_link }) {
           fullscreenControl: false,
           streetViewControl: false,
           keyboardShortcuts: false,
+          rotateControl: false,
+          zoomControl: false,
+          mapTypeControl: false,
+          mapTypeId: mapType,
         }}
       >
         {selected && (
