@@ -4,12 +4,16 @@ import { formsData } from "../../../data";
 import { useNavigate } from "react-router-dom";
 
 function DisplayReinstatementSheets() {
+  const navigate = useNavigate();
   const checkbox = useRef(null);
   const forms = formsData;
   const [searchfield, setSearchfield] = useState("");
   const [filter, setFilter] = useState(false);
+  const [page, setPage] = useState(1);
+  const resultsPerPage = 3;
+  let numberOfPages = 1;
+
   const filteredForms = searchFilter();
-  const navigate = useNavigate();
 
   function searchFilter() {
     // filter by Address
@@ -31,7 +35,18 @@ function DisplayReinstatementSheets() {
 
     if (filter) result = setupFilter(result);
 
+    numberOfPages = Math.ceil(result.length / resultsPerPage);
+
+    result = getDocumentResultsPage(page, result);
+
     return result;
+  }
+
+  function getDocumentResultsPage(pageNumber = 1, list) {
+    const start = (pageNumber - 1) * resultsPerPage;
+    const end = pageNumber * resultsPerPage;
+
+    return list.slice(start, end);
   }
 
   function setupFilter(list) {
@@ -47,7 +62,16 @@ function DisplayReinstatementSheets() {
   }
 
   function checkFilter() {
+    setPage(1);
     setFilter(checkbox.current.checked);
+  }
+
+  function downloadReinstatementSheet(id) {}
+
+  function deleteSingleReinstatement(id) {}
+
+  function updatePdf(id) {
+    navigate(`/document/only_update/reinstatementsheet/${id}`);
   }
 
   return (
@@ -97,21 +121,49 @@ function DisplayReinstatementSheets() {
                 <div className={styles.pdf_card_buttons}>
                   <button
                     className={styles.pdf_btn_edit}
-                    onClick={() =>
-                      navigate(
-                        `/document/only_update/reinstatementsheet/${form.id}`
-                      )
-                    }
+                    onClick={() => updatePdf(form.id)}
                   >
                     Update
                   </button>
-                  <button className={styles.pdf_btn_download}>Download</button>
-                  <button className={styles.pdf_btn_remove}>Remove</button>
+                  <button
+                    className={styles.pdf_btn_download}
+                    onClick={() => downloadReinstatementSheet(form.id)}
+                  >
+                    Download
+                  </button>
+                  <button
+                    className={styles.pdf_btn_remove}
+                    onClick={() => deleteSingleReinstatement(form.id)}
+                  >
+                    Remove
+                  </button>
                 </div>
               </div>
             </div>
           ))}
         {forms.length === 0 && <p>There is no Single hole form...</p>}
+      </div>
+      <div className={styles.pagination_container}>
+        <button
+          style={
+            page > 1 ? { visibility: "visible" } : { visibility: "hidden" }
+          }
+          onClick={() => setPage(page - 1)}
+        >
+          {"<<  "}page {page - 1}
+        </button>
+        <p>{page}</p>
+        <button
+          style={
+            page < numberOfPages
+              ? { visibility: "visible" }
+              : { visibility: "hidden" }
+          }
+          onClick={() => setPage(page + 1)}
+        >
+          page {page + 1}
+          {"  >>"}
+        </button>
       </div>
     </section>
   );

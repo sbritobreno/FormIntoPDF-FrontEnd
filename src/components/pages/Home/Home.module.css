@@ -171,3 +171,27 @@ button:disabled {
   border: none;
   color: #fff;
 }
+
+.pagination_container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+
+.pagination_container button {
+  margin-inline: 30px;
+  height: 2em;
+  background-color: rgba(20,102,182,0.5);
+  border: none;
+  color: #fff;
+}
+
+.pagination_container button:hover {
+  background-color: rgba(20,102,182,1);
+}
+
+.pagination_container p {
+  font-weight: bold;
+  color: var(--primary-color)
+}

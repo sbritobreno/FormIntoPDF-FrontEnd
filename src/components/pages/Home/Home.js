@@ -27,7 +27,7 @@ function Home() {
             <h1>
               {homeDisplay === "PDF"
                 ? "See here all PDFs!"
-                : "See here all Reinstatement Sheets!"}
+                : "See here all Single Reinstatements!"}
             </h1>
           </div>
           <div className={styles.home_selector}>
@@ -43,13 +43,13 @@ function Home() {
             </button>
             <button
               className={
-                homeDisplay === "REINSTATEMENTSHEETS"
+                homeDisplay === "SINGLEREINSTATEMENTS"
                   ? styles.btn_selector_active
                   : styles.btn_selector
               }
-              onClick={() => setHomeDisplay("REINSTATEMENTSHEETS")}
+              onClick={() => setHomeDisplay("SINGLEREINSTATEMENTS")}
             >
-              Reinstatement Sheets
+              Single Reinstatements
             </button>
           </div>
         </>

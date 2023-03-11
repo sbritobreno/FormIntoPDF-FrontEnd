@@ -5,13 +5,17 @@ import { Context } from "../../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
 function DisplayPDF({ updateDocUrl }) {
-  const checkbox = useRef(null);
   const pdfs = pdfsData;
+  const navigate = useNavigate();
+  const checkbox = useRef(null);
   const { isAdmin } = useContext(Context);
   const [searchfield, setSearchfield] = useState("");
   const [filter, setFilter] = useState(false);
+  const [page, setPage] = useState(1);
+  const resultsPerPage = 3;
+  let numberOfPages = 1;
+
   const filteredPDFs = searchFilter();
-  const navigate = useNavigate();
 
   function searchFilter() {
     // filter by Address
@@ -33,7 +37,18 @@ function DisplayPDF({ updateDocUrl }) {
 
     if (filter) result = setupFilter(result);
 
+    numberOfPages = Math.ceil(result.length / resultsPerPage);
+
+    result = getDocumentResultsPage(page, result);
+
     return result;
+  }
+
+  function getDocumentResultsPage(pageNumber = 1, list) {
+    const start = (pageNumber - 1) * resultsPerPage;
+    const end = pageNumber * resultsPerPage;
+
+    return list.slice(start, end);
   }
 
   function setupFilter(list) {
@@ -49,6 +64,7 @@ function DisplayPDF({ updateDocUrl }) {
   }
 
   function checkFilter() {
+    setPage(1);
     setFilter(checkbox.current.checked);
   }
 
@@ -146,6 +162,28 @@ function DisplayPDF({ updateDocUrl }) {
             </div>
           ))}
         {pdfs.length === 0 && <p>There is no PDF...</p>}
+      </div>
+      <div className={styles.pagination_container}>
+        <button
+          style={
+            page > 1 ? { visibility: "visible" } : { visibility: "hidden" }
+          }
+          onClick={() => setPage(page - 1)}
+        >
+          {"<<  "}page {page - 1}
+        </button>
+        <p>{page}</p>
+        <button
+          style={
+            page < numberOfPages
+              ? { visibility: "visible" }
+              : { visibility: "hidden" }
+          }
+          onClick={() => setPage(page + 1)}
+        >
+          page {page + 1}
+          {"  >>"}
+        </button>
       </div>
     </section>
   );
