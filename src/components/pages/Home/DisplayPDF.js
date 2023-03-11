@@ -125,7 +125,7 @@ function DisplayPDF({ updateDocUrl }) {
                       disabled={!isAdmin}
                       onClick={() => attachFile(pdf.id)}
                     >
-                      Attach File
+                      Add File
                     </button>
                   ) : (
                     ""

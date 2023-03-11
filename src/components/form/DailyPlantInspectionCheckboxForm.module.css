@@ -1,5 +1,5 @@
 .dpi_checkbox_form {
-  margin-bottom: 1.5em;
+  margin-bottom: 1em;
 }
 
 .week_checkbox_form {
@@ -8,11 +8,6 @@
   padding: 0.7em;
   border: 1px solid #777;
   border-radius: 5px;
-}
-
-.week_checkbox_form label {
-  font-weight: normal;
-  font-size: 1em;
 }
 
 .day_checkbox_form {
@@ -24,4 +19,14 @@
   margin-inline: auto;
   width: 20px;
   height: 20px;
+}
+
+.dpi_label{
+  font-weight: normal;
+}
+
+/* ###########################         Mobile/Tablet           ##################################### */
+
+@media (max-width: 767px) {
+  
 }

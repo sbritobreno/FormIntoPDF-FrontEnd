@@ -8,3 +8,12 @@
   background-color: #fff;
   position: relative;
 }
+
+/* ###########################         Mobile/Tablet           ##################################### */
+
+@media (max-width: 767px) {
+  .container {
+    padding: 1em 0em 3em;
+    margin: 10px 6px;
+  }
+}

@@ -23,7 +23,7 @@ function Profile() {
     <section>
       <div className={styles.profile_header}>
         <h1>Profile</h1>
-        <div className={styles.preview_images}>
+        <div className={styles.preview_image}>
           {(user.image || preview) && (
             <img
               src={

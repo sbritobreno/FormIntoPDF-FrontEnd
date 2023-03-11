@@ -5,7 +5,11 @@
   right: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, rgba(30,133,235,1) 0%, rgba(20,102,182,1) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(30, 133, 235, 1) 0%,
+    rgba(20, 102, 182, 1) 100%
+  );
   z-index: 5;
 }
 
@@ -35,7 +39,6 @@
   min-height: 2.5rem;
   width: 100%;
   cursor: pointer;
-  font-size: 1.1em;
   font-weight: bold;
 }
 
@@ -53,6 +56,12 @@
 }
 
 .form_container label {
-    color: #fff;
-    text-align: left;
-  }
+  color: #fff;
+  text-align: left;
+}
+
+/* ###########################         Mobile/Tablet           ##################################### */
+
+@media (max-width: 767px) {
+  
+}

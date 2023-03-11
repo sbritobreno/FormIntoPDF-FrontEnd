@@ -33,3 +33,9 @@
 .btn_clear:hover {
   background-color: var(--primary-color-dark);
 }
+
+/* ###########################         Mobile/Tablet           ##################################### */
+
+@media (max-width: 767px) {
+  
+}

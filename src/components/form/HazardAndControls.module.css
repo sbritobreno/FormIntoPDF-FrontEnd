@@ -1,7 +1,7 @@
 .hazard_and_controls {
   display: flex;
   flex-direction: column;
-  padding: 1em;
+  padding: 1em 0em;
   border-bottom: 2px dashed #777;
 }
 
@@ -13,7 +13,7 @@
 }
 
 .hazard_and_controls textarea {
-  height: 3em;
+  height: 5em;
 }
 
 .hazard_and_controls textarea {
@@ -22,4 +22,10 @@
   border: 1px solid #777;
   border-radius: 5px;
   resize: none;
+}
+
+/* ###########################         Mobile/Tablet           ##################################### */
+
+@media (max-width: 767px) {
+  
 }

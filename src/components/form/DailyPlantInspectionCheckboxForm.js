@@ -6,31 +6,31 @@ function DPICheckboxForm({ title, name }) {
       <h4>{title}:</h4>
       <div className={styles.week_checkbox_form}>
         <div className={styles.day_checkbox_form}>
-          <label>Mon</label>
+          <label className={styles.dpi_label}>Mon</label>
           <input type="checkbox" name={"dpi_" + name + "_mon"} />
         </div>
         <div className={styles.day_checkbox_form}>
-          <label>Tue</label>
+          <label className={styles.dpi_label}>Tue</label>
           <input type="checkbox" name={"dpi_" + name + "_tue"} />
         </div>
         <div className={styles.day_checkbox_form}>
-          <label>Wed</label>
+          <label className={styles.dpi_label}>Wed</label>
           <input type="checkbox" name={"dpi_" + name + "_wed"} />
         </div>
         <div className={styles.day_checkbox_form}>
-          <label>Thurs</label>
+          <label className={styles.dpi_label}>Thurs</label>
           <input type="checkbox" name={"dpi_" + name + "_thurs"} />
         </div>
         <div className={styles.day_checkbox_form}>
-          <label>Fri</label>
+          <label className={styles.dpi_label}>Fri</label>
           <input type="checkbox" name={"dpi_" + name + "_fri"} />
         </div>
         <div className={styles.day_checkbox_form}>
-          <label>Sat</label>
+          <label className={styles.dpi_label}>Sat</label>
           <input type="checkbox" name={"dpi_" + name + "_sat"} />
         </div>
         <div className={styles.day_checkbox_form}>
-          <label>Sun</label>
+          <label className={styles.dpi_label}>Sun</label>
           <input type="checkbox" name={"dpi_" + name + "_sun"} />
         </div>
       </div>

@@ -11,3 +11,11 @@
   font-weight: bold;
   color: white;
 }
+
+/* ###########################         Mobile/Tablet           ##################################### */
+
+@media (max-width: 767px) {
+  .footer {
+    height: 150px;
+  }
+}

@@ -9,14 +9,14 @@
 }
 
 .home_header p {
-  margin-bottom: 1.5em;
+  margin-bottom: 1em;
 }
 
 .home_selector {
   display: flex;
   justify-content: center;
   text-align: center;
-  margin-bottom: 2em;
+  margin-bottom: 1.5em;
   border-bottom: 1px solid var(--primary-color);
 }
 
@@ -30,7 +30,7 @@
   border-bottom: 3px solid var(--primary-color);
   background-color: #fff;
   font-weight: bold;
-  font-size: 1em;
+  font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (1920 - 320)) );
   cursor: pointer;
 }
 
@@ -49,7 +49,7 @@
     rgba(20, 102, 182, 1) 100%
   );
   font-weight: bold;
-  font-size: 1em;
+  font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (1920 - 320)) );
   cursor: pointer;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
@@ -70,12 +70,12 @@
   text-align: center;
   border-radius: 5px;
   color: var(--primary-color);
-  font-size: 16px;
+  font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (1920 - 320)) );
   border: 2px solid var(--primary-color);
 }
 
 .filter label {
-  font-size: 1.2em;
+  font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (1920 - 320)) );
   color: var(--primary-color);
   margin: 0;
 }
@@ -94,7 +94,7 @@
 
 .pdf_card {
   display: flex;
-  width: 90%;
+  width: 80%;
   margin: 0.5em;
   border-bottom: 1px solid var(--primary-color);
   padding: 5px;
@@ -135,7 +135,7 @@
   width: 8em;
   height: 2em;
   margin: 0.5em;
-  border-radius: 10px;
+  border-radius: 5px;
   color: var(--primary-color);
   border-color: var(--primary-color);
   background-color: #fff;
@@ -194,4 +194,22 @@ button:disabled {
 .pagination_container p {
   font-weight: bold;
   color: var(--primary-color)
+}
+
+/* ###########################         Mobile/Tablet           ##################################### */
+
+@media (max-width: 767px) {
+  .pdf_card {
+    width: 100%;
+    margin: 0;
+  }
+
+  .pdf_details {
+    margin-inline: 0.3em;
+  }
+
+  .pdf_card_buttons button {
+    width: 6em;
+    margin: 0.3em 0em;
+  }
 }

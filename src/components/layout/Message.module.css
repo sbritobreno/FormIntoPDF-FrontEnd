@@ -21,3 +21,13 @@
   background-color: #f8d7da;
   border-color: #f5c6cb;
 }
+
+/* ###########################         Mobile/Tablet           ##################################### */
+
+@media (max-width: 767px) {
+  .message {
+    width: 90vw;
+    max-width: 90vw;
+    margin: 2% 5%;
+  }
+}

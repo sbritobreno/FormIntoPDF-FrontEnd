@@ -17,13 +17,25 @@ body {
 h1 {
   color: var(--primary-color);
   margin-bottom: 1em;
-  font-size: 2em;
+  font-size: calc(24px + (34 - 24) * ((100vw - 320px) / (1920 - 320)) );
 }
 
 h2 {
   color: var(--primary-color);
   margin-bottom: 0.7em;
-  font-size: 1.5em;
+  font-size: calc(18px + (28 - 18) * ((100vw - 320px) / (1920 - 320)) );
+}
+
+h3 {
+  color: var(--primary-color);
+  margin-bottom: 0.5em;
+  font-size: calc(16px + (26 - 16) * ((100vw - 320px) / (1920 - 320)) );
+}
+
+h4 {
+  color: #000;
+  margin-bottom: 0.3em;
+  font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (1920 - 320)) );
 }
 
 .bold {
@@ -31,17 +43,39 @@ h2 {
   color: var(--primary-color);
 }
 
-h1,
-h2,
-h3,
-p,
-input,
-button {
-  letter-spacing: 1px;
-}
-
 label {
   margin-bottom: 0.3em;
   font-weight: bold;
-  font-size: 1em;
+  font-size: calc(12px + (16 - 12) * ((100vw - 320px) / (1920 - 320)) );
+}
+
+p {
+  margin-bottom: 0.3em;
+  font-weight: normal;
+  font-size: calc(12px + (18 - 12) * ((100vw - 320px) / (1920 - 320)) );
+}
+
+input[type="submit"] {
+  border-radius: 8px;
+  background-color: #25b456;
+  color: #fff;
+  border: none;
+  min-width: 100px;
+  min-height: 2.5rem;
+  width: 100%;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (1920 - 320)) );
+}
+
+input[type="submit"]:hover {
+  background-color: #1c8a42;
+}
+
+h1,
+h2,
+h3,
+input,
+button {
+  letter-spacing: 1px;
 }

@@ -12,8 +12,8 @@ function Home() {
 
   useEffect(() => {
     setCurrentPdf(0);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <section>
@@ -29,6 +29,11 @@ function Home() {
                 ? "See here all PDFs!"
                 : "See here all Single Reinstatements!"}
             </h1>
+            <p>
+              {homeDisplay === "PDF"
+                ? "See here all PDFs!"
+                : "See here all Single Reinstatements!"}
+            </p>
           </div>
           <div className={styles.home_selector}>
             <button
@@ -49,7 +54,7 @@ function Home() {
               }
               onClick={() => setHomeDisplay("SINGLEREINSTATEMENTS")}
             >
-              Single Reinstatements
+              Reinstatements
             </button>
           </div>
         </>

@@ -13,3 +13,9 @@
 .form_control input::placeholder {
   color: #7b7b7b;
 }
+
+/* ###########################         Mobile/Tablet           ##################################### */
+
+@media (max-width: 767px) {
+  
+}

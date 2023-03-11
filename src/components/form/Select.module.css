@@ -7,11 +7,16 @@
 .form_control label {
   margin-bottom: 0.3em;
   font-weight: bold;
-  font-size: 1em;
 }
 
 .form_control select {
   padding: 0.7em;
   border: 1px solid #777;
   border-radius: 5px;
+}
+
+/* ###########################         Mobile/Tablet           ##################################### */
+
+@media (max-width: 767px) {
+  
 }
