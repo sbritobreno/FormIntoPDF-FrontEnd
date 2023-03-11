@@ -14,7 +14,7 @@ const formsData = [
     area: 2,
     surface_category: "granite slabs",
     reinstatement: "Permanent",
-    status: "Completed",
+    status: "In progress",
     comments: ["No comment", "Nothing to say"],
     date: "01/01/2023",
   },
@@ -36,6 +36,24 @@ const formsData = [
     ],
     date: "01/01/2023",
   },
+  {
+    id: 3,
+    image: formimg,
+    address:
+      "Spire of Dublin, O'Connell Street Upper, North City, Dublin, Ireland",
+    coordinates: "53.3498114 -6.2602525",
+    length: 1,
+    width: 2,
+    area: 2,
+    surface_category: "granite slabs",
+    reinstatement: "Permanent",
+    status: "Completed",
+    comments: [
+      "No comment",
+      "The two basic components required to load a simple map are: LoadScript - Loads the Google Maps API script GoogleMap - The map component inside which all other components renderThe simplest way to get a functional map is:Make sure you cache the props passed to GoogleMap to avoid re-renders that may harm the performance. to say",
+    ],
+    date: "07/01/2023",
+  },
 ];
 
 const pdfsData = [
@@ -52,6 +70,7 @@ const pdfsData = [
     holes: [formsData[0], formsData[1]],
     final_file_attached: "attached",
     pdf_sections_completed: 3,
+    last_updated_by: "Gian",
   },
   {
     id: 2,
@@ -66,6 +85,7 @@ const pdfsData = [
     holes: [formsData[0]],
     final_file_attached: null,
     pdf_sections_completed: 4,
+    last_updated_by: "Gian",
   },
   {
     id: 3,
@@ -79,6 +99,7 @@ const pdfsData = [
     address: "Dublin 01",
     holes: [formsData[0]],
     final_file_attached: "attached",
+    last_updated_by: "Gian",
   },
   {
     id: 4,
@@ -92,6 +113,7 @@ const pdfsData = [
     address: "Dublin 01",
     holes: [formsData[0]],
     final_file_attached: null,
+    last_updated_by: "Gian",
   },
   {
     id: 5,
@@ -105,6 +127,7 @@ const pdfsData = [
     address: "Dublin 01",
     holes: [formsData[0]],
     final_file_attached: null,
+    last_updated_by: "Gian",
   },
   {
     id: 6,
@@ -118,6 +141,7 @@ const pdfsData = [
     address: "Dublin 01",
     holes: [formsData[0]],
     final_file_attached: null,
+    last_updated_by: "Gian",
   },
   {
     id: 7,
@@ -131,6 +155,7 @@ const pdfsData = [
     address: "Dublin 01",
     holes: [formsData[0]],
     final_file_attached: null,
+    last_updated_by: "Gian",
   },
 ];
 

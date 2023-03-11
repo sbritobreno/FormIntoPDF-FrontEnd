@@ -1,12 +1,19 @@
 import styles from "./Home.module.css";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import DisplayPDF from "./DisplayPDF";
-import DisplaySingleHole from "./DisplaySingleHole";
+import DisplayReinstatementSheets from "./DisplayReinstatementSheets";
+import { Context } from "../../../context/UserContext";
 
 function Home() {
+  const { setCurrentPdf } = useContext(Context);
   const path = window.location.pathname;
   const updateDocUrl = path.includes("update_doc") ? true : false;
   const [homeDisplay, setHomeDisplay] = useState("PDF");
+
+  useEffect(() => {
+    setCurrentPdf(0);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
 
   return (
     <section>
@@ -17,7 +24,11 @@ function Home() {
       ) : (
         <>
           <div className={styles.home_header}>
-            <h1>See here all PDFs!</h1>
+            <h1>
+              {homeDisplay === "PDF"
+                ? "See here all PDFs!"
+                : "See here all Reinstatement Sheets!"}
+            </h1>
           </div>
           <div className={styles.home_selector}>
             <button
@@ -32,18 +43,22 @@ function Home() {
             </button>
             <button
               className={
-                homeDisplay === "SINGLE HOLE"
+                homeDisplay === "REINSTATEMENTSHEETS"
                   ? styles.btn_selector_active
                   : styles.btn_selector
               }
-              onClick={() => setHomeDisplay("SINGLE HOLE")}
+              onClick={() => setHomeDisplay("REINSTATEMENTSHEETS")}
             >
-              Single Hole
+              Reinstatement Sheets
             </button>
           </div>
         </>
       )}
-      {homeDisplay === "PDF" ? <DisplayPDF updateDocUrl={updateDocUrl}/> : <DisplaySingleHole />}
+      {homeDisplay === "PDF" ? (
+        <DisplayPDF updateDocUrl={updateDocUrl} />
+      ) : (
+        <DisplayReinstatementSheets />
+      )}
     </section>
   );
 }

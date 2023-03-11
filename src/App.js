@@ -67,6 +67,18 @@ function App() {
                 path="/document/new/reinstatementsheet"
                 element={<ReinstatementSheet />}
               />
+              <Route
+                path="/document/update/reinstatementsheet/:id"
+                element={<ReinstatementSheet />}
+              />
+              <Route
+                path="/document/only_update/reinstatementsheet/:id"
+                element={<ReinstatementSheet />}
+              />
+              <Route
+                path="/document/update/reinstatementsheet/:id"
+                element={<ReinstatementSheet />}
+              />
               <Route path="/map" element={<Map />} />
             </Routes>
           </Container>

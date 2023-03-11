@@ -4,7 +4,6 @@ import { pdfsData } from "../../../data";
 import { Context } from "../../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
-
 function DisplayPDF({ updateDocUrl }) {
   const checkbox = useRef(null);
   const pdfs = pdfsData;
@@ -53,20 +52,14 @@ function DisplayPDF({ updateDocUrl }) {
     setFilter(checkbox.current.checked);
   }
 
-  function downloadPDF(id){
+  function downloadPDF(id) {}
 
-  }
+  function deletePDF(id) {}
 
-  function deletePDF(id){
-
-  }
-
-  function attachFile(id) {
-
-  }
+  function attachFile(id) {}
 
   function updatePdf(id) {
-    navigate(`/document/update/${id}`)
+    navigate(`/document/update/${id}`);
   }
 
   return (
@@ -104,25 +97,20 @@ function DisplayPDF({ updateDocUrl }) {
                   <p>
                     <span className="bold">Address: </span> {pdf.address}
                   </p>
+                  <p>
+                    <span className="bold">Last updated by: </span>{" "}
+                    {pdf.last_updated_by}
+                  </p>
                 </div>
                 <div className={styles.pdf_card_buttons}>
-                  {!updateDocUrl ? (
-                    <>
-                      <button
-                        className={styles.pdf_btn_remove}
-                        disabled={!isAdmin}
-                        onClick={() => deletePDF(pdf.id)}
-                      >
-                        Remove
-                      </button>
-                      <button
-                        className={styles.pdf_btn_download}
-                        disabled={!isAdmin}
-                        onClick={() => downloadPDF(pdf.id)}
-                      >
-                        Download
-                      </button>
-                    </>
+                  {pdf.final_file_attached ? (
+                    <button
+                      className={styles.pdf_btn_attach_file}
+                      disabled={!isAdmin}
+                      onClick={() => attachFile(pdf.id)}
+                    >
+                      Attach File
+                    </button>
                   ) : (
                     ""
                   )}
@@ -133,14 +121,23 @@ function DisplayPDF({ updateDocUrl }) {
                   >
                     Update
                   </button>
-                  {pdf.final_file_attached ? (
-                    <button
-                      className={styles.pdf_btn_attach_file}
-                      disabled={!isAdmin}
-                      onClick={() => attachFile(pdf.id)}
-                    >
-                      Attach File
-                    </button>
+                  {!updateDocUrl ? (
+                    <>
+                      <button
+                        className={styles.pdf_btn_download}
+                        disabled={!isAdmin}
+                        onClick={() => downloadPDF(pdf.id)}
+                      >
+                        Download
+                      </button>
+                      <button
+                        className={styles.pdf_btn_remove}
+                        disabled={!isAdmin}
+                        onClick={() => deletePDF(pdf.id)}
+                      >
+                        Remove
+                      </button>
+                    </>
                   ) : (
                     ""
                   )}

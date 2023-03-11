@@ -1,11 +1,13 @@
 import styles from "./Home.module.css";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { formsData } from "../../../data";
 import { useNavigate } from "react-router-dom";
 
-function DisplaySingleHole() {
+function DisplayReinstatementSheets() {
+  const checkbox = useRef(null);
   const forms = formsData;
   const [searchfield, setSearchfield] = useState("");
+  const [filter, setFilter] = useState(false);
   const filteredForms = searchFilter();
   const navigate = useNavigate();
 
@@ -24,21 +26,47 @@ function DisplaySingleHole() {
         .startsWith(searchfield.toLowerCase().trim());
     });
 
-    return resultAddress.length > resultDate.length ? resultAddress : resultDate;
+    let result =
+      resultAddress.length > resultDate.length ? resultAddress : resultDate;
+
+    if (filter) result = setupFilter(result);
+
+    return result;
+  }
+
+  function setupFilter(list) {
+    const result = list.filter((sheet) => {
+      return sheet.status === "In progress";
+    });
+
+    return result;
   }
 
   function onSearchChange(event) {
     setSearchfield(event.target.value);
   }
 
+  function checkFilter() {
+    setFilter(checkbox.current.checked);
+  }
+
   return (
     <section>
       <div className={styles.search_box}>
-      <input
+        <input
           className={styles.search}
           type="search"
           placeholder="Search by Address or Date"
           onChange={onSearchChange}
+        />
+      </div>
+      <div className={styles.filter}>
+        <label>Filter Status=In progress:</label>
+        <input
+          ref={checkbox}
+          className={styles.search}
+          type="checkbox"
+          onChange={checkFilter}
         />
       </div>
       <div className={styles.pdfs_container}>
@@ -52,10 +80,12 @@ function DisplaySingleHole() {
                     <span className="bold">Address: </span> {form.address}
                   </p>
                   <p>
-                    <span className="bold">Coordinates: </span> {form.coordinates}
+                    <span className="bold">Coordinates: </span>{" "}
+                    {form.coordinates}
                   </p>
                   <p>
-                    <span className="bold">Reinstatement: </span> {form.reinstatement}
+                    <span className="bold">Reinstatement: </span>{" "}
+                    {form.reinstatement}
                   </p>
                   <p>
                     <span className="bold">Status: </span> {form.status}
@@ -65,9 +95,18 @@ function DisplaySingleHole() {
                   </p>
                 </div>
                 <div className={styles.pdf_card_buttons}>
-                  <button className={styles.pdf_btn_edit} onClick={() => navigate(`/form/edit/${form.id}`)}>Edit</button>
-                  <button className={styles.pdf_btn_remove}>Remove</button>
+                  <button
+                    className={styles.pdf_btn_edit}
+                    onClick={() =>
+                      navigate(
+                        `/document/only_update/reinstatementsheet/${form.id}`
+                      )
+                    }
+                  >
+                    Update
+                  </button>
                   <button className={styles.pdf_btn_download}>Download</button>
+                  <button className={styles.pdf_btn_remove}>Remove</button>
                 </div>
               </div>
             </div>
@@ -78,4 +117,4 @@ function DisplaySingleHole() {
   );
 }
 
-export default DisplaySingleHole;
+export default DisplayReinstatementSheets;

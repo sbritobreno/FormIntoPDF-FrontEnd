@@ -28,13 +28,13 @@ function CreateOrUpdateDocument() {
       document.querySelector("main").style.backgroundColor = "#fff";
       document.querySelector("main").style.boxShadow =
         "0 0.5rem 1rem rgb(0 0 0 / 15%)";
-        setCurrentPdf(0) // Unset currentPdf when leaving this page
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, setCurrentPdf]);
 
   function sectionsCompleted(id) {
-    const secCompleted = pdfsData.filter((doc) => {return doc.id === +id})[0]
+    const secCompleted = pdfsData.filter((doc) => {
+      return doc.id === +id;
+    })[0];
 
     const sectionsNumber = Object.keys(sectionBtns);
     sectionsNumber.forEach((index) => {
@@ -125,7 +125,9 @@ function CreateOrUpdateDocument() {
           disabled={false}
           className={styles.statementssheet_btn}
           onClick={() => {
-            navigate("/document/new/reinstatementsheet");
+            window.location.pathname.includes("new") ?
+            navigate("/document/new/reinstatementsheet") :
+            navigate(`/document/update/reinstatementsheet/${id}`)
           }}
         >
           Reinstatement Sheet ...

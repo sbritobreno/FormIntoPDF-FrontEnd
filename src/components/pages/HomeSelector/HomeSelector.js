@@ -1,9 +1,11 @@
 import styles from "./HomeSelector.module.css";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { Context } from "../../../context/UserContext";
 
 function HomeSelector() {
   const navigate = useNavigate();
+  const { setCurrentPdf } = useContext(Context);
 
   useEffect(() => {
     // Anything in here is fired on component mount.
@@ -15,7 +17,9 @@ function HomeSelector() {
       document.querySelector("main").style.backgroundColor = "#fff";
       document.querySelector("main").style.boxShadow =
         "0 0.5rem 1rem rgb(0 0 0 / 15%)";
+        setCurrentPdf(0);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

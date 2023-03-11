@@ -72,7 +72,7 @@ function LoadMap({ page_link }) {
 
   function changeMapView() {
     if (mapType === "roadmap") setMapType("satellite");
-    if (mapType === "satellite") setMapType("roadmap");
+    else setMapType("roadmap");
   }
 
   const style = {

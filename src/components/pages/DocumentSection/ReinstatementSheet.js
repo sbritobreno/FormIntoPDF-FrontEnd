@@ -1,21 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import styles from "./Doc.module.css";
 import Input from "../../form/Input";
 import TextArea from "../../form/TextArea";
 import Select from "../../form/Select";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { Context } from "../../../context/UserContext";
 
 function ReinstatementSheet() {
+  const { setCurrentPdf, getCurrentPdf } = useContext(Context);
+  const currentPdf = getCurrentPdf();
+  const { id } = useParams();
+
   // This state come from map component with location and coordinates
   const { state } = useLocation();
   const [form, setForm] = useState({
     address: state?.location,
     coordinates: state?.coordinates,
   });
+
   const [preview, setPreview] = useState([]);
   const reinstatement = ["Permanent", "Temporary"];
   const status = ["Completed", "In progress"];
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (id) {
+      setCurrentPdf(id);
+    }
+  }, [id, setCurrentPdf]);
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -42,7 +54,9 @@ function ReinstatementSheet() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    navigate("/document/new", { state: { sectionIndex: 5 } });
+    if(window.location.pathname.includes("/only_update")) navigate("/FormIntoPDF-FrontEnd/home");
+    if(window.location.pathname.includes("/update")) navigate(`/document/update/${currentPdf.id}`);
+    if(window.location.pathname.includes("/new")) navigate("/document/new");
   }
 
   return (
@@ -55,12 +69,14 @@ function ReinstatementSheet() {
           type="button"
           value="Set hole location / coordinates"
           onClick={() =>
-            navigate("/map", { state: { page_link: "/document/new/reinstatementsheet" } })
+            navigate("/map", {
+              state: { page_link: window.location.pathname },
+            })
           }
         />
         <div className={styles.form_control}>
           <input
-            value={form.address || ""}
+            value={currentPdf.address || ""}
             type="text"
             name="location"
             placeholder="Location address"

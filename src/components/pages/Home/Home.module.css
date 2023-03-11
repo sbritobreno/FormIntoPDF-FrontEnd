@@ -41,8 +41,13 @@
   margin: 0;
   border-radius: 0px;
   border: none;
-  border-bottom: 3px solid linear-gradient(90deg, rgba(30,133,235,1) 0%, rgba(20,102,182,1) 100%);
-  background: linear-gradient(90deg, rgba(30,133,235,1) 0%, rgba(20,102,182,1) 100%);
+  border-bottom: 3px solid
+    linear-gradient(90deg, rgba(30, 133, 235, 1) 0%, rgba(20, 102, 182, 1) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(30, 133, 235, 1) 0%,
+    rgba(20, 102, 182, 1) 100%
+  );
   font-weight: bold;
   font-size: 1em;
   cursor: pointer;
@@ -97,21 +102,22 @@
   background-color: #fff;
 }
 
-.pdf_card img {
-  margin: auto;
-  width: 50px;
-  height: 50px;
-}
-
 .pdf_card_subcontainer {
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
 
+.pdf_card img {
+  margin: auto;
+  width: 50px;
+  height: 50px;
+}
+
 .pdf_details {
   text-align: left;
   margin-inline: 1em;
+  margin-block: auto;
 }
 
 .pdf_details p {
@@ -119,13 +125,15 @@
 }
 
 .pdf_card_buttons {
+  display: flex;
+  flex-direction: column;
   margin-block: auto;
 }
 
-button {
+.pdf_card_buttons button {
   float: right;
   width: 8em;
-  height: 2.5em;
+  height: 2em;
   margin: 0.5em;
   border-radius: 10px;
   color: var(--primary-color);
