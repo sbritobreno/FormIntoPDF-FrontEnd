@@ -62,9 +62,10 @@ function ReinstatementSheet() {
   return (
     <section className={styles.form_container}>
       <h1>Reinstatement Sheet</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={styles.form_reinstatement}>
         {/* That would be actually a simple button to set location and coordinates on the form */}
         <Input
+          className={styles.btn_set_loc_coords}
           text="Location / Coordinates"
           type="button"
           value="Set hole location / coordinates"
@@ -173,7 +174,7 @@ function ReinstatementSheet() {
               ))}
         </div>
 
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Save" />
       </form>
     </section>
   );

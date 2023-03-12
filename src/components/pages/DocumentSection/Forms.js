@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "../../form/Input";
 import DPICheckboxForm from "../../form/DailyPlantInspectionCheckboxForm";
@@ -10,6 +10,7 @@ import Signature from "../../form/Signature";
 
 function Forms() {
   const navigate = useNavigate();
+  const inputs = useRef([]);
   const [form, setForm] = useState({});
   const [hazardAndControlsQuantity, setHazardAndControlsQuantity] = useState(1);
 
@@ -28,18 +29,38 @@ function Forms() {
   }
 
   function handlerIssuedByCompanySign(data) {
-    handler(data, "issued_by_company");
+    handler(data, "issued_by_company", 0);
+  }
+
+  function handlerReceivedByCompanySign(data) {
+    handler(data, "received_by_signature", 1);
+  }
+
+  function handlerFinalCheckUpSign(data) {
+    handler(data, "final_checkup_signature", 2);
   }
 
   function handlerNearMissReportSign(data) {
-    handler(data, "near_miss_report_signature_comments");
+    handler(data, "near_miss_report_signature_comments", 3);
   }
 
-  function handler(data, name) {
-    setForm({
-      ...form,
-      [name]: data.toString(),
-    });
+  function handler(data, name, index) {
+    if (checkIfSignPadIsEmpty(index))
+      setForm({
+        ...form,
+        [name]: data.toString(),
+      });
+    else console.error("No signature", index);
+  }
+
+  function checkIfSignPadIsEmpty(index) {
+    const canvas = inputs[index].childNodes[0];
+    const isSignPadEmpty = canvas
+      .getContext("2d")
+      .getImageData(0, 0, canvas.width, canvas.height)
+      .data.some((channel) => channel !== 0);
+
+    return isSignPadEmpty;
   }
 
   return (
@@ -125,15 +146,6 @@ function Forms() {
         <h3>PART 3 - Details of Persons and Times of Permit</h3>
         <h4>Permit issued by:</h4>
         <Input
-          text="Name"
-          type="text"
-          name="issued_by_name"
-          placeholder="Type name"
-          handleOnChange={handleChange}
-          autoComplete="off"
-        />
-        <Signature handleChange={handlerIssuedByCompanySign} />
-        <Input
           text="Company"
           type="text"
           name="issued_by_company"
@@ -141,23 +153,19 @@ function Forms() {
           handleOnChange={handleChange}
           autoComplete="off"
         />
-        <h4>Permit received by:</h4>
         <Input
           text="Name"
           type="text"
-          name="received_by_name"
+          name="issued_by_name"
           placeholder="Type name"
           handleOnChange={handleChange}
           autoComplete="off"
         />
-        <Input
-          text="Signature"
-          type="text"
-          name="received_by_signature"
-          placeholder="Type signature"
-          handleOnChange={handleChange}
-          autoComplete="off"
+        <Signature
+          ref={(el) => (inputs[0] = el)}
+          handleChange={handlerIssuedByCompanySign}
         />
+        <h4>Permit received by:</h4>
         <Input
           text="Company"
           type="text"
@@ -166,8 +174,27 @@ function Forms() {
           handleOnChange={handleChange}
           autoComplete="off"
         />
+        <Input
+          text="Name"
+          type="text"
+          name="received_by_name"
+          placeholder="Type name"
+          handleOnChange={handleChange}
+          autoComplete="off"
+        />
+        <Signature
+          ref={(el) => (inputs[1] = el)}
+          handleChange={handlerReceivedByCompanySign}
+        />
         <h3>PART 4 - Final Check Up</h3>
         <h4>Final check by:</h4>
+        <Input
+          text="Time"
+          type="time"
+          name="final_checkup_time"
+          handleOnChange={handleChange}
+          autoComplete="off"
+        />
         <Input
           text="Name"
           type="text"
@@ -176,20 +203,9 @@ function Forms() {
           handleOnChange={handleChange}
           autoComplete="off"
         />
-        <Input
-          text="Signature"
-          type="text"
-          name="final_checkup_signature"
-          placeholder="Type signature"
-          handleOnChange={handleChange}
-          autoComplete="off"
-        />
-        <Input
-          text="Time"
-          type="time"
-          name="final_checkup_time"
-          handleOnChange={handleChange}
-          autoComplete="off"
+        <Signature
+          ref={(el) => (inputs[2] = el)}
+          handleChange={handlerFinalCheckUpSign}
         />
         <h2 className={styles.form_subheading}>Daily Plant Inspection</h2>
         <DPICheckboxForm
@@ -263,7 +279,10 @@ function Forms() {
           name={"suggestion_to_prevent_reoccurance_comments"}
           handleOnChange={handleChange}
         />
-        <Signature handleChange={handlerNearMissReportSign} />
+        <Signature
+          ref={(el) => (inputs[3] = el)}
+          handleChange={handlerNearMissReportSign}
+        />
         <h2 className={styles.form_subheading}>
           Identify any futher Hazards and what controls are required
         </h2>
@@ -282,7 +301,7 @@ function Forms() {
         >
           Add more
         </button>
-        <input type="submit" value="Submit" />
+        <input className={styles.btn_form_save} type="submit" value="Save" />
       </form>
     </section>
   );

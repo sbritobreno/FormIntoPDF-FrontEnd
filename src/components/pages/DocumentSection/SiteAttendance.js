@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Doc.module.css";
 import Input from "../../form/Input";
@@ -7,6 +7,7 @@ import { RiCloseLine, RiDeleteBin5Line } from "react-icons/ri";
 
 function SiteAttendance() {
   const navigate = useNavigate();
+  const inputs = useRef([]);
   const [displayAttendanceList, setDisplayAttendanceList] = useState(false);
   const [newAttendance, setNewAttendance] = useState({});
   const [attendanceList, setAttendanceList] = useState([
@@ -25,6 +26,17 @@ function SiteAttendance() {
   async function handleSubmit(e) {
     e.preventDefault();
     setAttendanceList([...attendanceList, newAttendance]);
+    setNewAttendance({});
+
+    const inputNumber = Object.keys(inputs);
+    inputNumber.forEach((index) => {
+      if (+index === 4) {
+        const canvas = inputs[index].childNodes[0];
+        const context = canvas.getContext("2d");
+        context.clearRect(0, 0, canvas.width, canvas.height);
+      }
+      inputs[index].value = "";
+    });
   }
 
   function saveAttendanceStage() {
@@ -39,7 +51,19 @@ function SiteAttendance() {
   }
 
   function handler(data) {
-    setNewAttendance({ ...newAttendance, staff_signature: data.toString() });
+    if (checkIfSignPadIsEmpty(4))
+      setNewAttendance({ ...newAttendance, staff_signature: data.toString() });
+    else console.error("No signature");
+  }
+
+  function checkIfSignPadIsEmpty(index) {
+    const canvas = inputs[index].childNodes[0];
+    const isSignPadEmpty = canvas
+      .getContext("2d")
+      .getImageData(0, 0, canvas.width, canvas.height)
+      .data.some((channel) => channel !== 0);
+
+    return isSignPadEmpty;
   }
 
   const style = {
@@ -99,6 +123,7 @@ function SiteAttendance() {
           <h1>Site Attendance</h1>
           <form onSubmit={handleSubmit}>
             <Input
+              ref={(el) => (inputs[0] = el)}
               text="Name Print"
               type="text"
               name="name_print"
@@ -106,24 +131,8 @@ function SiteAttendance() {
               handleOnChange={handleChange}
               autoComplete="off"
             />
-            <Signature handleChange={handler} />
-            {/* <Input
-              text="Signature"
-              type="text"
-              name="staff_signature"
-              placeholder="Type staff signature"
-              handleOnChange={handleChange}
-              autoComplete="off"
-            /> */}
             <Input
-              text="Location"
-              type="text"
-              name="location"
-              placeholder="Type site location"
-              handleOnChange={handleChange}
-              autoComplete="off"
-            />
-            <Input
+              ref={(el) => (inputs[1] = el)}
               text="Date"
               type="date"
               name="date"
@@ -131,6 +140,7 @@ function SiteAttendance() {
               autoComplete="off"
             />
             <Input
+              ref={(el) => (inputs[2] = el)}
               text="Time In"
               type="time"
               name="time_in"
@@ -138,19 +148,27 @@ function SiteAttendance() {
               autoComplete="off"
             />
             <Input
+              ref={(el) => (inputs[3] = el)}
               text="Time Out"
               type="time"
               name="time_out"
               handleOnChange={handleChange}
               autoComplete="off"
             />
-            <input type="submit" value="Submit" />
+            <Signature ref={(el) => (inputs[4] = el)} handleChange={handler} />
             <input
+              className={styles.btn_form_submit}
+              type="submit"
+              value="Submit"
+            />
+            <input
+              className={styles.btn_see_current_list}
               type="button"
               value="See current list"
               onClick={() => setDisplayAttendanceList(true)}
             />
             <input
+              className={styles.btn_form_save}
               type="button"
               value="Save"
               onClick={() => saveAttendanceStage()}

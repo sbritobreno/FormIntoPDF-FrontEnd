@@ -77,7 +77,7 @@ function MethodStatements() {
           name="loc_photograph_image"
           onChange={onFileChange}
         />
-        <div className={styles.preview_images}>
+        <div className={styles.preview_image}>
           {(form.image || preview) && (
             <img
               src={
@@ -89,7 +89,7 @@ function MethodStatements() {
             />
           )}
         </div>
-        <input type="submit" value="Submit" />
+        <input className={styles.btn_form_save} type="submit" value="Save" />
       </form>
     </section>
   );

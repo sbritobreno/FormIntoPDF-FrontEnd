@@ -40,12 +40,6 @@ svg {
   width: 100px;
 }
 
-@media (max-width: 767px) {
-  .table img {
-    width: 50px;
-  }
-}
-
 /* ################################## Form ################################## */
 
 .form_container {
@@ -60,7 +54,7 @@ svg {
 }
 
 .form_container h2 {
-  margin-top: 60px;
+  margin-top: 30px;
 }
 
 .form_container h3,
@@ -76,37 +70,44 @@ svg {
 
 .form_container legend {
   font-weight: bold;
-  font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (1920 - 320)) );
+  font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (1920 - 320)));
 }
 
 .form_container input[type="submit"],
 .form_container input[type="button"] {
   margin-top: 0.5em;
   border-radius: 8px;
-  background-color: var(--primary-color);
   border: none;
   color: #fff;
   height: 2.5rem;
   width: 100%;
   cursor: pointer;
-  font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (1920 - 320)) );
+  font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (1920 - 320)));
   font-weight: bold;
 }
 
-.form_container input[type="button"] {
+.form_container .btn_see_current_list {
   background-color: var(--primary-color);
 }
 
-.form_container input[type="submit"] {
+.form_container .btn_form_submit {
+  background-color: var(--primary-color);
+}
+
+.form_container .btn_form_save {
   background-color: var(--button-green);
 }
 
-.form_container input[type="submit"]:hover {
-  background-color: var(--button-green-dark);
+.form_container .btn_see_current_list:hover {
+  background-color: var(--primary-color-dark);
 }
 
-.form_container input[type="button"]:hover {
+.form_container .btn_form_submit:hover {
   background-color: var(--primary-color-dark);
+}
+
+.form_container .btn_form_save:hover {
+  background-color: var(--button-green-dark);
 }
 
 .form_subheading {
@@ -145,6 +146,14 @@ svg {
   margin: 0.5em;
 }
 
+.form_reinstatement input[type="button"] {
+  background-color: var(--primary-color);
+}
+
+.form_reinstatement input[type="button"]:hover {
+  background-color: var(--primary-color-dark);
+}
+
 /* ################################## Site Setup ################################## */
 
 /* and Method Statement */
@@ -156,11 +165,12 @@ svg {
   border-radius: 5px;
 }
 
-.preview_images {
+.preview_image {
   text-align: center;
+  margin-bottom: 1em;
 }
 
-.preview_images img {
+.preview_image img {
   width: 70%;
   border-radius: 10px;
   margin: 0.5em;
@@ -169,14 +179,14 @@ svg {
 /* ################################## Forms ################################## */
 
 .add_hazard_controls {
-  float: right;
-  margin: 0.5em 0 1em 0;
-  border-radius: 8px;
-  background-color: var(--primary-color);
-  border: none;
+  width: 100px;
+  height: 30px;
   color: #fff;
-  cursor: pointer;
-  font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (1920 - 320)) );
+  margin: 0.5em 0 1em 0;
+  border-radius: 5px;
+  border: none;
+  background-color: var(--primary-color);
+  float: right;
 }
 
 .add_hazard_controls:hover {
@@ -186,5 +196,7 @@ svg {
 /* ###########################         Mobile/Tablet           ##################################### */
 
 @media (max-width: 767px) {
-  
+  .table img {
+    width: 50px;
+  }
 }

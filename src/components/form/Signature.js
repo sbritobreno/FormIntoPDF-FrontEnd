@@ -1,8 +1,8 @@
 import styles from "./Signature.module.css";
 import SignaturePad from "react-signature-canvas";
-import { useRef } from "react";
+import { useRef, forwardRef } from "react";
 
-function Signature({ title = "Signature:", handleChange }) {
+function SignatureC({ title = "Signature:", handleChange }, ref) {
   let sigPad = useRef({});
   let data = "";
   const handler = handleChange;
@@ -16,14 +16,13 @@ function Signature({ title = "Signature:", handleChange }) {
     e.preventDefault();
     data = sigPad.current.getTrimmedCanvas().toDataURL("image/png");
     handler(data);
-    data = '';
   }
 
   return (
     <>
       <label>{title}</label>
       <div className={styles.container}>
-        <div className={styles.signature_container}>
+        <div className={styles.signature_container} ref={ref}>
           <SignaturePad
             canvasProps={{ className: styles.sigPad }}
             ref={sigPad}
@@ -42,5 +41,7 @@ function Signature({ title = "Signature:", handleChange }) {
     </>
   );
 }
+
+const Signature = forwardRef(SignatureC);
 
 export default Signature;

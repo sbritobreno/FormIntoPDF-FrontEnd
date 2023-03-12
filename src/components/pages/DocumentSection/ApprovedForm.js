@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Doc.module.css";
 import Input from "../../form/Input";
@@ -7,6 +7,7 @@ import Signature from "../../form/Signature";
 
 function ApprovedForm() {
   const navigate = useNavigate();
+  const inputs = useRef([]);
   const [displayApprovedFormList, setDisplayApprovedFormList] = useState(false);
   const [newApprovedForm, setNewApprovedForm] = useState({});
   const [approvedFormList, setApprovedFormList] = useState([
@@ -41,6 +42,17 @@ function ApprovedForm() {
   async function handleSubmit(e) {
     e.preventDefault();
     setApprovedFormList([...approvedFormList, newApprovedForm]);
+    setNewApprovedForm({});
+
+    const inputNumber = Object.keys(inputs);
+    inputNumber.forEach((index) => {
+      if (+index === 3) {
+        const canvas = inputs[index].childNodes[0];
+        const context = canvas.getContext("2d");
+        context.clearRect(0, 0, canvas.width, canvas.height);
+      }
+      inputs[index].value = "";
+    });
   }
 
   function saveApprovedFormStage() {
@@ -55,10 +67,22 @@ function ApprovedForm() {
   }
 
   function handler(data) {
-    setNewApprovedForm({
-      ...newApprovedForm,
-      inspector_signature: data.toString(),
-    });
+    if (checkIfSignPadIsEmpty(3))
+      setNewApprovedForm({
+        ...newApprovedForm,
+        inspector_signature: data.toString(),
+      });
+    else console.error("No signature");
+  }
+
+  function checkIfSignPadIsEmpty(index) {
+    const canvas = inputs[index].childNodes[0];
+    const isSignPadEmpty = canvas
+      .getContext("2d")
+      .getImageData(0, 0, canvas.width, canvas.height)
+      .data.some((channel) => channel !== 0);
+
+    return isSignPadEmpty;
   }
 
   const style = {
@@ -117,6 +141,7 @@ function ApprovedForm() {
           <h1>Approved Form (AF 3)</h1>
           <form onSubmit={handleSubmit}>
             <Input
+              ref={(el) => (inputs[0] = el)}
               text="Description or Location"
               type="text"
               name="description_location"
@@ -125,6 +150,7 @@ function ApprovedForm() {
               autoComplete="off"
             />
             <Input
+              ref={(el) => (inputs[1] = el)}
               text="Date of Examination"
               type="date"
               name="date_examination"
@@ -132,6 +158,7 @@ function ApprovedForm() {
               autoComplete="off"
             />
             <Input
+              ref={(el) => (inputs[2] = el)}
               text="Results of thorough examination"
               type="text"
               name="examination_result_state"
@@ -142,14 +169,21 @@ function ApprovedForm() {
             <Signature
               title="Signature of person who made the inspection:"
               handleChange={handler}
+              ref={(el) => (inputs[3] = el)}
             />
-            <input type="submit" value="Submit" />
             <input
+              className={styles.btn_form_submit}
+              type="submit"
+              value="Submit"
+            />
+            <input
+              className={styles.btn_see_current_list}
               type="button"
               value="See current list"
               onClick={() => setDisplayApprovedFormList(true)}
             />
             <input
+              className={styles.btn_form_save}
               type="button"
               value="Save"
               onClick={() => saveApprovedFormStage()}

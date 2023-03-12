@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "../../form/Input";
-import Signature from "../../form/Signature";
 import styles from "./Doc.module.css";
 import CheckboxContainer from "../../form/CheckboxContainer";
 import HazardCheckboxContainer from "../../form/HazardCheckboxContainer";
@@ -23,13 +22,6 @@ function SiteSetup() {
   async function handleSubmit(e) {
     e.preventDefault();
     navigate("/document/new", { state: { sectionIndex: 1 } });
-  }
-
-  function handler(data) {
-    setSiteSetup({
-      ...siteSetup,
-      traffic_management_compliance_checksheet_signature: data.toString(),
-    });
   }
 
   return (
@@ -210,12 +202,6 @@ function SiteSetup() {
         <h2 className={styles.form_subheading}>
           Traffic Management Compliance Checksheet
         </h2>
-        <CheckboxContainer
-          title={
-            "Is traffic management set up as per TMP in use? is TM amendment sheet required?"
-          }
-          name={"traffic_management_compliance_checksheet_question_one"}
-        />
         <Input
           text="TMP number set up on site"
           type="text"
@@ -223,6 +209,12 @@ function SiteSetup() {
           placeholder="Type TMP number"
           handleOnChange={handleChange}
           autoComplete="off"
+        />
+        <CheckboxContainer
+          title={
+            "Is traffic management set up as per TMP in use? is TM amendment sheet required?"
+          }
+          name={"traffic_management_compliance_checksheet_question_one"}
         />
         <CheckboxContainer
           title={"Are parked vehicles preventing proper TMP set up?"}
@@ -254,7 +246,6 @@ function SiteSetup() {
           title={"4.Are all required traffic management measures in plate?"}
           name={"traffic_management_compliance_checksheet_question_sub_four"}
         />
-        <Signature handleChange={handler} />
         <h2 className={styles.form_subheading}>
           Traffic Management/SLG Checklist
         </h2>
@@ -406,7 +397,7 @@ function SiteSetup() {
           name="sketch_image"
           onChange={onFileChange}
         />
-        <div className={styles.preview_images}>
+        <div className={styles.preview_image}>
           {(siteSetup.image || preview) && (
             <img
               src={
@@ -418,7 +409,7 @@ function SiteSetup() {
             />
           )}
         </div>
-        <input type="submit" value="Submit" />
+        <input className={styles.btn_form_save} type="submit" value="Save" />
       </form>
     </section>
   );
