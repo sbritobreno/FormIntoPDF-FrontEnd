@@ -71,7 +71,7 @@ function Users() {
                     </div>
                   </div>
                   <button className={styles.users_btn_remove}>
-                    Remove user
+                    Remove
                   </button>
                 </div>
               </div>

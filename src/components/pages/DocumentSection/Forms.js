@@ -20,7 +20,7 @@ function Forms() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    navigate("/document/new", { state: { sectionIndex: 3 } });
+    navigate(-1);
   }
 
   function increaseHazardAndControlsQuantity(e) {

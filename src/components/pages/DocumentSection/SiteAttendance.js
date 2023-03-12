@@ -40,7 +40,7 @@ function SiteAttendance() {
   }
 
   function saveAttendanceStage() {
-    navigate("/document/new", { state: { sectionIndex: 0 } });
+    navigate(-1);
   }
 
   function deleteRowAttendance(index) {

@@ -20,8 +20,9 @@
 }
 
 .form_container {
-  width: 350px;
-  margin: auto;
+  width: 85vw;
+  max-width: 350px;
+  margin-inline: auto;
   background: transparent;
 }
 

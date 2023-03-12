@@ -30,7 +30,7 @@
   border-bottom: 3px solid var(--primary-color);
   background-color: #fff;
   font-weight: bold;
-  font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (1920 - 320)) );
+  font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (1920 - 320)));
   cursor: pointer;
 }
 
@@ -49,7 +49,7 @@
     rgba(20, 102, 182, 1) 100%
   );
   font-weight: bold;
-  font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (1920 - 320)) );
+  font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (1920 - 320)));
   cursor: pointer;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
@@ -70,12 +70,12 @@
   text-align: center;
   border-radius: 5px;
   color: var(--primary-color);
-  font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (1920 - 320)) );
+  font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (1920 - 320)));
   border: 2px solid var(--primary-color);
 }
 
 .filter label {
-  font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (1920 - 320)) );
+  font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (1920 - 320)));
   color: var(--primary-color);
   margin: 0;
 }
@@ -137,7 +137,7 @@
   margin: 0.5em;
   border-radius: 5px;
   color: var(--primary-color);
-  border-color: var(--primary-color);
+  border: 2px solid var(--primary-color);
   background-color: #fff;
   font-weight: bold;
   cursor: pointer;
@@ -172,7 +172,7 @@ button:disabled {
   color: #fff;
 }
 
-.pagination_container{
+.pagination_container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -182,26 +182,40 @@ button:disabled {
 .pagination_container button {
   margin-inline: 30px;
   height: 2em;
-  background-color: rgba(20,102,182,0.5);
+  background-color: rgba(20, 102, 182, 0.5);
   border: none;
+  border-radius: 10px;
+  width: 8em;
   color: #fff;
 }
 
 .pagination_container button:hover {
-  background-color: rgba(20,102,182,1);
+  background-color: rgba(20, 102, 182, 1);
 }
 
 .pagination_container p {
   font-weight: bold;
-  color: var(--primary-color)
+  color: var(--primary-color);
 }
 
 /* ###########################         Mobile/Tablet           ##################################### */
 
 @media (max-width: 767px) {
+  .search_box,
+  .pdfs_container,
+  .home_selector {
+    width: 85vw;
+    margin-inline: auto;
+  }
+
   .pdf_card {
     width: 100%;
     margin: 0;
+  }
+
+  .pdf_card img {
+    width: 30px;
+    height: 30px;
   }
 
   .pdf_details {
@@ -211,5 +225,10 @@ button:disabled {
   .pdf_card_buttons button {
     width: 6em;
     margin: 0.3em 0em;
+  }
+
+  .pagination_container button {
+    margin-inline: 20px;
+    width: 6em;
   }
 }

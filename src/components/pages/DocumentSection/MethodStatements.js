@@ -15,12 +15,11 @@ function MethodStatements() {
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
-    console.log("eee");
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
-    navigate("/document/new", { state: { sectionIndex: 4 } });
+    navigate(-1);
   }
 
   return (

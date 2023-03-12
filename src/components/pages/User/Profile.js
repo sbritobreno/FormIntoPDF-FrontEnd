@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styles from "./Profile.module.css";
 import Input from "../../form/Input";
+import user_img from "../../../../src/profile_img_default.png";
 
 function Profile() {
   const [user, setUser] = useState({});
@@ -24,12 +25,12 @@ function Profile() {
       <div className={styles.profile_header}>
         <h1>Profile</h1>
         <div className={styles.preview_image}>
-          {(user.image || preview) && (
+          {(user.image || preview || user_img) && (
             <img
               src={
                 preview
                   ? URL.createObjectURL(preview)
-                  : `${process.env.REACT_APP_API}/images/users/${user.image}`
+                  : user_img
               }
               alt="Profile img"
             />

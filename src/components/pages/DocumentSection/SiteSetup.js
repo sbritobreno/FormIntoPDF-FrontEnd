@@ -21,7 +21,7 @@ function SiteSetup() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    navigate("/document/new", { state: { sectionIndex: 1 } });
+    navigate(-1);
   }
 
   return (

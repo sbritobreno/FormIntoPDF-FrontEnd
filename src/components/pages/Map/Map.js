@@ -76,28 +76,17 @@ function LoadMap({ page_link }) {
   }
 
   const style = {
-    position: "absolute",
-    zIndex: 15,
-    top: "0px",
-    margin: "10px",
-    fontSize: "calc(28px + (40 - 28) * ((100vw - 320px) / (1920 - 320)))",
+    margin: "5px 15px",
+    fontSize: "34px",
     color: "var(--primary-color)",
     cursor: "pointer",
     backgroundColor: "white",
-    borderRadius: "10px",
+    borderRadius: "5px",
     boxShadow: "0 0.5rem 1rem rgb(0 0 0 / 15%)",
   };
 
   return (
     <div className={styles.map_container}>
-      <RiCloseLine
-        style={{ ...style, right: "0px" }}
-        onClick={() => navigate(-1)}
-      />
-      <BsLayersHalf
-        style={{ ...style, left: "0px", width: "70px" }}
-        onClick={changeMapView}
-      />
       <div className={styles.location_coordinates_container}>
         <PlacesAutocomplete
           setZoom={setZoom}
@@ -131,6 +120,16 @@ function LoadMap({ page_link }) {
           />
         )}
       </GoogleMap>
+      <div className={styles.btns_container}>
+        <BsLayersHalf
+          style={{...style, padding: "4px"}}
+          onClick={changeMapView}
+        />
+        <RiCloseLine
+          style={style}
+          onClick={() => navigate(-1)}
+        />
+      </div>
       <button className={styles.btn_save} onClick={onSave}>
         Save
       </button>

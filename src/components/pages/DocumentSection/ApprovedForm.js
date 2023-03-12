@@ -56,7 +56,7 @@ function ApprovedForm() {
   }
 
   function saveApprovedFormStage() {
-    navigate("/document/new", { state: { sectionIndex: 2 } });
+    navigate(-1);
   }
 
   function deleteRowApprovedForm(index) {
@@ -103,7 +103,7 @@ function ApprovedForm() {
             onClick={() => setDisplayApprovedFormList(false)}
           />
           <div className={styles.table}>
-            <h1>Approved Form (AF 3) Table</h1>
+            <h1>Approved Form Table</h1>
             <table>
               <tbody>
                 <tr>

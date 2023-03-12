@@ -11,7 +11,8 @@
 
 .form_container {
   max-width: 500px;
-  margin: 3em auto;
+  width: 85vw;
+  margin: 10px auto 3em auto;
   background-color: #fff;
   border-radius: 15px;
 }
@@ -42,6 +43,7 @@
   background-color: #fff;
   color: var(--primary-color);
   border: 2px solid var(--primary-color);
+  border-radius: 8px;
 }
 
 .btn2:hover {
@@ -53,5 +55,8 @@
 /* ###########################         Mobile/Tablet           ##################################### */
 
 @media (max-width: 767px) {
-  
+  .preview_image img {
+    width: 120px;
+    height: 120px;
+  }
 }
