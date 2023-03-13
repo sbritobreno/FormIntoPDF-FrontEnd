@@ -85,9 +85,7 @@ button {
 }
 
 select,
-input[type="submit"],
-input[type="time"],
-input[type="date"] {
+input {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
