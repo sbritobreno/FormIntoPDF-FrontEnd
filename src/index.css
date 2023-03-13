@@ -1,4 +1,4 @@
-* {
+*::-webkit-appearance {
   padding: 0;
   margin: 0;
   font-family: Helvetica, Arial, sans-serif;
@@ -7,6 +7,11 @@
   --primary-color-dark: #5e2a82;
   --button-green: #25b456;
   --button-green-dark: #1c8a42;
+  -webkit-appearance: none;
+}
+
+input::-webkit-border-radius {
+  -webkit-border-radius:0; 
 }
 
 body {
