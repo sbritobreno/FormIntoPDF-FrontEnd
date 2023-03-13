@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/FormIntoPDF-FrontEnd/static/css/main.b3e578d2.css",
+    "main.css": "/FormIntoPDF-FrontEnd/static/css/main.44898a19.css",
     "main.js": "/FormIntoPDF-FrontEnd/static/js/main.1ff9e088.js",
     "static/media/profile_img_default.png": "/FormIntoPDF-FrontEnd/static/media/profile_img_default.8973ad91ff3039f96c89.png",
     "static/media/pdf_img.png": "/FormIntoPDF-FrontEnd/static/media/pdf_img.e23884162032f2a0e9fe.png",
     "index.html": "/FormIntoPDF-FrontEnd/index.html",
-    "main.b3e578d2.css.map": "/FormIntoPDF-FrontEnd/static/css/main.b3e578d2.css.map",
+    "main.44898a19.css.map": "/FormIntoPDF-FrontEnd/static/css/main.44898a19.css.map",
     "main.1ff9e088.js.map": "/FormIntoPDF-FrontEnd/static/js/main.1ff9e088.js.map"
   },
   "entrypoints": [
-    "static/css/main.b3e578d2.css",
+    "static/css/main.44898a19.css",
     "static/js/main.1ff9e088.js"
   ]
 }
