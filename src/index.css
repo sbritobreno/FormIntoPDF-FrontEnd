@@ -84,8 +84,10 @@ button {
   letter-spacing: 1px;
 }
 
+select,
 input[type="time"],
 input[type="date"] {
   -webkit-appearance: none;
   -moz-appearance: none;
+  appearance: none;
 }
