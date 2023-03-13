@@ -85,6 +85,8 @@ svg {
   cursor: pointer;
   font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (1920 - 320)));
   font-weight: bold;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
 .form_container .btn_see_current_list {
