@@ -17,9 +17,9 @@ function HomeSelector() {
       document.querySelector("main").style.backgroundColor = "#fff";
       document.querySelector("main").style.boxShadow =
         "0 0.5rem 1rem rgb(0 0 0 / 15%)";
-        setCurrentPdf(0);
+      setCurrentPdf(0);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -28,9 +28,27 @@ function HomeSelector() {
         <h1>Welcome {"username"}!</h1>
       </div>
       <div className={styles.btns_container}>
-        <button onClick={() => {navigate("/document/new")}}>New Document</button>
-        <button onClick={() => {navigate("/FormIntoPDF-FrontEnd/update_doc")}}>Update Document</button>
-        <button onClick={() => {navigate("/FormIntoPDF-FrontEnd/home")}}>Access All Document</button>
+        <button
+          onClick={() => {
+            navigate("/document/new");
+          }}
+        >
+          New Document
+        </button>
+        <button
+          onClick={() => {
+            navigate("/FormIntoPDF-FrontEnd/update_doc");
+          }}
+        >
+          Update Document
+        </button>
+        <button
+          onClick={() => {
+            navigate("/FormIntoPDF-FrontEnd/home");
+          }}
+        >
+          Access All Document
+        </button>
       </div>
     </section>
   );
