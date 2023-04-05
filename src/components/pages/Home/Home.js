@@ -6,8 +6,6 @@ import { Context } from "../../../context/UserContext";
 
 function Home() {
   const { setCurrentPdf } = useContext(Context);
-  const path = window.location.pathname;
-  const updateDocUrl = path.includes("update_doc") ? true : false;
   const [homeDisplay, setHomeDisplay] = useState("PDF");
 
   useEffect(() => {
@@ -17,53 +15,29 @@ function Home() {
 
   return (
     <section>
-      {updateDocUrl ? (
-        <div className={styles.home_header}>
-          <h1>Update a PDF!</h1>
-        </div>
-      ) : (
-        <>
-          <div className={styles.home_header}>
-            <h1>
-              {homeDisplay === "PDF"
-                ? "See here all PDFs!"
-                : "See here all Single Reinstatements!"}
-            </h1>
-            <p>
-              {homeDisplay === "PDF"
-                ? "See here all PDFs!"
-                : "See here all Single Reinstatements!"}
-            </p>
-          </div>
-          <div className={styles.home_selector}>
-            <button
-              className={
-                homeDisplay === "PDF"
-                  ? styles.btn_selector_active
-                  : styles.btn_selector
-              }
-              onClick={() => setHomeDisplay("PDF")}
-            >
-              PDF's
-            </button>
-            <button
-              className={
-                homeDisplay === "SINGLEREINSTATEMENTS"
-                  ? styles.btn_selector_active
-                  : styles.btn_selector
-              }
-              onClick={() => setHomeDisplay("SINGLEREINSTATEMENTS")}
-            >
-              Reinstatements
-            </button>
-          </div>
-        </>
-      )}
-      {homeDisplay === "PDF" ? (
-        <DisplayPDF updateDocUrl={updateDocUrl} />
-      ) : (
-        <DisplayReinstatementSheets />
-      )}
+      <div className={styles.home_selector}>
+        <button
+          className={
+            homeDisplay === "PDF"
+              ? styles.btn_selector_active
+              : styles.btn_selector
+          }
+          onClick={() => setHomeDisplay("PDF")}
+        >
+          PDF's
+        </button>
+        <button
+          className={
+            homeDisplay === "SINGLEREINSTATEMENTS"
+              ? styles.btn_selector_active
+              : styles.btn_selector
+          }
+          onClick={() => setHomeDisplay("SINGLEREINSTATEMENTS")}
+        >
+          Reinstatements
+        </button>
+      </div>
+      {homeDisplay === "PDF" ? <DisplayPDF /> : <DisplayReinstatementSheets />}
     </section>
   );
 }

@@ -8,10 +8,13 @@ svg {
 .table {
   display: block;
   justify-content: center;
+  margin-inline: 1em;
+  overflow: auto;
 }
 
 .table table {
   width: 90%;
+  min-width: 600px;
   margin-inline: auto;
   border-collapse: collapse;
 }
@@ -197,6 +200,10 @@ svg {
 /* ###########################         Mobile/Tablet           ##################################### */
 
 @media (max-width: 767px) {
+  /* .table table {
+    width: 200%;
+  } */
+
   .table img {
     width: 50px;
   }

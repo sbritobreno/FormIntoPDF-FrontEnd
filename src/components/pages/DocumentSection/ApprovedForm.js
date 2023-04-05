@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Doc.module.css";
 import Input from "../../form/Input";
@@ -25,15 +25,15 @@ function ApprovedForm() {
     },
   ]);
 
-  useEffect(() => {
-    // Anything in here is fired on component mount.
-    document.querySelector("body").style.overflowX = "auto";
+  // useEffect(() => {
+  //   // Anything in here is fired on component mount.
+  //   document.querySelector("body").style.overflowX = "auto";
 
-    return () => {
-      // Anything in here is fired on component unmount.
-      document.querySelector("body").style.overflowX = "hidden";
-    };
-  }, []);
+  //   return () => {
+  //     // Anything in here is fired on component unmount.
+  //     document.querySelector("body").style.overflowX = "hidden";
+  //   };
+  // }, []);
 
   function handleChange(e) {
     setNewApprovedForm({ ...newApprovedForm, [e.target.name]: e.target.value });
@@ -102,8 +102,8 @@ function ApprovedForm() {
             style={style}
             onClick={() => setDisplayApprovedFormList(false)}
           />
+          <h1>Approved Form Table</h1>
           <div className={styles.table}>
-            <h1>Approved Form Table</h1>
             <table>
               <tbody>
                 <tr>

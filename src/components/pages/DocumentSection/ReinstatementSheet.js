@@ -124,7 +124,7 @@ function ReinstatementSheet() {
         <Input
           text="Surface Category"
           type="text"
-          name="local_authority_license"
+          name="surface_category"
           placeholder="e.g. Granite slabs, Concrete footpath etc."
           handleOnChange={handleChange}
           autoComplete="off"

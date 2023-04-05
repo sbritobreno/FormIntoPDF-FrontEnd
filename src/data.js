@@ -6,6 +6,7 @@ const formsData = [
   {
     id: 1,
     image: formimg,
+    esbh_hole_no: null,
     address:
       "Spire of Dublin, O'Connell Street Upper, North City, Dublin, Ireland",
     coordinates: "53.3498114 -6.2602525",
@@ -64,7 +65,7 @@ const pdfsData = [
     esbh_hole_no: 123,
     local_authority_licence_number: 456,
     traffic_impact_number: 789,
-    name: "PDF made by the Admin",
+    name: "PDF",
     date: "02/01/2023",
     address: "Dublin 01",
     holes: [formsData[0], formsData[1]],
@@ -99,7 +100,7 @@ const pdfsData = [
     address: "Dublin 01",
     holes: [formsData[0]],
     final_file_attached: "attached",
-    last_updated_by: "Gian",
+    last_updated_by: "Giannn",
   },
   {
     id: 4,
@@ -147,7 +148,7 @@ const pdfsData = [
     id: 7,
     type: "Hole",
     image: img,
-    esbh_hole_no: 123,
+    esbh_hole_no: null,
     local_authority_licence_number: 456,
     traffic_impact_number: 789,
     name: "PDF made by the Admin",
@@ -162,7 +163,7 @@ const pdfsData = [
 const users_staff = [
   {
     id: 1,
-    name: "Gian",
+    name: "Gian Valentim",
     image: user_img,
     email: "gian@s.com",
     phone: "123 456 45",

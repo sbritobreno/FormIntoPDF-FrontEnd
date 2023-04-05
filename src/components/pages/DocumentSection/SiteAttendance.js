@@ -83,8 +83,8 @@ function SiteAttendance() {
             style={style}
             onClick={() => setDisplayAttendanceList(false)}
           />
+          <h1>Site Attendance Table</h1>
           <div className={styles.table}>
-            <h1>Site Attendance Table</h1>
             <table>
               <tbody>
                 <tr>

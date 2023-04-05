@@ -12,7 +12,6 @@ import ScrollToTop from "../src/components/layout/ScrollToTop";
 
 // pages
 import Home from "./components/pages/Home/Home";
-import HomeSelector from "./components/pages/HomeSelector/HomeSelector";
 import Login from "./components/pages/Auth/Login";
 import Profile from "./components/pages/User/Profile";
 import NewUser from "./components/pages/Auth/NewUser";
@@ -40,13 +39,11 @@ function App() {
           <Message />
           <Container>
             <Routes>
-              <Route path="/FormIntoPDF-FrontEnd/home" element={<Home />} />
-              <Route path="/FormIntoPDF-FrontEnd" element={<HomeSelector />} />
+              <Route path="/FormIntoPDF-FrontEnd" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/user/new" element={<NewUser />} />
               <Route path="/user/all_users" element={<Users />} />
               <Route path="/user/profile" element={<Profile />} />
-              <Route path="/FormIntoPDF-FrontEnd/update_doc" element={<Home />} />
               <Route path="/document/new" element={<CreateOrUpdateDocument />} />
               <Route path="/document/update/:id" element={<CreateOrUpdateDocument />} />
               <Route

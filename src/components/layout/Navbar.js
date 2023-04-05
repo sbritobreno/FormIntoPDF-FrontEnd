@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import React, { useContext } from "react";
 import styles from "./Navbar.module.css";
 
+import { users_staff } from "../../data";
+
 /* Contenxt */
 import { Context } from "../../context/UserContext";
 
@@ -15,6 +17,9 @@ function Navbar() {
           <h2>Form Into PDF</h2>
         </div>
         <ul>
+          <li className={styles.new_link}>
+            <Link to="/document/new">new +</Link>
+          </li>
           <li>
             <Link to="/FormIntoPDF-FrontEnd">Home</Link>
           </li>
@@ -25,11 +30,16 @@ function Navbar() {
               <Link to="/user/all_users">See all users</Link>
             </div>
           </li>
-          <li>
-            <Link to="/user/profile">Profile</Link>
-          </li>
-          <li onClick={logout}>
-            <Link>Log out</Link>
+          <li className={styles.dropdown}>
+            <div className={styles.user_img}>
+              <img src={users_staff[0].image} alt="user_image" />
+            </div>
+            <div className={styles.dropdown_content_last}>
+              <Link to="/user/profile">{users_staff[0].name}</Link>
+              <Link to="/login" onClick={logout}>
+                Logout
+              </Link>
+            </div>
           </li>
         </ul>
       </div>

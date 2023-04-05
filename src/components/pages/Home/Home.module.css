@@ -1,22 +1,8 @@
-.home_header {
-  text-align: center;
-  margin-bottom: 1em;
-  border-bottom: 1px solid var(--primary-color);
-}
-
-.home_header h1 {
-  margin-bottom: 0.5em;
-}
-
-.home_header p {
-  margin-bottom: 1em;
-}
-
 .home_selector {
   display: flex;
   justify-content: center;
   text-align: center;
-  margin-bottom: 1.5em;
+  margin-block: 1em 1.5em;
   border-bottom: 1px solid var(--primary-color);
 }
 
@@ -60,13 +46,12 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  margin-bottom: 1em;
+  margin-bottom: 1.5em;
 }
 
 .search {
   height: 40px;
   width: 320px;
-  margin: 0.5em;
   text-align: center;
   border-radius: 5px;
   color: var(--primary-color);
@@ -81,7 +66,7 @@
 }
 
 .filter input {
-  margin: 0px 10px;
+  margin: 0px 0px 0px 10px;
   height: auto;
   width: 1.5em;
 }
@@ -96,10 +81,12 @@
   display: flex;
   width: 80%;
   margin: 0.5em;
-  border-bottom: 1px solid var(--primary-color);
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0.5rem 0.5rem rgb(0 0 0 / 15%);
+  background-color: #fff;
   padding: 5px;
   text-align: center;
-  background-color: #fff;
 }
 
 .pdf_card_subcontainer {

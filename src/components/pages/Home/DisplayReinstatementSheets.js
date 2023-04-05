@@ -51,7 +51,7 @@ function DisplayReinstatementSheets() {
 
   function setupFilter(list) {
     const result = list.filter((sheet) => {
-      return sheet.status === "In progress";
+      return sheet.esbh_hole_no === null;
     });
 
     return result;
@@ -85,7 +85,7 @@ function DisplayReinstatementSheets() {
         />
       </div>
       <div className={styles.filter}>
-        <label>Filter Status=In progress:</label>
+        <label>Filter No HSBH number:</label>
         <input
           ref={checkbox}
           className={styles.search}

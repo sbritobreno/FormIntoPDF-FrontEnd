@@ -4,7 +4,7 @@ import { pdfsData } from "../../../data";
 import { Context } from "../../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
-function DisplayPDF({ updateDocUrl }) {
+function DisplayPDF() {
   const pdfs = pdfsData;
   const navigate = useNavigate();
   const checkbox = useRef(null);
@@ -119,17 +119,14 @@ function DisplayPDF({ updateDocUrl }) {
                   </p>
                 </div>
                 <div className={styles.pdf_card_buttons}>
-                  {pdf.final_file_attached ? (
-                    <button
-                      className={styles.pdf_btn_attach_file}
-                      disabled={!isAdmin}
-                      onClick={() => attachFile(pdf.id)}
-                    >
-                      Add File
-                    </button>
-                  ) : (
-                    ""
-                  )}
+                  <button
+                    className={styles.pdf_btn_attach_file}
+                    disabled={!isAdmin}
+                    onClick={() => attachFile(pdf.id)}
+                  >
+                    {pdf.final_file_attached ? "Add File" : "Replace File"}
+                  </button>
+
                   <button
                     className={styles.pdf_btn_edit}
                     disabled={!isAdmin}
@@ -137,26 +134,20 @@ function DisplayPDF({ updateDocUrl }) {
                   >
                     Update
                   </button>
-                  {!updateDocUrl ? (
-                    <>
-                      <button
-                        className={styles.pdf_btn_download}
-                        disabled={!isAdmin}
-                        onClick={() => downloadPDF(pdf.id)}
-                      >
-                        Download
-                      </button>
-                      <button
-                        className={styles.pdf_btn_remove}
-                        disabled={!isAdmin}
-                        onClick={() => deletePDF(pdf.id)}
-                      >
-                        Remove
-                      </button>
-                    </>
-                  ) : (
-                    ""
-                  )}
+                  <button
+                    className={styles.pdf_btn_download}
+                    disabled={!isAdmin}
+                    onClick={() => downloadPDF(pdf.id)}
+                  >
+                    Download
+                  </button>
+                  <button
+                    className={styles.pdf_btn_remove}
+                    disabled={!isAdmin}
+                    onClick={() => deletePDF(pdf.id)}
+                  >
+                    Remove
+                  </button>
                 </div>
               </div>
             </div>
