@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/FormIntoPDF-FrontEnd/static/css/main.de16a59e.css",
-    "main.js": "/FormIntoPDF-FrontEnd/static/js/main.8255d954.js",
+    "main.css": "/FormIntoPDF-FrontEnd/static/css/main.ca08cc3b.css",
+    "main.js": "/FormIntoPDF-FrontEnd/static/js/main.0f4d06cc.js",
     "static/media/profile_img_default.png": "/FormIntoPDF-FrontEnd/static/media/profile_img_default.8973ad91ff3039f96c89.png",
     "static/media/pdf_img.png": "/FormIntoPDF-FrontEnd/static/media/pdf_img.e23884162032f2a0e9fe.png",
     "index.html": "/FormIntoPDF-FrontEnd/index.html",
-    "main.de16a59e.css.map": "/FormIntoPDF-FrontEnd/static/css/main.de16a59e.css.map",
-    "main.8255d954.js.map": "/FormIntoPDF-FrontEnd/static/js/main.8255d954.js.map"
+    "main.ca08cc3b.css.map": "/FormIntoPDF-FrontEnd/static/css/main.ca08cc3b.css.map",
+    "main.0f4d06cc.js.map": "/FormIntoPDF-FrontEnd/static/js/main.0f4d06cc.js.map"
   },
   "entrypoints": [
-    "static/css/main.de16a59e.css",
-    "static/js/main.8255d954.js"
+    "static/css/main.ca08cc3b.css",
+    "static/js/main.0f4d06cc.js"
   ]
 }
