@@ -2,11 +2,11 @@ import { useState, useContext, useEffect } from "react";
 import Input from "../../form/Input";
 import { Link } from "react-router-dom";
 import styles from "./Login.module.css";
-import { Context } from "../../../context/UserContext";
+import { UserContext } from "../../../context/UserContext";
 
 function Login() {
   const [user, setUser] = useState({});
-  const { login, resetPassword } = useContext(Context);
+  const { login, resetPassword } = useContext(UserContext);
 
   useEffect(() => {
     // Anything in here is fired on component mount.

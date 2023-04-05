@@ -4,13 +4,12 @@ import Input from "../../form/Input";
 import TextArea from "../../form/TextArea";
 import Select from "../../form/Select";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
-import { Context } from "../../../context/UserContext";
+import { DocumentContext } from "../../../context/DocumentContext";
 import { MdAddCircle } from "react-icons/md";
 
 function ReinstatementSheetHoleSequence() {
   const hiddenFileInput = useRef(null);
-  const { setCurrentPdf, getCurrentPdf } = useContext(Context);
-  const currentPdf = getCurrentPdf();
+  const { currentDocument } = useContext(DocumentContext);
   const { id } = useParams();
 
   // This state come from map component with location and coordinates
@@ -24,12 +23,6 @@ function ReinstatementSheetHoleSequence() {
   const reinstatement = ["Permanent", "Temporary"];
   const status = ["Completed", "In progress"];
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (id) {
-      setCurrentPdf(id);
-    }
-  }, [id, setCurrentPdf]);
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -82,7 +75,7 @@ function ReinstatementSheetHoleSequence() {
         />
         <div className={styles.form_control}>
           <input
-            value={currentPdf.address || ""}
+            value={currentDocument.address || ""}
             type="text"
             name="location"
             placeholder="Location address"

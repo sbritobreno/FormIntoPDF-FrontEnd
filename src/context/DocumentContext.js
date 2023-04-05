@@ -1,20 +1,20 @@
 import { useState, createContext } from "react";
 
-const Context = createContext();
+const DocumentContext = createContext();
 
 function DocumentProvider({ children }) {
   const [currentDocument, setCurrentDocument] = useState({});
 
   return (
-    <Context.Provider
+    <DocumentContext.Provider
       value={{
         currentDocument,
         setCurrentDocument,
       }}
     >
       {children}
-    </Context.Provider>
+    </DocumentContext.Provider>
   );
 }
 
-export { Context, DocumentProvider };
+export { DocumentContext, DocumentProvider };

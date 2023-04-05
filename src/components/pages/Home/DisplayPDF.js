@@ -1,14 +1,14 @@
 import styles from "./Home.module.css";
 import { useState, useContext, useRef } from "react";
 import { pdfsData } from "../../../data";
-import { Context } from "../../../context/UserContext";
+import { UserContext } from "../../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
 function DisplayPDF() {
   const pdfs = pdfsData;
   const navigate = useNavigate();
   const checkbox = useRef(null);
-  const { isAdmin } = useContext(Context);
+  const { isAdmin } = useContext(UserContext);
   const [searchfield, setSearchfield] = useState("");
   const [filter, setFilter] = useState(false);
   const [page, setPage] = useState(1);

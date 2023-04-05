@@ -2,21 +2,18 @@ import styles from "./CreateOrUpdateDocument.module.css";
 import { useEffect, useRef, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useFlashMessage from "../../../hooks/useFlashMessage";
-import { Context } from "../../../context/UserContext";
+import { DocumentContext } from "../../../context/DocumentContext";
 import { pdfsData } from "../../../data";
 
 function CreateOrUpdateDocument() {
-  const { setCurrentPdf } = useContext(Context);
+  const { currentDocument } = useContext(DocumentContext);
   const { id } = useParams();
   const navigate = useNavigate();
   const sectionBtns = useRef([]);
   const { setFlashMessage } = useFlashMessage();
 
   useEffect(() => {
-    if (id) {
-      setCurrentPdf(id);
-      sectionsCompleted(id);
-    }
+
     sectionBtns[0].style.opacity = 1;
 
     // Anything in here is fired on component mount.
@@ -29,7 +26,7 @@ function CreateOrUpdateDocument() {
       document.querySelector("main").style.boxShadow =
         "0 0.5rem 1rem rgb(0 0 0 / 15%)";
     };
-  }, [id, setCurrentPdf]);
+  }, [id]);
 
   function sectionsCompleted(id) {
     const secCompleted = pdfsData.filter((doc) => {

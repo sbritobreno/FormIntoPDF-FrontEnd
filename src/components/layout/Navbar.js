@@ -5,10 +5,10 @@ import styles from "./Navbar.module.css";
 import { users_staff } from "../../data";
 
 /* Contenxt */
-import { Context } from "../../context/UserContext";
+import { UserContext } from "../../context/UserContext";
 
 function Navbar() {
-  const { logout } = useContext(Context);
+  const { logout } = useContext(UserContext);
 
   return (
     <nav className={styles.navbar_container}>
@@ -21,7 +21,7 @@ function Navbar() {
             <Link to="/document/new">New document +</Link>
           </li>
           <li>
-            <Link to="/FormIntoPDF-FrontEnd">Home</Link>
+            <Link to="/home">Home</Link>
           </li>
           <li className={styles.dropdown}>
             <Link>Users</Link>

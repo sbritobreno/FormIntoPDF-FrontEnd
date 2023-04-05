@@ -1,17 +1,20 @@
 import styles from "./Home.module.css";
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import DisplayPDF from "./DisplayPDF";
 import DisplayReinstatementSheets from "./DisplayReinstatementSheets";
-import { Context } from "../../../context/UserContext";
+import { DocumentContext } from "../../../context/DocumentContext";
+import { UserContext } from "../../../context/UserContext";
 
 function Home() {
-  const { setCurrentPdf } = useContext(Context);
+  const { authenticated } = useContext(UserContext);
+  const { currentDocument } = useContext(DocumentContext);
   const [homeDisplay, setHomeDisplay] = useState("PDF");
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    setCurrentPdf(0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   if (!authenticated) navigate("/login");
+  // });
 
   return (
     <section>

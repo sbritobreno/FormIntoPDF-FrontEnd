@@ -1,20 +1,33 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import Input from "../../form/Input";
 import styles from "./NewUser.module.css";
-import { Context } from "../../../context/UserContext";
+import { UserContext } from "../../../context/UserContext";
 
 function NewUser() {
   const [newUser, setNewUser] = useState({});
-  const [isAdmin, setIsAdmin] = useState(false);
-  const { register } = useContext(Context);
+  const [notAdmin, setNotAdmin] = useState(true);
+  const { register } = useContext(UserContext);
+  const inputs = useRef([]);
 
   function handleChange(e) {
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
   }
 
+  function handleAdminToggle() {
+    setNotAdmin(!notAdmin);
+    setNewUser({ ...newUser, admin: notAdmin });
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     register(newUser);
+
+    // Reset inputs
+    setNotAdmin(true);
+    const inputsArray = Object.keys(inputs);
+    inputsArray.forEach((i) => {
+      inputs[i].value = "";
+    });
   }
 
   return (
@@ -22,27 +35,39 @@ function NewUser() {
       <h1>Register</h1>
       <form onSubmit={handleSubmit}>
         <Input
+          ref={(el) => (inputs[0] = el)}
           text="Name"
           type="text"
           name="name"
-          placeholder="Type your name"
+          placeholder="Type user's name"
           handleOnChange={handleChange}
         />
         <Input
-          text="Phone"
-          type="text"
-          name="phone"
-          placeholder="Type your phone"
-          handleOnChange={handleChange}
-        />
-        <Input
+          ref={(el) => (inputs[1] = el)}
           text="E-mail"
           type="email"
           name="email"
-          placeholder="Type your e-mail"
+          placeholder="Type user's e-mail"
           handleOnChange={handleChange}
         />
         <Input
+          ref={(el) => (inputs[2] = el)}
+          text="Phone"
+          type="text"
+          name="phone"
+          placeholder="Type user's phone"
+          handleOnChange={handleChange}
+        />
+        <Input
+          ref={(el) => (inputs[3] = el)}
+          text="Role"
+          type="text"
+          name="role"
+          placeholder="Type user's role"
+          handleOnChange={handleChange}
+        />
+        <Input
+          ref={(el) => (inputs[4] = el)}
           text="Password"
           type="password"
           name="password"
@@ -51,6 +76,7 @@ function NewUser() {
           handleOnChange={handleChange}
         />
         <Input
+          ref={(el) => (inputs[5] = el)}
           text="Confirm password"
           type="password"
           name="confirmpassword"
@@ -64,13 +90,10 @@ function NewUser() {
             <input
               type="checkbox"
               name="isadmin"
-              checked={isAdmin}
+              checked={!notAdmin}
               onChange={handleChange}
             />
-            <span
-              className={styles.slider}
-              onClick={() => setIsAdmin(!isAdmin)}
-            ></span>
+            <span className={styles.slider} onClick={handleAdminToggle}></span>
           </div>
         </div>
         <input type="submit" value="Register" />

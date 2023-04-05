@@ -1,11 +1,31 @@
-import { useState } from "react";
+import api from "../../../utils/api";
+import { useState, useContext, useEffect } from "react";
 import styles from "./Profile.module.css";
 import Input from "../../form/Input";
 import user_img from "../../../../src/profile_img_default.png";
+import { UserContext } from "../../../context/UserContext";
 
 function Profile() {
+  const { deleteUserAccount } = useContext(UserContext);
+  const [token] = useState(localStorage.getItem("token"));
   const [user, setUser] = useState({});
   const [preview, setPreview] = useState("");
+
+  useEffect(() => {
+    try {
+      api
+        .get("/user/checkuser", {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(token)}`,
+          },
+        })
+        .then((response) => {
+          setUser(response.data);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }, [token]);
 
   function onFileChange(e) {
     setPreview(e.target.files[0]);
@@ -30,7 +50,7 @@ function Profile() {
               src={
                 preview
                   ? URL.createObjectURL(preview)
-                  : user_img
+                  : `${process.env.REACT_APP_API}/images/users/${user.image}`
               }
               alt="Profile img"
             />
@@ -48,6 +68,7 @@ function Profile() {
           text="Name"
           type="text"
           name="name"
+          value={user.name || ""}
           placeholder="Type user name"
           handleOnChange={handleChange}
         />
@@ -55,20 +76,25 @@ function Profile() {
           text="E-mail"
           type="email"
           name="email"
+          value={user.email || ""}
           autoComplete={"email"}
           placeholder="Type user email"
+          readOnly={"readonly"}
         />
         <Input
           text="Role"
           type="text"
           name="role"
+          value={user.role || ""}
           autoComplete={"role"}
+          handleOnChange={handleChange}
           placeholder="Type user role"
         />
         <Input
           text="Phone"
           type="text"
           name="phone"
+          value={user.phone || ""}
           placeholder="Type user phone number"
           handleOnChange={handleChange}
         />
@@ -89,7 +115,11 @@ function Profile() {
           handleOnChange={handleChange}
         />
         <input type="submit" value="Edit" />
-        <button type="button" className={styles.btn2} onClick={() => {}}>
+        <button
+          type="button"
+          className={styles.btn2}
+          onClick={deleteUserAccount}
+        >
           Delete Account
         </button>
       </form>

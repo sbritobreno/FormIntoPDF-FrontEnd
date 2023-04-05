@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import styles from "./Doc.module.css";
 import { useNavigate, useParams } from "react-router-dom";
-import { Context } from "../../../context/UserContext";
+import { DocumentContext } from "../../../context/DocumentContext";
 import {
   RiCloseLine,
   RiDeleteBin5Line,
@@ -11,8 +11,7 @@ import {
 
 function ReinstatementSheetTable() {
   const navigate = useNavigate();
-  const { setCurrentPdf, getCurrentPdf } = useContext(Context);
-  const currentPdf = getCurrentPdf();
+  const { currentDocument, setCurrentDocument } = useContext(DocumentContext);
   const { id } = useParams();
 
   const [attendanceList, setAttendanceList] = useState([
@@ -25,10 +24,7 @@ function ReinstatementSheetTable() {
   ]);
 
   useEffect(() => {
-    if (id) {
-      setCurrentPdf(id);
-    }
-  }, [id, setCurrentPdf, attendanceList]);
+  }, [id, attendanceList]);
 
   function deleteHoleSequence(index) {
     console.log(index);
@@ -75,10 +71,10 @@ function ReinstatementSheetTable() {
               <th>Edit</th>
             </tr>
             <tr>
-              <td>{currentPdf.esbh_hole_no}</td>
-              <td>{currentPdf.esbh_hole_no}</td>
-              <td>{currentPdf.esbh_hole_no}</td>
-              <td>{currentPdf.esbh_hole_no}</td>
+              <td>{currentDocument.esbh_hole_no}</td>
+              <td>{currentDocument.esbh_hole_no}</td>
+              <td>{currentDocument.esbh_hole_no}</td>
+              <td>{currentDocument.esbh_hole_no}</td>
               <td className={styles.btn}>
                 <RiEdit2Line
                   style={styleIcons}
@@ -107,15 +103,15 @@ function ReinstatementSheetTable() {
             </tr>
             {attendanceList.map((element, key) => (
               <tr key={key}>
-                <td>{currentPdf.esbh_hole_no}</td>
-                <td>{currentPdf.esbh_hole_no}</td>
-                <td>{currentPdf.esbh_hole_no}</td>
-                <td>{currentPdf.esbh_hole_no}</td>
-                <td>{currentPdf.esbh_hole_no}</td>
-                <td>{currentPdf.esbh_hole_no}</td>
-                <td>{currentPdf.esbh_hole_no}</td>
-                <td>{currentPdf.esbh_hole_no}</td>
-                <td>{currentPdf.esbh_hole_no}</td>
+                <td>{currentDocument.esbh_hole_no}</td>
+                <td>{currentDocument.esbh_hole_no}</td>
+                <td>{currentDocument.esbh_hole_no}</td>
+                <td>{currentDocument.esbh_hole_no}</td>
+                <td>{currentDocument.esbh_hole_no}</td>
+                <td>{currentDocument.esbh_hole_no}</td>
+                <td>{currentDocument.esbh_hole_no}</td>
+                <td>{currentDocument.esbh_hole_no}</td>
+                <td>{currentDocument.esbh_hole_no}</td>
                 <td className={styles.btn}>
                   <RiEdit2Line
                     style={styleIcons}

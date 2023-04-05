@@ -43,7 +43,7 @@ function App() {
             <Message />
             <Container>
               <Routes>
-                <Route path="/FormIntoPDF-FrontEnd" element={<Home />} />
+                <Route path="/home" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/user/new" element={<NewUser />} />
                 <Route path="/user/all_users" element={<Users />} />

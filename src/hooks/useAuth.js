@@ -1,45 +1,48 @@
+import api from "../utils/api";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useFlashMessage from "./useFlashMessage";
-import { pdfsData } from "../data";
 
 export default function useAuth() {
-  //const [token] = useState(localStorage.getItem("token"));
+  const [token] = useState(localStorage.getItem("token"));
   const [authenticated, setAuthenticated] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(true);
-  const [pdf, setPdf] = useState({});
+  const [isAdmin, setIsAdmin] = useState(false);
   const { setFlashMessage } = useFlashMessage();
   const navigate = useNavigate();
 
-  if (authenticated && isAdmin) {
-    //this block can be deleted
-  }
-
-  async function setCurrentPdf(id = 0) {
-    setPdf({});
-    localStorage.removeItem("curentPdf");
-
-    if (id > 0) {
-      const document = pdfsData.filter((doc) => {
-        return doc.id === +id;
-      });
-
-      setPdf(document[0]);
-      localStorage.setItem("curentPdf", JSON.stringify(pdf));
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      api.defaults.headers.Authorization = `Bearer ${JSON.parse(token)}`;
+      setAuthenticated(true);
     }
-  }
-
-  function getCurrentPdf() {
-    return pdf;
-  }
+  }, [token]);
 
   async function login(user) {
     let msgText = "You are now logged in!";
     let msgType = "success";
 
-    await authUser();
-    await checkIfUserIsAdmin();
+    try {
+      const data = await api.post("/user/login", user).then((response) => {
+        msgText = response.data.message;
+        return response.data;
+      });
+
+      await authUser(data);
+      await checkIfUserIsAdmin();
+    } catch (error) {
+      msgText = error.response.data.message;
+      msgType = "error";
+    }
+
     setFlashMessage(msgText, msgType);
+  }
+
+  async function authUser(data) {
+    setAuthenticated(true);
+    localStorage.setItem("token", JSON.stringify(data.token));
+
+    navigate("/home");
   }
 
   async function logout() {
@@ -47,41 +50,124 @@ export default function useAuth() {
     const msgType = "success";
 
     setAuthenticated(false);
+    setIsAdmin(false);
+    localStorage.removeItem("token");
+    api.defaults.headers.Authorization = undefined;
     navigate("/login");
 
     setFlashMessage(msgText, msgType);
+  }
+
+  async function checkIfUserIsAdmin() {
+    try {
+      const data = await api
+        .get("/user/checkuser", {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(token)}`,
+          },
+        })
+        .then((response) => {
+          return response.data;
+        });
+      if (data.admin) {
+        setIsAdmin(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async function register(user) {
     let msgText = "A new user was created!";
     let msgType = "success";
 
-    await authUser();
+    try {
+      await api.post("/user/register", user).then((response) => {
+        return response.data;
+      });
+    } catch (error) {
+      msgText = error.response.data.message;
+      msgType = "error";
+    }
+
     setFlashMessage(msgText, msgType);
   }
 
-  async function deleteUserAccount() {}
+  async function deleteUserAccount() {
+    let msgText = "Account deleted!";
+    let msgType = "success";
 
-  async function resetPassword() {}
+    try {
+      await api
+        .delete("/user/deleteaccount", {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(token)}`,
+          },
+        })
+        .then((response) => {
+          return response.data;
+        });
+    } catch (error) {
+      msgText = error.response.data.message;
+      msgType = "error";
+    }
 
-  async function authUser() {
-    navigate("/FormIntoPDF-FrontEnd");
+    setAuthenticated(false);
+    setIsAdmin(false);
+    localStorage.removeItem("token");
+    api.defaults.headers.Authorization = undefined;
+    navigate("/login");
+
+    setFlashMessage(msgText, msgType);
   }
 
-  async function checkIfUserIsAdmin() {
-    if (true) {
-      setIsAdmin(true);
+  async function deleteUserAccountByAdmin(username, id) {
+    let msgText = `${username}'s account deleted!`;
+    let msgType = "success";
+
+    try {
+      await api
+        .delete(`/user/deleteaccount/${id}`, {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(token)}`,
+          },
+        })
+        .then((response) => {
+          return response.data;
+        });
+    } catch (error) {
+      msgText = error.response.data.message;
+      msgType = "error";
     }
+
+    setFlashMessage(msgText, msgType);
+  }
+
+  async function resetPassword(email) {
+    let msgText = `A new password was sent to ${email}`;
+    let msgType = "success";
+
+    try {
+      await api.patch("/user/resetpassword", email).then((response) => {
+        return response.data;
+      });
+    } catch (error) {
+      msgText = error.response.data.message;
+      msgType = "error";
+    }
+
+    setFlashMessage(msgText, msgType);
   }
 
   return {
-    register,
-    logout,
     login,
+    logout,
+    checkIfUserIsAdmin,
+    register,
     deleteUserAccount,
+    deleteUserAccountByAdmin,
     resetPassword,
-    setCurrentPdf,
-    getCurrentPdf,
+    authenticated,
     isAdmin,
   };
 }
