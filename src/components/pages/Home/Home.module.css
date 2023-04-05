@@ -197,7 +197,7 @@ button:disabled {
 
   .pdf_card {
     width: 100%;
-    margin: 0;
+    margin: 0.2em 0em;
   }
 
   .pdf_card img {

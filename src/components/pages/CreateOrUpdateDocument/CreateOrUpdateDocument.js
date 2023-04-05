@@ -63,19 +63,35 @@ function CreateOrUpdateDocument() {
   return (
     <section className={styles.newdocument_section}>
       <div className={styles.heading}>
-        <h1>Create a new document!</h1>
-        <p>
-          Complete each section in order to create a new PDF document, you can
-          save it after completing at least 1 section, then you can finish it
-          later on by clicking "Update Document" on home page.
-        </p>
+        {window.location.pathname.includes("new") ? (
+          <>
+            <h1>Create a new document!</h1>
+            <p>
+              Complete each section in order to create a new PDF document, you
+              can save it after completing at least 1 section, then you can
+              finish it later on by clicking on "Update" button of the document
+              on home page.
+            </p>
+          </>
+        ) : (
+          <>
+            <h1>Update the current document!</h1>
+            <p>
+              You can save the current state of the document and continue
+              updating it later on by clicking on "Update" button of the
+              document on home page.
+            </p>
+          </>
+        )}
       </div>
       <div className={styles.btns_container}>
         <button
           ref={(el) => (sectionBtns[0] = el)}
           className={styles.siteattendance_btn}
           onClick={() => {
-            navigate("/document/new/siteattendance");
+            id
+              ? navigate(`/document/${id}/update/siteattendance`)
+              : navigate(`/document/new/siteattendance`);
           }}
         >
           Site Attendance ...
@@ -85,7 +101,7 @@ function CreateOrUpdateDocument() {
           disabled={false}
           className={styles.sitesetup_btn}
           onClick={() => {
-            navigate("/document/new/sitesetup");
+            navigate(`/document/${id}/update/sitesetup`);
           }}
         >
           Site Setup ...
@@ -95,7 +111,7 @@ function CreateOrUpdateDocument() {
           disabled={false}
           className={styles.approvedform_btn}
           onClick={() => {
-            navigate("/document/new/approvedform");
+            navigate(`/document/${id}/update/approvedform`);
           }}
         >
           Approved Form (AF3) ...
@@ -105,7 +121,7 @@ function CreateOrUpdateDocument() {
           disabled={false}
           className={styles.forms_btn}
           onClick={() => {
-            navigate("/document/new/forms");
+            navigate(`/document/${id}/update/forms`);
           }}
         >
           Forms ...
@@ -115,7 +131,7 @@ function CreateOrUpdateDocument() {
           disabled={false}
           className={styles.methodstatements_btn}
           onClick={() => {
-            navigate("/document/new/methodstatements");
+            navigate(`/document/${id}/update/methodstatements`);
           }}
         >
           Method Statements ...
@@ -125,9 +141,7 @@ function CreateOrUpdateDocument() {
           disabled={false}
           className={styles.statementssheet_btn}
           onClick={() => {
-            window.location.pathname.includes("new") ?
-            navigate("/document/new/reinstatementsheet") :
-            navigate(`/document/update/reinstatementsheet/${id}`)
+            navigate(`/document/${id}/update/reinstatementsheet_table`);
           }}
         >
           Reinstatement Sheet ...

@@ -13,8 +13,8 @@ svg {
 }
 
 .table table {
+  min-width: 900px;
   width: 90%;
-  min-width: 600px;
   margin-inline: auto;
   border-collapse: collapse;
 }
@@ -22,7 +22,7 @@ svg {
 .table table,
 .table th,
 .table td {
-  border: 2px solid black;
+  border: 1px solid black;
   height: 40px;
 }
 
@@ -30,11 +30,11 @@ svg {
   text-align: center;
 }
 
-.table .remove_btn {
+.table .btn {
   width: 50px;
 }
 
-.table .remove_btn svg {
+.table .btn svg {
   float: center;
   width: 50px;
 }
@@ -134,6 +134,20 @@ svg {
   border-radius: 5px;
 }
 
+.table_images {
+  display: block;
+  justify-content: center;
+  margin-inline: 1em;
+  overflow: auto;
+}
+
+.reinstatement_img_all {
+  margin: 2em auto;
+  min-width: 900px;
+  width: 90%;
+}
+
+.reinstatement_img_all,
 .preview_form_images {
   display: flex;
   justify-content: center;
@@ -143,6 +157,7 @@ svg {
   margin-bottom: 1em;
 }
 
+.reinstatement_img_all img,
 .preview_form_images img {
   width: 130px;
   height: 130px;
@@ -200,9 +215,13 @@ svg {
 /* ###########################         Mobile/Tablet           ##################################### */
 
 @media (max-width: 767px) {
-  /* .table table {
-    width: 200%;
-  } */
+  .table table {
+    width: 900px;
+  }
+
+  .reinstatement_img_all {
+    width: 900px;
+  }
 
   .table img {
     width: 50px;

@@ -75,7 +75,7 @@ function DisplayPDF() {
   function attachFile(id) {}
 
   function updatePdf(id) {
-    navigate(`/document/update/${id}`);
+    navigate(`/document/${id}/update`);
   }
 
   return (

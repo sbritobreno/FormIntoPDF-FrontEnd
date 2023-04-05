@@ -18,7 +18,7 @@ function Navbar() {
         </div>
         <ul>
           <li className={styles.new_link}>
-            <Link to="/document/new">new +</Link>
+            <Link to="/document/new">New document +</Link>
           </li>
           <li>
             <Link to="/FormIntoPDF-FrontEnd">Home</Link>

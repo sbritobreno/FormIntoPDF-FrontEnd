@@ -22,7 +22,9 @@ import SiteSetup from "./components/pages/DocumentSection/SiteSetup";
 import ApprovedForm from "./components/pages/DocumentSection/ApprovedForm";
 import Forms from "./components/pages/DocumentSection/Forms";
 import MethodStatements from "./components/pages/DocumentSection/MethodStatements";
-import ReinstatementSheet from "./components/pages/DocumentSection/ReinstatementSheet";
+import ReinstatementSheetTable from "./components/pages/DocumentSection/ReinstatementSheetTable";
+import ReinstatementSheetInfo from "./components/pages/DocumentSection/ReinstatementSheetInfo";
+import ReinstatementSheetHoleSequence from "./components/pages/DocumentSection/ReinstatementSheetHoleSequence";
 import Map from "./components/pages/Map/Map";
 
 // context
@@ -44,37 +46,46 @@ function App() {
               <Route path="/user/new" element={<NewUser />} />
               <Route path="/user/all_users" element={<Users />} />
               <Route path="/user/profile" element={<Profile />} />
-              <Route path="/document/new" element={<CreateOrUpdateDocument />} />
-              <Route path="/document/update/:id" element={<CreateOrUpdateDocument />} />
+              <Route
+                path="/document/new"
+                element={<CreateOrUpdateDocument />}
+              />
+              <Route
+                path="/document/:id/update"
+                element={<CreateOrUpdateDocument />}
+              />
               <Route
                 path="/document/new/siteattendance"
                 element={<SiteAttendance />}
               />
-              <Route path="/document/new/sitesetup" element={<SiteSetup />} />
               <Route
-                path="/document/new/approvedform"
+                path="/document/:id/update/siteattendance"
+                element={<SiteAttendance />}
+              />
+              <Route
+                path="/document/:id/update/sitesetup"
+                element={<SiteSetup />}
+              />
+              <Route
+                path="/document/:id/update/approvedform"
                 element={<ApprovedForm />}
               />
-              <Route path="/document/new/forms" element={<Forms />} />
+              <Route path="/document/:id/update/forms" element={<Forms />} />
               <Route
-                path="/document/new/methodstatements"
+                path="/document/:id/update/methodstatements"
                 element={<MethodStatements />}
               />
               <Route
-                path="/document/new/reinstatementsheet"
-                element={<ReinstatementSheet />}
+                path="/document/:id/update/reinstatementsheet_table"
+                element={<ReinstatementSheetTable />}
               />
               <Route
-                path="/document/update/reinstatementsheet/:id"
-                element={<ReinstatementSheet />}
+                path="/document/update/reinstatementsheet_info/:id"
+                element={<ReinstatementSheetInfo />}
               />
               <Route
-                path="/document/only_update/reinstatementsheet/:id"
-                element={<ReinstatementSheet />}
-              />
-              <Route
-                path="/document/update/reinstatementsheet/:id"
-                element={<ReinstatementSheet />}
+                path="/document/update/hole_sequence/:id"
+                element={<ReinstatementSheetHoleSequence />}
               />
               <Route path="/map" element={<Map />} />
             </Routes>

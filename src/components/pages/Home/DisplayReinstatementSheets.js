@@ -71,7 +71,7 @@ function DisplayReinstatementSheets() {
   function deleteSingleReinstatement(id) {}
 
   function updatePdf(id) {
-    navigate(`/document/only_update/reinstatementsheet/${id}`);
+    navigate(`/document/${id}/update/reinstatementsheet_table`);
   }
 
   return (

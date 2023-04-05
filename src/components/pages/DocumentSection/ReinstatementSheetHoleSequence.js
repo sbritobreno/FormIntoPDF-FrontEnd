@@ -6,7 +6,7 @@ import Select from "../../form/Select";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { Context } from "../../../context/UserContext";
 
-function ReinstatementSheet() {
+function ReinstatementSheetHoleSequence() {
   const { setCurrentPdf, getCurrentPdf } = useContext(Context);
   const currentPdf = getCurrentPdf();
   const { id } = useParams();
@@ -54,9 +54,7 @@ function ReinstatementSheet() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    if(window.location.pathname.includes("/only_update")) navigate("/FormIntoPDF-FrontEnd/home");
-    if(window.location.pathname.includes("/update")) navigate(`/document/update/${currentPdf.id}`);
-    if(window.location.pathname.includes("/new")) navigate("/document/new");
+    navigate(`/document/${id}/update/reinstatementsheet_table`);
   }
 
   return (
@@ -180,4 +178,4 @@ function ReinstatementSheet() {
   );
 }
 
-export default ReinstatementSheet;
+export default ReinstatementSheetHoleSequence;
