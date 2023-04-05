@@ -1,12 +1,14 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import styles from "./Doc.module.css";
 import Input from "../../form/Input";
 import TextArea from "../../form/TextArea";
 import Select from "../../form/Select";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { Context } from "../../../context/UserContext";
+import { MdAddCircle } from "react-icons/md";
 
 function ReinstatementSheetHoleSequence() {
+  const hiddenFileInput = useRef(null);
   const { setCurrentPdf, getCurrentPdf } = useContext(Context);
   const currentPdf = getCurrentPdf();
   const { id } = useParams();
@@ -55,6 +57,11 @@ function ReinstatementSheetHoleSequence() {
   async function handleSubmit(e) {
     e.preventDefault();
     navigate(`/document/${id}/update/reinstatementsheet_table`);
+  }
+
+  async function handleClickAddImage(e) {
+    e.preventDefault();
+    hiddenFileInput.current.click();
   }
 
   return (
@@ -146,7 +153,46 @@ function ReinstatementSheetHoleSequence() {
           name={"comments"}
           handleOnChange={handleChange}
         />
-        <Input
+        <div className={styles.preview_form_images}>
+          {preview.length > 0
+            ? preview.map((image, index) => (
+                <img
+                  src={URL.createObjectURL(image)}
+                  alt="job_image"
+                  key={`${index}`}
+                />
+              ))
+            : form.images &&
+              form.images.map((image, index) => (
+                <img
+                  src={`${process.env.REACT_APP_API}/images/forms/${image}`}
+                  alt="job_image"
+                  key={`${index}`}
+                />
+              ))}
+          <button
+            className={styles.add_image_btn}
+            onClick={handleClickAddImage}
+          >
+            <MdAddCircle
+              style={{
+                padding: "20px",
+                fontSize: "130px",
+                color: "#fff",
+                cursor: "pointer",
+              }}
+            />
+          </button>
+          <input
+            type="file"
+            name="images"
+            ref={hiddenFileInput}
+            onChange={onFileChange}
+            style={{ display: "none" }}
+            multiple={true}
+          ></input>
+        </div>
+        {/* <Input
           text="Job image"
           type="file"
           name="images"
@@ -170,7 +216,7 @@ function ReinstatementSheetHoleSequence() {
                   key={`${index}`}
                 />
               ))}
-        </div>
+        </div> */}
 
         <input type="submit" value="Save" />
       </form>

@@ -173,6 +173,18 @@ svg {
   background-color: var(--primary-color-dark);
 }
 
+.add_image_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 130px;
+  height: 130px;
+  border: none;
+  border-radius: 10px;
+  margin: 0.5em;
+  background-color: #ddd;
+}
+
 /* ################################## Site Setup ################################## */
 
 /* and Method Statement */
