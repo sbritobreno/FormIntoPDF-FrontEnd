@@ -2,6 +2,7 @@ import styles from "./Home.module.css";
 import { useState, useRef } from "react";
 import { formsData } from "../../../data";
 import { useNavigate } from "react-router-dom";
+import Pagination from "../../layout/Pagination";
 
 function DisplayReinstatementSheets() {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ function DisplayReinstatementSheets() {
   const [searchfield, setSearchfield] = useState("");
   const [filter, setFilter] = useState(false);
   const [page, setPage] = useState(1);
-  const resultsPerPage = 3;
+  const resultsPerPage = 5;
   let numberOfPages = 1;
 
   const filteredForms = searchFilter();
@@ -143,28 +144,7 @@ function DisplayReinstatementSheets() {
           ))}
         {forms.length === 0 && <p>There is no Single hole form...</p>}
       </div>
-      <div className={styles.pagination_container}>
-        <button
-          style={
-            page > 1 ? { visibility: "visible" } : { visibility: "hidden" }
-          }
-          onClick={() => setPage(page - 1)}
-        >
-          {"<<  "}page {page - 1}
-        </button>
-        <p>{page}</p>
-        <button
-          style={
-            page < numberOfPages
-              ? { visibility: "visible" }
-              : { visibility: "hidden" }
-          }
-          onClick={() => setPage(page + 1)}
-        >
-          page {page + 1}
-          {"  >>"}
-        </button>
-      </div>
+      <Pagination setPage={setPage} page={page} numberOfPages={numberOfPages} />
     </section>
   );
 }

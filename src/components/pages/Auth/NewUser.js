@@ -18,16 +18,19 @@ function NewUser() {
     setNewUser({ ...newUser, admin: notAdmin });
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    register(newUser);
+    let successful;
+    await register(newUser).then((res) => (successful = res));
 
-    // Reset inputs
-    setNotAdmin(true);
-    const inputsArray = Object.keys(inputs);
-    inputsArray.forEach((i) => {
-      inputs[i].value = "";
-    });
+    // Reset inputs if request successful
+    if (successful) {
+      setNotAdmin(true);
+      const inputsArray = Object.keys(inputs);
+      inputsArray.forEach((i) => {
+        inputs[i].value = "";
+      });
+    }
   }
 
   return (

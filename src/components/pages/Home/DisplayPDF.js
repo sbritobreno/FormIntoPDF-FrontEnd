@@ -3,6 +3,7 @@ import { useState, useContext, useRef } from "react";
 import { pdfsData } from "../../../data";
 import { UserContext } from "../../../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import Pagination from "../../layout/Pagination";
 
 function DisplayPDF() {
   const pdfs = pdfsData;
@@ -12,7 +13,7 @@ function DisplayPDF() {
   const [searchfield, setSearchfield] = useState("");
   const [filter, setFilter] = useState(false);
   const [page, setPage] = useState(1);
-  const resultsPerPage = 3;
+  const resultsPerPage = 5;
   let numberOfPages = 1;
 
   const filteredPDFs = searchFilter();
@@ -154,28 +155,7 @@ function DisplayPDF() {
           ))}
         {pdfs.length === 0 && <p>There is no PDF...</p>}
       </div>
-      <div className={styles.pagination_container}>
-        <button
-          style={
-            page > 1 ? { visibility: "visible" } : { visibility: "hidden" }
-          }
-          onClick={() => setPage(page - 1)}
-        >
-          {"<<  "}page {page - 1}
-        </button>
-        <p>{page}</p>
-        <button
-          style={
-            page < numberOfPages
-              ? { visibility: "visible" }
-              : { visibility: "hidden" }
-          }
-          onClick={() => setPage(page + 1)}
-        >
-          page {page + 1}
-          {"  >>"}
-        </button>
-      </div>
+      <Pagination setPage={setPage} page={page} numberOfPages={numberOfPages} />
     </section>
   );
 }

@@ -159,32 +159,6 @@ button:disabled {
   color: #fff;
 }
 
-.pagination_container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 10px;
-}
-
-.pagination_container button {
-  margin-inline: 30px;
-  height: 2em;
-  background-color: rgba(20, 102, 182, 0.5);
-  border: none;
-  border-radius: 10px;
-  width: 8em;
-  color: #fff;
-}
-
-.pagination_container button:hover {
-  background-color: rgba(20, 102, 182, 1);
-}
-
-.pagination_container p {
-  font-weight: bold;
-  color: var(--primary-color);
-}
-
 /* ###########################         Mobile/Tablet           ##################################### */
 
 @media (max-width: 767px) {
@@ -212,10 +186,5 @@ button:disabled {
   .pdf_card_buttons button {
     width: 7em;
     margin: 0.3em 0em;
-  }
-
-  .pagination_container button {
-    margin-inline: 20px;
-    width: 6em;
   }
 }

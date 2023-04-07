@@ -1,9 +1,11 @@
-import api from "../utils/api";
+import api from "../../utils/api";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import useFlashMessage from "./useFlashMessage";
+import useFlashMessage from "../../hooks/useFlashMessage";
 
-export default function useAuth() {
+export default function UserService() {
+  const [currentUser, setCurrentUser] = useState(false);
+  const [userList, setUserList] = useState([]);
   const [token] = useState(localStorage.getItem("token"));
   const [authenticated, setAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -15,8 +17,41 @@ export default function useAuth() {
     if (token) {
       api.defaults.headers.Authorization = `Bearer ${JSON.parse(token)}`;
       setAuthenticated(true);
+
+      // Get current user
+      api
+        .get("/user/checkuser", {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(token)}`,
+          },
+        })
+        .then((response) => {
+          setCurrentUser(response.data);
+          if (response.data.admin) {
+            setIsAdmin(true);
+          }
+        })
+        .catch((err) => {
+          return err.response.data;
+        });
+
+      // Get list of users
+      api
+        .get("/user/allusers", {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(token)}`,
+          },
+        })
+        .then((response) => {
+          setUserList(response.data.users);
+        })
+        .catch((err) => {
+          return err.response.data;
+        });
+    } else if (!window.location.pathname.includes("login")) {
+      navigate("/login");
     }
-  }, [token]);
+  }, [navigate, token]);
 
   async function login(user) {
     let msgText = "You are now logged in!";
@@ -29,7 +64,6 @@ export default function useAuth() {
       });
 
       await authUser(data);
-      await checkIfUserIsAdmin();
     } catch (error) {
       msgText = error.response.data.message;
       msgType = "error";
@@ -51,30 +85,12 @@ export default function useAuth() {
 
     setAuthenticated(false);
     setIsAdmin(false);
+    setCurrentUser({});
     localStorage.removeItem("token");
     api.defaults.headers.Authorization = undefined;
     navigate("/login");
 
     setFlashMessage(msgText, msgType);
-  }
-
-  async function checkIfUserIsAdmin() {
-    try {
-      const data = await api
-        .get("/user/checkuser", {
-          headers: {
-            Authorization: `Bearer ${JSON.parse(token)}`,
-          },
-        })
-        .then((response) => {
-          return response.data;
-        });
-      if (data.admin) {
-        setIsAdmin(true);
-      }
-    } catch (error) {
-      console.log(error);
-    }
   }
 
   async function register(user) {
@@ -91,6 +107,9 @@ export default function useAuth() {
     }
 
     setFlashMessage(msgText, msgType);
+
+    if (msgType === "error") return false;
+    if (msgType === "success") return true;
   }
 
   async function deleteUserAccount() {
@@ -114,6 +133,7 @@ export default function useAuth() {
 
     setAuthenticated(false);
     setIsAdmin(false);
+    setCurrentUser({});
     localStorage.removeItem("token");
     api.defaults.headers.Authorization = undefined;
     navigate("/login");
@@ -143,12 +163,12 @@ export default function useAuth() {
     setFlashMessage(msgText, msgType);
   }
 
-  async function resetPassword(email) {
-    let msgText = `A new password was sent to ${email}`;
+  async function resetPassword(user) {
+    let msgText = `A new password was sent to ${user.email}`;
     let msgType = "success";
 
     try {
-      await api.patch("/user/resetpassword", email).then((response) => {
+      await api.patch("/user/resetpassword", user).then((response) => {
         return response.data;
       });
     } catch (error) {
@@ -159,15 +179,58 @@ export default function useAuth() {
     setFlashMessage(msgText, msgType);
   }
 
+  async function updateProfile(user) {
+    let msgType = "success";
+    const formData = new FormData();
+
+    Object.keys(user).forEach((key) => formData.append(key, user[key]));
+
+    const data = await api
+      .patch(`/user/edit`, formData, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        return response.data;
+      })
+      .catch((err) => {
+        msgType = "error";
+        return err.response.data;
+      });
+
+    setFlashMessage(data.message, msgType);
+  }
+
+  async function toggleUserAdmin(id) {
+    await api
+      .patch(`/user/toggleuseradmin/${id}`, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+        },
+      })
+      .then((response) => {
+        return response.data;
+      })
+      .catch((err) => {
+        return err.response.data;
+      });
+  }
+
   return {
+    setCurrentUser,
+    currentUser,
+    authenticated,
+    isAdmin,
+    userList,
     login,
     logout,
-    checkIfUserIsAdmin,
     register,
     deleteUserAccount,
     deleteUserAccountByAdmin,
     resetPassword,
-    authenticated,
-    isAdmin,
+    updateProfile,
+    toggleUserAdmin,
   };
 }

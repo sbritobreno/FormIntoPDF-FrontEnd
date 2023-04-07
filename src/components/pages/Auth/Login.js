@@ -52,7 +52,8 @@ function Login() {
           <input type="submit" value="Login" />
         </form>
         <p>
-          Forgot your password? <Link onClick={resetPassword}>Click here.</Link>
+          Forgot your password?{" "}
+          <Link onClick={() => resetPassword(user)}>Click here.</Link>
         </p>
       </div>
     </section>

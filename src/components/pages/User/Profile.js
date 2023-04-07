@@ -1,43 +1,26 @@
-import api from "../../../utils/api";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import styles from "./Profile.module.css";
 import Input from "../../form/Input";
 import user_img from "../../../../src/profile_img_default.png";
 import { UserContext } from "../../../context/UserContext";
 
 function Profile() {
-  const { deleteUserAccount } = useContext(UserContext);
-  const [token] = useState(localStorage.getItem("token"));
-  const [user, setUser] = useState({});
+  const { deleteUserAccount, currentUser, setCurrentUser, updateProfile } =
+    useContext(UserContext);
   const [preview, setPreview] = useState("");
-
-  useEffect(() => {
-    try {
-      api
-        .get("/user/checkuser", {
-          headers: {
-            Authorization: `Bearer ${JSON.parse(token)}`,
-          },
-        })
-        .then((response) => {
-          setUser(response.data);
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  }, [token]);
 
   function onFileChange(e) {
     setPreview(e.target.files[0]);
-    setUser({ ...user, [e.target.name]: e.target.files[0] });
+    setCurrentUser({ ...currentUser, [e.target.name]: e.target.files[0] });
   }
 
   function handleChange(e) {
-    setUser({ ...user, [e.target.name]: e.target.value });
+    setCurrentUser({ ...currentUser, [e.target.name]: e.target.value });
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
+    updateProfile(currentUser);
   }
 
   return (
@@ -45,12 +28,12 @@ function Profile() {
       <div className={styles.profile_header}>
         <h1>Profile</h1>
         <div className={styles.preview_image}>
-          {(user.image || preview || user_img) && (
+          {(currentUser.image || preview || user_img) && (
             <img
               src={
                 preview
                   ? URL.createObjectURL(preview)
-                  : `${process.env.REACT_APP_API}/images/users/${user.image}`
+                  : `${process.env.REACT_APP_API}/images/users/${currentUser.image}`
               }
               alt="Profile img"
             />
@@ -68,7 +51,7 @@ function Profile() {
           text="Name"
           type="text"
           name="name"
-          value={user.name || ""}
+          value={currentUser.name || ""}
           placeholder="Type user name"
           handleOnChange={handleChange}
         />
@@ -76,7 +59,7 @@ function Profile() {
           text="E-mail"
           type="email"
           name="email"
-          value={user.email || ""}
+          value={currentUser.email || ""}
           autoComplete={"email"}
           placeholder="Type user email"
           readOnly={"readonly"}
@@ -85,7 +68,7 @@ function Profile() {
           text="Role"
           type="text"
           name="role"
-          value={user.role || ""}
+          value={currentUser.role || ""}
           autoComplete={"role"}
           handleOnChange={handleChange}
           placeholder="Type user role"
@@ -94,7 +77,7 @@ function Profile() {
           text="Phone"
           type="text"
           name="phone"
-          value={user.phone || ""}
+          value={currentUser.phone || ""}
           placeholder="Type user phone number"
           handleOnChange={handleChange}
         />

@@ -1,35 +1,41 @@
 import { createContext } from "react";
-import useAuth from "../hooks/useAuth";
+import UserService from "../services/user/user.service";
 
 const UserContext = createContext();
 
 function UserProvider({ children }) {
   const {
+    setCurrentUser,
+    currentUser,
+    authenticated,
+    isAdmin,
+    userList,
     login,
     logout,
-    checkIfUserIsAdmin,
     register,
     deleteUserAccount,
     deleteUserAccountByAdmin,
     resetPassword,
-    currentUser,
-    authenticated,
-    isAdmin,
-  } = useAuth();
+    updateProfile,
+    toggleUserAdmin,
+  } = UserService();
 
   return (
     <UserContext.Provider
       value={{
+        setCurrentUser,
+        currentUser,
+        authenticated,
+        isAdmin,
+        userList,
         login,
         logout,
-        checkIfUserIsAdmin,
         register,
         deleteUserAccount,
         deleteUserAccountByAdmin,
         resetPassword,
-        currentUser,
-        authenticated,
-        isAdmin,
+        updateProfile,
+        toggleUserAdmin,
       }}
     >
       {children}

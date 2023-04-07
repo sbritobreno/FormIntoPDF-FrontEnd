@@ -1,26 +1,49 @@
 import styles from "./Users.module.css";
-import { useState } from "react";
-import { users_staff } from "../../../data";
+import React, { useState, useContext } from "react";
+import { UserContext } from "../../../context/UserContext";
+import Pagination from "../../layout/Pagination";
 
 function Users() {
+  const [updateList, setUpdateList] = useState(false);
+  const { userList, toggleUserAdmin, currentUser, deleteUserAccountByAdmin } =
+    useContext(UserContext);
+  const [page, setPage] = useState(1);
+  const resultsPerPage = 2;
+  let numberOfPages = 1;
   const [searchfieldName, setSearchfieldName] = useState("");
   const filteredUser = searchFilter();
 
   function searchFilter() {
     // filter by Name
-    return users_staff.filter((user) => {
-      return user.name.toLowerCase().startsWith(searchfieldName.toLowerCase());
+    let result = userList.filter((user) => {
+      return (
+        // Remove currentUser from the list
+        user.id !== currentUser.id &&
+        user.name.toLowerCase().startsWith(searchfieldName.toLowerCase())
+      );
     });
+
+    numberOfPages = Math.ceil(result.length / resultsPerPage);
+
+    result = getPageResults(page, result);
+
+    return result;
+  }
+
+  function getPageResults(pageNumber = 1, list) {
+    const start = (pageNumber - 1) * resultsPerPage;
+    const end = pageNumber * resultsPerPage;
+
+    return list.slice(start, end);
   }
 
   function onSearchChangeName(event) {
     setSearchfieldName(event.target.value);
   }
 
-  function toggleAdmin(id) {
-    // it is working but it is not refreshing cause there is no state
-    const user = users_staff.filter((user) => user.id === id);
-    user[0].isadmin = !user[0].isadmin;
+  function handleToggle(id) {
+    toggleUserAdmin(id);
+    setUpdateList(!updateList);
   }
 
   return (
@@ -38,10 +61,13 @@ function Users() {
         />
       </div>
       <div className={styles.users_container}>
-        {users_staff.length > 0 &&
+        {filteredUser.length > 0 &&
           filteredUser.map((user) => (
             <div className={styles.users_card} key={user.id}>
-              <img src={user.image} alt="user_image" />
+              <img
+                src={`${process.env.REACT_APP_API}/images/users/${user.image}`}
+                alt="user_image"
+              />
               <div className={styles.users_card_subcontainer}>
                 <div className={styles.users_details}>
                   <p>
@@ -61,26 +87,29 @@ function Users() {
                     <div className={styles.switch}>
                       <input
                         type="checkbox"
-                        name="isadmin"
-                        defaultChecked={user.isadmin}
+                        name="admin"
+                        checked={user.admin}
+                        onChange={() => handleToggle(user.id)}
                       />
                       <span
                         className={styles.slider}
-                        onClick={() => toggleAdmin(user.id)}
+                        onClick={() => handleToggle(user.id)}
                       ></span>
                     </div>
                   </div>
-                  <button className={styles.users_btn_remove}>
+                  <button
+                    className={styles.users_btn_remove}
+                    onClick={() => deleteUserAccountByAdmin(user.name, user.id)}
+                  >
                     Remove
                   </button>
                 </div>
               </div>
             </div>
           ))}
-        {users_staff.length === 0 && (
-          <p>Oops, it seems you are the only user!</p>
-        )}
+        {userList.length === 0 && <p>Oops, it seems you are the only user!</p>}
       </div>
+      <Pagination setPage={setPage} page={page} numberOfPages={numberOfPages} />
     </section>
   );
 }

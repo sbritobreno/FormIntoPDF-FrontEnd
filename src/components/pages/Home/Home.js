@@ -1,20 +1,12 @@
 import styles from "./Home.module.css";
-import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
 import DisplayPDF from "./DisplayPDF";
 import DisplayReinstatementSheets from "./DisplayReinstatementSheets";
 import { DocumentContext } from "../../../context/DocumentContext";
-import { UserContext } from "../../../context/UserContext";
 
 function Home() {
-  const { authenticated } = useContext(UserContext);
   const { currentDocument } = useContext(DocumentContext);
   const [homeDisplay, setHomeDisplay] = useState("PDF");
-  const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   if (!authenticated) navigate("/login");
-  // });
 
   return (
     <section>

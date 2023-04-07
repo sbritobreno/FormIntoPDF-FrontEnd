@@ -2,14 +2,10 @@ import { Link } from "react-router-dom";
 import React, { useContext, useState } from "react";
 import styles from "./MobileNavbar.module.css";
 import { GiHamburgerMenu } from "react-icons/gi";
-
-import { users_staff } from "../../data";
-
-/* Contenxt */
 import { UserContext } from "../../context/UserContext";
 
 function MobileNavbar() {
-  const {authenticated, logout} = useContext(UserContext)
+  const { isAdmin, logout, currentUser } = useContext(UserContext);
   const [dropdownOpen, setMobileDropdownOpen] = useState(false);
   const style = { color: "#fff", fontSize: "2em" };
 
@@ -29,8 +25,8 @@ function MobileNavbar() {
                 <Link to="/FormIntoPDF-FrontEnd">Home</Link>
                 <Link to="/document/new">New document +</Link>
                 <Link to="/user/new">Create new user</Link>
-                <Link to="/user/all_users">See all users</Link>
-                <Link to="/user/profile">{users_staff[0].name}</Link>
+                {isAdmin && <Link to="/user/all_users">See all users</Link>}
+                {isAdmin && <Link to="/user/profile">{currentUser.name}</Link>} 
                 <Link to="/login" onClick={logout}>
                   Logout
                 </Link>
