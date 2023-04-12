@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 import styles from "./Doc.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { DocumentContext } from "../../../context/DocumentContext";
@@ -11,27 +11,14 @@ import {
 
 function ReinstatementSheetTable() {
   const navigate = useNavigate();
-  const { currentDocument, setCurrentDocument } = useContext(DocumentContext);
+  const { currentDocument, getDocument } = useContext(DocumentContext);
   const { id } = useParams();
 
-  const [attendanceList, setAttendanceList] = useState([
-    { name_print: "brddd", time_in: 10, time_out: 12 },
-    { name_print: "breno", time_in: 10, time_out: 12 },
-    { name_print: "breno", time_in: 10, time_out: 12 },
-    { name_print: "breno", time_in: 10, time_out: 12 },
-    { name_print: "breno", time_in: 10, time_out: 12 },
-    { name_print: "breno", time_in: 10, time_out: 12 },
-  ]);
-
   useEffect(() => {
-  }, [id, attendanceList]);
+    getDocument(id);
+  }, [id]);
 
-  function deleteHoleSequence(index) {
-    console.log(index);
-    var array = attendanceList;
-    array.splice(index, 1);
-    setAttendanceList(array);
-  }
+  function deleteHoleSequence(index) {}
 
   function navigateTo() {
     if (navigate(-1).pathname.includes("/FormIntoPDF-FrontEnd")) {
@@ -71,10 +58,10 @@ function ReinstatementSheetTable() {
               <th>Edit</th>
             </tr>
             <tr>
-              <td>{currentDocument.esbh_hole_no}</td>
-              <td>{currentDocument.esbh_hole_no}</td>
-              <td>{currentDocument.esbh_hole_no}</td>
-              <td>{currentDocument.esbh_hole_no}</td>
+              <td>{currentDocument?.reinstatement_sheet?.esbn_hole_number}</td>
+              <td>{currentDocument?.reinstatement_sheet?.esbn_hole_number}</td>
+              <td>{currentDocument?.reinstatement_sheet?.esbn_hole_number}</td>
+              <td>{currentDocument?.reinstatement_sheet?.esbn_hole_number}</td>
               <td className={styles.btn}>
                 <RiEdit2Line
                   style={styleIcons}
@@ -101,40 +88,45 @@ function ReinstatementSheetTable() {
               <th>Edit</th>
               <th>Delete</th>
             </tr>
-            {attendanceList.map((element, key) => (
-              <tr key={key}>
-                <td>{currentDocument.esbh_hole_no}</td>
-                <td>{currentDocument.esbh_hole_no}</td>
-                <td>{currentDocument.esbh_hole_no}</td>
-                <td>{currentDocument.esbh_hole_no}</td>
-                <td>{currentDocument.esbh_hole_no}</td>
-                <td>{currentDocument.esbh_hole_no}</td>
-                <td>{currentDocument.esbh_hole_no}</td>
-                <td>{currentDocument.esbh_hole_no}</td>
-                <td>{currentDocument.esbh_hole_no}</td>
-                <td className={styles.btn}>
-                  <RiEdit2Line
-                    style={styleIcons}
-                    onClick={() =>
-                      navigate(`/document/update/hole_sequence/${element.id}`)
-                    }
-                  />
-                </td>
-                <td className={styles.btn}>
-                  <RiDeleteBin5Line
-                    style={styleIcons}
-                    onClick={() => deleteHoleSequence(key)}
-                  />
-                </td>
-              </tr>
-            ))}
+            {currentDocument?.reinstatement_sheet?.hole_sequences?.map(
+              (element, key) => (
+                <tr key={key}>
+                  <td>{(key + 1).toString()}</td>
+                  <td>{element.coordinates}</td>
+                  <td>{element.surface_category}</td>
+                  <td>{element.length}</td>
+                  <td>{element.width}</td>
+                  <td>{element.area}</td>
+                  <td>{element.reinstatement}</td>
+                  <td>{element.status}</td>
+                  <td>{element.date_complete}</td>
+                  <td className={styles.btn}>
+                    <RiEdit2Line
+                      style={styleIcons}
+                      onClick={() =>
+                        navigate(`/document/update/hole_sequence/${element.id}`)
+                      }
+                    />
+                  </td>
+                  <td className={styles.btn}>
+                    <RiDeleteBin5Line
+                      style={styleIcons}
+                      onClick={() => deleteHoleSequence(key)}
+                    />
+                  </td>
+                </tr>
+              )
+            )}
           </tbody>
         </table>
         <table>
           <tbody>
             <tr>
               <td className={styles.btn}>
-                <RiFileAddLine style={styleIcons} onClick={() => navigate(`/document/update/hole_sequence/new`)} />
+                <RiFileAddLine
+                  style={styleIcons}
+                  onClick={() => navigate(`/document/update/hole_sequence/new`)}
+                />
               </td>
             </tr>
           </tbody>
@@ -143,22 +135,29 @@ function ReinstatementSheetTable() {
           <tbody>
             <tr>
               <th style={{ width: "120px" }}>Comments:</th>
-              <td>"Comments..."</td>
+              <td>{currentDocument?.reinstatement_sheet?.esbn_hole_number}</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <div className={styles.table_images}>
-        <div className={styles.reinstatement_img_all}>
-          {attendanceList.map((image, index) => (
-            <img
-              src={`${process.env.REACT_APP_API}/images/documents/${image}`}
-              alt="job_image"
-              key={`${index}`}
-            />
-          ))}
+      {currentDocument?.reinstatement_sheet?.hole_sequences
+        ?.reinstatement_images ? (
+        <div className={styles.table_images}>
+          <div className={styles.reinstatement_img_all}>
+            {currentDocument?.reinstatement_sheet?.hole_sequences?.reinstatement_images?.map(
+              (image, index) => (
+                <img
+                  src={`${process.env.REACT_APP_API}/images/documents/${image}`}
+                  alt="job_image"
+                  key={`${index}`}
+                />
+              )
+            )}
+          </div>
         </div>
-      </div>
+      ) : (
+        ""
+      )}
     </section>
   );
 }

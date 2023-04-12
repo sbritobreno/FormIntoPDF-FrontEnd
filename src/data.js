@@ -1,4 +1,4 @@
-import img from "../src/pdf_img.png";
+import img from "./assets/pdf_img.png"
 import formimg from "../src/form_img.png";
 import user_img from "../src/profile_img_default.png";
 

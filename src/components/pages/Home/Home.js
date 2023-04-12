@@ -1,11 +1,9 @@
 import styles from "./Home.module.css";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import DisplayPDF from "./DisplayPDF";
 import DisplayReinstatementSheets from "./DisplayReinstatementSheets";
-import { DocumentContext } from "../../../context/DocumentContext";
 
 function Home() {
-  const { currentDocument } = useContext(DocumentContext);
   const [homeDisplay, setHomeDisplay] = useState("PDF");
 
   return (

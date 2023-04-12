@@ -1,34 +1,34 @@
 import styles from "./Home.module.css";
 import { useState, useContext, useRef } from "react";
-import { pdfsData } from "../../../data";
-import { UserContext } from "../../../context/UserContext";
+import { DocumentContext } from "../../../context/DocumentContext";
 import { useNavigate } from "react-router-dom";
 import Pagination from "../../layout/Pagination";
+import pdf_img from "../../../assets/pdf_img.png";
 
 function DisplayPDF() {
-  const pdfs = pdfsData;
+  const { documentList, removeDocument, downloadPDF, attachFile } =
+    useContext(DocumentContext);
   const navigate = useNavigate();
   const checkbox = useRef(null);
-  const { isAdmin } = useContext(UserContext);
   const [searchfield, setSearchfield] = useState("");
   const [filter, setFilter] = useState(false);
   const [page, setPage] = useState(1);
   const resultsPerPage = 5;
   let numberOfPages = 1;
 
-  const filteredPDFs = searchFilter();
+  const filteredDocuments = searchFilter();
 
   function searchFilter() {
     // filter by Address
-    let resultAddress = pdfs.filter((pdf) => {
-      return pdf.address
+    let resultAddress = documentList.filter((doc) => {
+      return doc.created_by
         .toLowerCase()
         .includes(searchfield.toLowerCase().trim());
     });
 
     // filter by Date
-    let resultDate = pdfs.filter((pdf) => {
-      return pdf.date
+    let resultDate = documentList.filter((doc) => {
+      return doc.createdAt
         .toLowerCase()
         .startsWith(searchfield.toLowerCase().trim());
     });
@@ -40,12 +40,12 @@ function DisplayPDF() {
 
     numberOfPages = Math.ceil(result.length / resultsPerPage);
 
-    result = getDocumentResultsPage(page, result);
+    result = getPageResults(page, result);
 
     return result;
   }
 
-  function getDocumentResultsPage(pageNumber = 1, list) {
+  function getPageResults(pageNumber = 1, list) {
     const start = (pageNumber - 1) * resultsPerPage;
     const end = pageNumber * resultsPerPage;
 
@@ -53,8 +53,8 @@ function DisplayPDF() {
   }
 
   function setupFilter(list) {
-    const result = list.filter((pdf) => {
-      return pdf.final_file_attached !== null;
+    const result = list.filter((doc) => {
+      return doc.file_attached !== null;
     });
 
     return result;
@@ -67,16 +67,6 @@ function DisplayPDF() {
   function checkFilter() {
     setPage(1);
     setFilter(checkbox.current.checked);
-  }
-
-  function downloadPDF(id) {}
-
-  function deletePDF(id) {}
-
-  function attachFile(id) {}
-
-  function updatePdf(id) {
-    navigate(`/document/${id}/update`);
   }
 
   return (
@@ -99,53 +89,49 @@ function DisplayPDF() {
         />
       </div>
       <div className={styles.pdfs_container}>
-        {pdfs.length > 0 &&
-          filteredPDFs.map((pdf) => (
-            <div className={styles.pdf_card} key={pdf.id}>
-              <img src={pdf.image} alt="PDF_image" />
+        {filteredDocuments.length > 0 &&
+          filteredDocuments.map((doc) => (
+            <div className={styles.pdf_card} key={doc.id}>
+              <img src={pdf_img} alt="PDF_image" />
               <div className={styles.pdf_card_subcontainer}>
                 <div className={styles.pdf_details}>
                   <p>
-                    <span className="bold">PDF name: </span> {pdf.name}
+                    <span className="bold">PDF name: </span> {doc.created_by}
                   </p>
                   <p>
-                    <span className="bold">Date: </span> {pdf.date}
+                    <span className="bold">Date: </span> {doc.createdAt}
                   </p>
                   <p>
-                    <span className="bold">Address: </span> {pdf.address}
+                    <span className="bold">Address: </span> {doc.createdAt}
                   </p>
                   <p>
-                    <span className="bold">Last updated by: </span>{" "}
-                    {pdf.last_updated_by}
+                    <span className="bold">Last updated by: </span>
+                    {doc.last_updated_by}
                   </p>
                 </div>
                 <div className={styles.pdf_card_buttons}>
                   <button
                     className={styles.pdf_btn_attach_file}
-                    disabled={!isAdmin}
-                    onClick={() => attachFile(pdf.id)}
+                    onClick={() => attachFile(doc.id)}
                   >
-                    {pdf.final_file_attached ? "Add File" : "Replace File"}
+                    {doc.file_attached ? "Replace File" : "Add File"}
                   </button>
 
                   <button
                     className={styles.pdf_btn_edit}
-                    disabled={!isAdmin}
-                    onClick={() => updatePdf(pdf.id)}
+                    onClick={() => navigate(`/document/${doc.id}/update`)}
                   >
                     Update
                   </button>
                   <button
                     className={styles.pdf_btn_download}
-                    disabled={!isAdmin}
-                    onClick={() => downloadPDF(pdf.id)}
+                    onClick={() => downloadPDF(doc.id)}
                   >
                     Download
                   </button>
                   <button
                     className={styles.pdf_btn_remove}
-                    disabled={!isAdmin}
-                    onClick={() => deletePDF(pdf.id)}
+                    onClick={() => removeDocument(doc.id)}
                   >
                     Remove
                   </button>
@@ -153,7 +139,7 @@ function DisplayPDF() {
               </div>
             </div>
           ))}
-        {pdfs.length === 0 && <p>There is no PDF...</p>}
+        {filteredDocuments.length === 0 && <p>There is no PDF...</p>}
       </div>
       <Pagination setPage={setPage} page={page} numberOfPages={numberOfPages} />
     </section>

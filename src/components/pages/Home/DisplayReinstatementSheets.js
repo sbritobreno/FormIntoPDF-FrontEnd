@@ -38,12 +38,12 @@ function DisplayReinstatementSheets() {
 
     numberOfPages = Math.ceil(result.length / resultsPerPage);
 
-    result = getDocumentResultsPage(page, result);
+    result = getPageResults(page, result);
 
     return result;
   }
 
-  function getDocumentResultsPage(pageNumber = 1, list) {
+  function getPageResults(pageNumber = 1, list) {
     const start = (pageNumber - 1) * resultsPerPage;
     const end = pageNumber * resultsPerPage;
 

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import useFlashMessage from "../../hooks/useFlashMessage";
 
 export default function UserService() {
-  const [currentUser, setCurrentUser] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
   const [userList, setUserList] = useState([]);
   const [token] = useState(localStorage.getItem("token"));
   const [authenticated, setAuthenticated] = useState(false);
@@ -48,7 +48,7 @@ export default function UserService() {
         .catch((err) => {
           return err.response.data;
         });
-    } else if (!window.location.pathname.includes("login")) {
+    } else {
       navigate("/login");
     }
   }, [navigate, token]);

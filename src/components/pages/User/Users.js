@@ -1,10 +1,9 @@
 import styles from "./Users.module.css";
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { UserContext } from "../../../context/UserContext";
 import Pagination from "../../layout/Pagination";
 
 function Users() {
-  const [updateList, setUpdateList] = useState(false);
   const { userList, toggleUserAdmin, currentUser, deleteUserAccountByAdmin } =
     useContext(UserContext);
   const [page, setPage] = useState(1);
@@ -43,7 +42,6 @@ function Users() {
 
   function handleToggle(id) {
     toggleUserAdmin(id);
-    setUpdateList(!updateList);
   }
 
   return (
