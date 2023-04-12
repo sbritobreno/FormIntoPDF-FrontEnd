@@ -185,32 +185,6 @@ function ReinstatementSheetHoleSequence() {
             multiple={true}
           ></input>
         </div>
-        {/* <Input
-          text="Job image"
-          type="file"
-          name="images"
-          handleOnChange={onFileChange}
-          multiple={true}
-        />
-        <div className={styles.preview_form_images}>
-          {preview.length > 0
-            ? preview.map((image, index) => (
-                <img
-                  src={URL.createObjectURL(image)}
-                  alt="job_image"
-                  key={`${index}`}
-                />
-              ))
-            : form.images &&
-              form.images.map((image, index) => (
-                <img
-                  src={`${process.env.REACT_APP_API}/images/forms/${image}`}
-                  alt="job_image"
-                  key={`${index}`}
-                />
-              ))}
-        </div> */}
-
         <input type="submit" value="Save" />
       </form>
     </section>

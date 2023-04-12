@@ -81,11 +81,11 @@ export default function DocumentService() {
     setFlashMessage(data.message, msgType);
   }
 
-  async function attachFile(id) {
+  async function attachFile(id, file) {
     let msgType = "success";
 
     const data = await api
-      .patch(`/document/attach_file/${id}`, {
+      .patch(`/document/attach_file/${id}`, file, {
         headers: {
           Authorization: `Bearer ${JSON.parse(token)}`,
         },

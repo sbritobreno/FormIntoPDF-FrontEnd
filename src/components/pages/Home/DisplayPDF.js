@@ -15,6 +15,7 @@ function DisplayPDF() {
   const [page, setPage] = useState(1);
   const resultsPerPage = 5;
   let numberOfPages = 1;
+  const hiddenFileInput = useRef([]);
 
   const filteredDocuments = searchFilter();
 
@@ -35,11 +36,8 @@ function DisplayPDF() {
 
     let result =
       resultAddress.length > resultDate.length ? resultAddress : resultDate;
-
     if (filter) result = setupFilter(result);
-
     numberOfPages = Math.ceil(result.length / resultsPerPage);
-
     result = getPageResults(page, result);
 
     return result;
@@ -54,7 +52,7 @@ function DisplayPDF() {
 
   function setupFilter(list) {
     const result = list.filter((doc) => {
-      return doc.file_attached !== null;
+      return doc.file_attached === null;
     });
 
     return result;
@@ -67,6 +65,17 @@ function DisplayPDF() {
   function checkFilter() {
     setPage(1);
     setFilter(checkbox.current.checked);
+  }
+
+  async function handleClickAttachFile(e, index) {
+    e.preventDefault();
+    hiddenFileInput[index].click();
+  }
+
+  function onFileChange(e, id) {
+    const formData = new FormData();
+    formData.append("file", e.target.files[0]);
+    attachFile(id, formData);
   }
 
   return (
@@ -90,7 +99,7 @@ function DisplayPDF() {
       </div>
       <div className={styles.pdfs_container}>
         {filteredDocuments.length > 0 &&
-          filteredDocuments.map((doc) => (
+          filteredDocuments.map((doc, index) => (
             <div className={styles.pdf_card} key={doc.id}>
               <img src={pdf_img} alt="PDF_image" />
               <div className={styles.pdf_card_subcontainer}>
@@ -110,13 +119,21 @@ function DisplayPDF() {
                   </p>
                 </div>
                 <div className={styles.pdf_card_buttons}>
-                  <button
-                    className={styles.pdf_btn_attach_file}
-                    onClick={() => attachFile(doc.id)}
-                  >
-                    {doc.file_attached ? "Replace File" : "Add File"}
-                  </button>
-
+                  <>
+                    <button
+                      className={styles.pdf_btn_attach_file}
+                      onClick={(e) => handleClickAttachFile(e, index)}
+                    >
+                      {doc.file_attached ? "Replace File" : "Add File"}
+                    </button>
+                    <input
+                      type="file"
+                      name="file"
+                      ref={(el) => (hiddenFileInput[index] = el)}
+                      onChange={(e) => onFileChange(e, doc.id)}
+                      style={{ display: "none" }}
+                    ></input>
+                  </>
                   <button
                     className={styles.pdf_btn_edit}
                     onClick={() => navigate(`/document/${doc.id}/update`)}
