@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import styles from "./Profile.module.css";
 import Input from "../../form/Input";
-import user_img from "../../../../src/profile_img_default.png";
+import user_img from "../../../assets/profile_img_default.png";
 import { UserContext } from "../../../context/UserContext";
 
 function Profile() {

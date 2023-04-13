@@ -11,20 +11,20 @@ import {
 
 function ReinstatementSheetTable() {
   const navigate = useNavigate();
-  const { currentDocument, getDocument } = useContext(DocumentContext);
+  const { currentReinstatementSheet, getReinstatementSheet } = useContext(DocumentContext);
   const { id } = useParams();
 
   useEffect(() => {
-    getDocument(id);
+    getReinstatementSheet(id);
   }, [id]);
 
   function deleteHoleSequence(index) {}
 
   function navigateTo() {
-    if (navigate(-1).pathname.includes("/FormIntoPDF-FrontEnd")) {
-      navigate("/FormIntoPDF-FrontEnd");
-    } else {
+    if (navigate(-1).pathname.includes("/update")) {
       navigate(`/document/${id}/update`);
+    } else {
+      navigate("/home");
     }
   }
 
@@ -58,15 +58,15 @@ function ReinstatementSheetTable() {
               <th>Edit</th>
             </tr>
             <tr>
-              <td>{currentDocument?.reinstatement_sheet?.esbn_hole_number}</td>
-              <td>{currentDocument?.reinstatement_sheet?.esbn_hole_number}</td>
-              <td>{currentDocument?.reinstatement_sheet?.esbn_hole_number}</td>
-              <td>{currentDocument?.reinstatement_sheet?.esbn_hole_number}</td>
+              <td>{currentReinstatementSheet?.esbn_hole_number}</td>
+              <td>{currentReinstatementSheet?.esbn_hole_number}</td>
+              <td>{currentReinstatementSheet?.esbn_hole_number}</td>
+              <td>{currentReinstatementSheet?.esbn_hole_number}</td>
               <td className={styles.btn}>
                 <RiEdit2Line
                   style={styleIcons}
                   onClick={() =>
-                    navigate(`/document/update/reinstatementsheet_info/${id}`)
+                    navigate(`/document/${id}/update/reinstatementsheet_info`)
                   }
                 />
               </td>
@@ -88,7 +88,7 @@ function ReinstatementSheetTable() {
               <th>Edit</th>
               <th>Delete</th>
             </tr>
-            {currentDocument?.reinstatement_sheet?.hole_sequences?.map(
+            {currentReinstatementSheet?.hole_sequences?.map(
               (element, key) => (
                 <tr key={key}>
                   <td>{(key + 1).toString()}</td>
@@ -111,7 +111,7 @@ function ReinstatementSheetTable() {
                   <td className={styles.btn}>
                     <RiDeleteBin5Line
                       style={styleIcons}
-                      onClick={() => deleteHoleSequence(key)}
+                      onClick={() => deleteHoleSequence(element.id)}
                     />
                   </td>
                 </tr>
@@ -135,16 +135,16 @@ function ReinstatementSheetTable() {
           <tbody>
             <tr>
               <th style={{ width: "120px" }}>Comments:</th>
-              <td>{currentDocument?.reinstatement_sheet?.esbn_hole_number}</td>
+              <td>{currentReinstatementSheet?.esbn_hole_number}</td>
             </tr>
           </tbody>
         </table>
       </div>
-      {currentDocument?.reinstatement_sheet?.hole_sequences
+      {currentReinstatementSheet?.hole_sequences
         ?.reinstatement_images ? (
         <div className={styles.table_images}>
           <div className={styles.reinstatement_img_all}>
-            {currentDocument?.reinstatement_sheet?.hole_sequences?.reinstatement_images?.map(
+            {currentReinstatementSheet?.hole_sequences?.reinstatement_images?.map(
               (image, index) => (
                 <img
                   src={`${process.env.REACT_APP_API}/images/documents/${image}`}

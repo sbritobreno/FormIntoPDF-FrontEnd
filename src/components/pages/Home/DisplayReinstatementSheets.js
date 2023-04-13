@@ -1,43 +1,45 @@
 import styles from "./Home.module.css";
-import { useState, useRef } from "react";
-import { formsData } from "../../../data";
+import { useState, useRef, useContext } from "react";
+import { DocumentContext } from "../../../context/DocumentContext";
 import { useNavigate } from "react-router-dom";
 import Pagination from "../../layout/Pagination";
+import form_img from "../../../assets/form_img.png";
 
 function DisplayReinstatementSheets() {
+  const { documentList, downloadReinstatementSheet } =
+    useContext(DocumentContext);
+  const reinstatementSheets = documentList
+    .map((doc) => doc.reinstatement_sheet)
+    .filter((element) => element !== null && element !== undefined);
   const navigate = useNavigate();
   const checkbox = useRef(null);
-  const forms = formsData;
   const [searchfield, setSearchfield] = useState("");
   const [filter, setFilter] = useState(false);
   const [page, setPage] = useState(1);
   const resultsPerPage = 5;
   let numberOfPages = 1;
 
-  const filteredForms = searchFilter();
+  const filteredReinstatementSheets = searchFilter();
 
   function searchFilter() {
     // filter by Address
-    let resultAddress = forms.filter((form) => {
-      return form.address
+    let resultAddress = reinstatementSheets.filter((form) => {
+      return form.location
         .toLowerCase()
         .includes(searchfield.toLowerCase().trim());
     });
 
     // filter by Date
-    let resultDate = forms.filter((form) => {
-      return form.date
+    let resultDate = reinstatementSheets.filter((form) => {
+      return form.createdAt
         .toLowerCase()
         .startsWith(searchfield.toLowerCase().trim());
     });
 
     let result =
       resultAddress.length > resultDate.length ? resultAddress : resultDate;
-
     if (filter) result = setupFilter(result);
-
     numberOfPages = Math.ceil(result.length / resultsPerPage);
-
     result = getPageResults(page, result);
 
     return result;
@@ -52,7 +54,7 @@ function DisplayReinstatementSheets() {
 
   function setupFilter(list) {
     const result = list.filter((sheet) => {
-      return sheet.esbh_hole_no === null;
+      return sheet.esbn_hole_number === null;
     });
 
     return result;
@@ -67,14 +69,6 @@ function DisplayReinstatementSheets() {
     setFilter(checkbox.current.checked);
   }
 
-  function downloadReinstatementSheet(id) {}
-
-  function deleteSingleReinstatement(id) {}
-
-  function updatePdf(id) {
-    navigate(`/document/${id}/update/reinstatementsheet_table`);
-  }
-
   return (
     <section>
       <div className={styles.search_box}>
@@ -86,7 +80,7 @@ function DisplayReinstatementSheets() {
         />
       </div>
       <div className={styles.filter}>
-        <label>Filter No HSBH number:</label>
+        <label>Filter No ESBN number:</label>
         <input
           ref={checkbox}
           className={styles.search}
@@ -95,54 +89,55 @@ function DisplayReinstatementSheets() {
         />
       </div>
       <div className={styles.pdfs_container}>
-        {forms.length > 0 &&
-          filteredForms.map((form) => (
+        {filteredReinstatementSheets.length > 0 &&
+          filteredReinstatementSheets.map((form) => (
             <div className={styles.pdf_card} key={form.id}>
-              <img src={form.image} alt="PDF_image" />
+              <img src={form_img} alt="Form_image" />
               <div className={styles.pdf_card_subcontainer}>
                 <div className={styles.pdf_details}>
                   <p>
-                    <span className="bold">Address: </span> {form.address}
+                    <span className="bold">Address: </span> {form.location}
                   </p>
                   <p>
-                    <span className="bold">Coordinates: </span>{" "}
-                    {form.coordinates}
+                    <span className="bold">ESBN No.: </span>{" "}
+                    {form.esbn_hole_number}
                   </p>
                   <p>
-                    <span className="bold">Reinstatement: </span>{" "}
-                    {form.reinstatement}
+                    <span className="bold">Local Authority Licence No.: </span>{" "}
+                    {form.local_authority_licence_number}
                   </p>
                   <p>
-                    <span className="bold">Status: </span> {form.status}
+                    <span className="bold">Traffic Impact No.: </span>{" "}
+                    {form.traffic_impact_number}
                   </p>
                   <p>
-                    <span className="bold">Date: </span> {form.date}
+                    <span className="bold">Date: </span> {form.createdAt}
                   </p>
                 </div>
                 <div className={styles.pdf_card_buttons}>
                   <button
                     className={styles.pdf_btn_edit}
-                    onClick={() => updatePdf(form.id)}
+                    onClick={() =>
+                      navigate(
+                        `/document/${form.DocumentId}/update/reinstatementsheet_table`
+                      )
+                    }
                   >
                     Update
                   </button>
                   <button
                     className={styles.pdf_btn_download}
-                    onClick={() => downloadReinstatementSheet(form.id)}
+                    onClick={() => downloadReinstatementSheet(form.DocumentId)}
                   >
                     Download
-                  </button>
-                  <button
-                    className={styles.pdf_btn_remove}
-                    onClick={() => deleteSingleReinstatement(form.id)}
-                  >
-                    Remove
                   </button>
                 </div>
               </div>
             </div>
           ))}
-        {forms.length === 0 && <p>There is no Single hole form...</p>}
+        {filteredReinstatementSheets.length === 0 && (
+          <p>There is no Single Reinstatement form...</p>
+        )}
       </div>
       <Pagination setPage={setPage} page={page} numberOfPages={numberOfPages} />
     </section>

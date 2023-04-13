@@ -1,11 +1,9 @@
-import img from "./assets/pdf_img.png"
-import formimg from "../src/form_img.png";
-import user_img from "../src/profile_img_default.png";
+
 
 const formsData = [
   {
     id: 1,
-    image: formimg,
+    image: "formimg",
     esbh_hole_no: null,
     address:
       "Spire of Dublin, O'Connell Street Upper, North City, Dublin, Ireland",
@@ -21,7 +19,7 @@ const formsData = [
   },
   {
     id: 2,
-    image: formimg,
+    image: "formimg",
     address:
       "Spire of Dublin, O'Connell Street Upper, North City, Dublin, Ireland",
     coordinates: "53.3498114 -6.2602525",
@@ -39,7 +37,7 @@ const formsData = [
   },
   {
     id: 3,
-    image: formimg,
+    image: "formimg",
     address:
       "Spire of Dublin, O'Connell Street Upper, North City, Dublin, Ireland",
     coordinates: "53.3498114 -6.2602525",
@@ -61,7 +59,7 @@ const pdfsData = [
   {
     id: 1,
     type: "Hole",
-    image: img,
+    image: "img",
     esbh_hole_no: 123,
     local_authority_licence_number: 456,
     traffic_impact_number: 789,
@@ -76,7 +74,7 @@ const pdfsData = [
   {
     id: 2,
     type: "Hole",
-    image: img,
+    image: "img",
     esbh_hole_no: 123,
     local_authority_licence_number: 456,
     traffic_impact_number: 789,
@@ -91,7 +89,7 @@ const pdfsData = [
   {
     id: 3,
     type: "Hole",
-    image: img,
+    image: "img",
     esbh_hole_no: 123,
     local_authority_licence_number: 456,
     traffic_impact_number: 789,
@@ -105,7 +103,7 @@ const pdfsData = [
   {
     id: 4,
     type: "Hole",
-    image: img,
+    image: "img",
     esbh_hole_no: 123,
     local_authority_licence_number: 456,
     traffic_impact_number: 789,
@@ -119,7 +117,7 @@ const pdfsData = [
   {
     id: 5,
     type: "Hole",
-    image: img,
+    image: "img",
     esbh_hole_no: 123,
     local_authority_licence_number: 456,
     traffic_impact_number: 789,
@@ -133,7 +131,7 @@ const pdfsData = [
   {
     id: 6,
     type: "Hole",
-    image: img,
+    image: "img",
     esbh_hole_no: 123,
     local_authority_licence_number: 456,
     traffic_impact_number: 789,
@@ -147,7 +145,7 @@ const pdfsData = [
   {
     id: 7,
     type: "Hole",
-    image: img,
+    image: "img",
     esbh_hole_no: null,
     local_authority_licence_number: 456,
     traffic_impact_number: 789,
@@ -160,43 +158,6 @@ const pdfsData = [
   },
 ];
 
-const users_staff = [
-  {
-    id: 1,
-    name: "Gian Valentim",
-    image: user_img,
-    email: "gian@s.com",
-    phone: "123 456 45",
-    isadmin: false,
-    role: "Engineer",
-  },
-  {
-    id: 2,
-    name: "Gian",
-    image: user_img,
-    email: "gian@s.com",
-    phone: "123 456 45",
-    isadmin: false,
-    role: "Engineer",
-  },
-  {
-    id: 3,
-    name: "Gian",
-    image: user_img,
-    email: "gian@s.com",
-    phone: "123 456 45",
-    isadmin: true,
-    role: "Engineer",
-  },
-  {
-    id: 4,
-    name: "Gian",
-    image: user_img,
-    email: "gian@s.com",
-    phone: "123 456 45",
-    isadmin: true,
-    role: "Engineer",
-  },
-];
 
-export { pdfsData, users_staff, formsData };
+
+export { pdfsData, formsData };

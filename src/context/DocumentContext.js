@@ -12,6 +12,11 @@ function DocumentProvider({ children }) {
     removeDocument,
     downloadPDF,
     attachFile,
+    currentReinstatementSheet,
+    setCurrentReinstatementSheet,
+    getReinstatementSheet,
+    editReinstatementSheet,
+    downloadReinstatementSheet,
   } = DocumentService();
 
   return (
@@ -24,6 +29,11 @@ function DocumentProvider({ children }) {
         removeDocument,
         downloadPDF,
         attachFile,
+        currentReinstatementSheet,
+        setCurrentReinstatementSheet,
+        getReinstatementSheet,
+        editReinstatementSheet,
+        downloadReinstatementSheet,
       }}
     >
       {children}

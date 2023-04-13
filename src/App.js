@@ -82,7 +82,7 @@ function App() {
                   element={<ReinstatementSheetTable />}
                 />
                 <Route
-                  path="/document/update/reinstatementsheet_info/:id"
+                  path="/document/:id/update/reinstatementsheet_info"
                   element={<ReinstatementSheetInfo />}
                 />
                 <Route
