@@ -24,7 +24,7 @@ import Forms from "./components/pages/DocumentSection/Forms";
 import MethodStatements from "./components/pages/DocumentSection/MethodStatements";
 import ReinstatementSheetTable from "./components/pages/DocumentSection/ReinstatementSheetTable";
 import ReinstatementSheetInfo from "./components/pages/DocumentSection/ReinstatementSheetInfo";
-import ReinstatementSheetHoleSequence from "./components/pages/DocumentSection/ReinstatementSheetHoleSequence";
+import NewReinstatementSheetHoleSequence from "./components/pages/DocumentSection/NewReinstatementSheetHoleSequence";
 import Map from "./components/pages/Map/Map";
 
 // context
@@ -86,8 +86,12 @@ function App() {
                   element={<ReinstatementSheetInfo />}
                 />
                 <Route
+                  path="/document/:id/update/hole_sequence/new"
+                  element={<NewReinstatementSheetHoleSequence />}
+                />
+                <Route
                   path="/document/update/hole_sequence/:id"
-                  element={<ReinstatementSheetHoleSequence />}
+                  element={<NewReinstatementSheetHoleSequence />}
                 />
                 <Route path="/map" element={<Map />} />
               </Routes>

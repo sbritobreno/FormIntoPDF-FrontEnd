@@ -1,7 +1,7 @@
 import api from "../../utils/api";
-import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import useFlashMessage from "../../hooks/useFlashMessage";
+import { useNavigate } from "react-router-dom";
 
 export default function DocumentService() {
   const [token] = useState(localStorage.getItem("token"));
@@ -119,9 +119,9 @@ export default function DocumentService() {
       });
   }
 
-  async function editReinstatementSheet(id, data) {
+  async function editReinstatementSheetInfo(id, data) {
     await api
-      .patch(`document/${id}/update/reinstatementsheet`, data, {
+      .patch(`document/${id}/update/reinstatementsheetinfo`, data, {
         headers: {
           Authorization: `Bearer ${JSON.parse(token)}`,
           "Content-Type": "application/json",
@@ -155,6 +155,39 @@ export default function DocumentService() {
     setFlashMessage(data.message, msgType);
   }
 
+  async function createHoleSequence(id, holeSequence) {
+    let msgType = "success";
+    const formData = new FormData();
+
+    Object.keys(holeSequence).forEach((key) => {
+      if (key === "images") {
+        for (let i = 0; i < holeSequence[key].length; i++) {
+          formData.append("images", holeSequence[key][i]);
+        }
+      } else {
+        formData.append(key, holeSequence[key]);
+      }
+    });
+
+    const data = await api
+      .post(`/document/${id}/new_holesequence`, formData, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        return response.data;
+      })
+      .catch((err) => {
+        msgType = "error";
+        return err.response.data;
+      });
+
+    setFlashMessage(data.message, msgType);
+    navigate(`/document/${id}/update/reinstatementsheet_table`);
+  }
+
   return {
     documentList,
     currentDocument,
@@ -166,7 +199,8 @@ export default function DocumentService() {
     currentReinstatementSheet,
     setCurrentReinstatementSheet,
     getReinstatementSheet,
-    editReinstatementSheet,
+    editReinstatementSheetInfo,
     downloadReinstatementSheet,
+    createHoleSequence,
   };
 }

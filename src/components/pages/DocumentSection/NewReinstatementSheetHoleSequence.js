@@ -7,54 +7,68 @@ import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { DocumentContext } from "../../../context/DocumentContext";
 import { MdAddCircle } from "react-icons/md";
 
-function ReinstatementSheetHoleSequence() {
-  const hiddenFileInput = useRef(null);
-  const { currentDocument } = useContext(DocumentContext);
+function NewReinstatementSheetHoleSequence() {
   const { id } = useParams();
-
+  const {
+    currentReinstatementSheet,
+    getReinstatementSheet,
+    createHoleSequence,
+  } = useContext(DocumentContext);
   // This state come from map component with location and coordinates
   const { state } = useLocation();
-  const [form, setForm] = useState({
-    address: state?.location,
-    coordinates: state?.coordinates,
-  });
-
+  const [newHoleSequence, setNewHoleSequence] = useState({});
+  const hiddenFileInput = useRef(null);
   const [preview, setPreview] = useState([]);
-  const reinstatement = ["Permanent", "Temporary"];
-  const status = ["Completed", "In progress"];
+  const reinstatementOptions = ["Permanent", "Temporary"];
+  const statusOptions = ["Completed", "In progress"];
   const navigate = useNavigate();
 
+  useEffect(() => {
+    getReinstatementSheet(id);
+    if (state)
+      setNewHoleSequence({
+        ...newHoleSequence,
+        coordinates: state.coordinates,
+      });
+  }, [id]);
+
   function handleChange(e) {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setNewHoleSequence({ ...newHoleSequence, [e.target.name]: e.target.value });
   }
 
   function handleReinstatement(e) {
-    setForm({
-      ...form,
+    setNewHoleSequence({
+      ...newHoleSequence,
       reinstatement: e.target.options[e.target.selectedIndex].text,
     });
   }
 
   function handleStatus(e) {
-    setForm({
-      ...form,
+    setNewHoleSequence({
+      ...newHoleSequence,
       status: e.target.options[e.target.selectedIndex].text,
     });
   }
 
   function onFileChange(e) {
-    setPreview(Array.from(e.target.files));
-    setForm({ ...form, images: [...e.target.files] });
-  }
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    navigate(`/document/${id}/update/reinstatementsheet_table`);
+    setPreview(preview.concat(Array.from(e.target.files)));
+    setNewHoleSequence({ ...newHoleSequence, images: [...e.target.files] });
   }
 
   async function handleClickAddImage(e) {
     e.preventDefault();
     hiddenFileInput.current.click();
+  }
+
+  async function handleClickRemoveImage(index) {
+    const newArray = preview.filter((item, i) => i !== index);
+    setPreview(newArray);
+    setNewHoleSequence({ ...newHoleSequence, images: preview });
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    createHoleSequence(id, newHoleSequence);
   }
 
   return (
@@ -66,28 +80,30 @@ function ReinstatementSheetHoleSequence() {
           className={styles.btn_set_loc_coords}
           text="Location / Coordinates"
           type="button"
-          value="Set hole location / coordinates"
+          value="Set hole coordinates"
           onClick={() =>
             navigate("/map", {
-              state: { page_link: window.location.pathname },
+              state: { originPage: window.location.pathname },
             })
           }
         />
         <div className={styles.form_control}>
           <input
-            value={currentDocument.address || ""}
             type="text"
             name="location"
-            placeholder="Location address"
+            value={
+              currentReinstatementSheet.location ||
+              "Location should be set on Reinstatement sheet information"
+            }
             readOnly
           />
         </div>
         <div className={styles.form_control}>
           <input
-            value={form.coordinates || ""}
             type="text"
             name="coordinates"
             placeholder="Coordinates"
+            value={newHoleSequence.coordinates || ""}
             readOnly
           />
         </div>
@@ -113,9 +129,12 @@ function ReinstatementSheetHoleSequence() {
             text="Area"
             type="text"
             name="area"
-            value={form.length && form.width && form.length * form.width}
+            value={
+              newHoleSequence.length && newHoleSequence.width
+                ? newHoleSequence.length * newHoleSequence.width
+                : ""
+            }
             placeholder="Area will be calculated automatically"
-            handleOnChange={handleChange}
             readOnly
           />
         </fieldset>
@@ -130,39 +149,39 @@ function ReinstatementSheetHoleSequence() {
         <Select
           text="Reinstatement"
           name="reinstatement"
-          options={reinstatement}
+          options={reinstatementOptions}
           handleOnChange={handleReinstatement}
-          value={form.reinstatement || ""}
+          value={newHoleSequence.reinstatement || ""}
         />
         <Select
           text="Status"
           name="status"
-          options={status}
+          options={statusOptions}
           handleOnChange={handleStatus}
-          value={form.status || ""}
+          value={newHoleSequence.status || ""}
+        />
+        <Input
+          text="Completed at"
+          type="date"
+          name="date_complete"
+          handleOnChange={handleChange}
+          autoComplete="off"
         />
         <TextArea
-          title={"Add new comment"}
-          name={"comments"}
+          title="Add new comment"
+          name="comments"
           handleOnChange={handleChange}
         />
         <div className={styles.preview_form_images}>
-          {preview.length > 0
-            ? preview.map((image, index) => (
-                <img
-                  src={URL.createObjectURL(image)}
-                  alt="job_image"
-                  key={`${index}`}
-                />
-              ))
-            : form.images &&
-              form.images.map((image, index) => (
-                <img
-                  src={`${process.env.REACT_APP_API}/images/forms/${image}`}
-                  alt="job_image"
-                  key={`${index}`}
-                />
-              ))}
+          {preview.length > 0 &&
+            preview.map((image, index) => (
+              <img
+                src={URL.createObjectURL(image)}
+                alt="job_image"
+                key={`${index}`}
+                onClick={() => handleClickRemoveImage(index)}
+              />
+            ))}
           <button
             className={styles.add_image_btn}
             onClick={handleClickAddImage}
@@ -191,4 +210,4 @@ function ReinstatementSheetHoleSequence() {
   );
 }
 
-export default ReinstatementSheetHoleSequence;
+export default NewReinstatementSheetHoleSequence;

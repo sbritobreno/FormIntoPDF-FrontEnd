@@ -125,7 +125,7 @@ function ReinstatementSheetTable() {
               <td className={styles.btn}>
                 <RiFileAddLine
                   style={styleIcons}
-                  onClick={() => navigate(`/document/update/hole_sequence/new`)}
+                  onClick={() => navigate(`/document/${id}/update/hole_sequence/new`)}
                 />
               </td>
             </tr>

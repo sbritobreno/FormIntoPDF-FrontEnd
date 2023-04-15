@@ -17,7 +17,6 @@ function PlacesAutocomplete({
   setZoom,
   setCenter,
   selected,
-  setLocation,
 }) {
   const {
     ready,
@@ -29,11 +28,10 @@ function PlacesAutocomplete({
 
   const handleSelect = async (address) => {
     setValue(address, false);
-    setLocation(address);
     clearSuggestions();
 
     const results = await getGeocode({ address });
-    const { lat, lng } = await getLatLng(results[0]);
+    const { lat, lng } = getLatLng(results[0]);
     setSelected({ lat, lng });
     setCenter({ lat, lng });
     setZoom(19);

@@ -15,8 +15,9 @@ function DocumentProvider({ children }) {
     currentReinstatementSheet,
     setCurrentReinstatementSheet,
     getReinstatementSheet,
-    editReinstatementSheet,
+    editReinstatementSheetInfo,
     downloadReinstatementSheet,
+    createHoleSequence,
   } = DocumentService();
 
   return (
@@ -32,8 +33,9 @@ function DocumentProvider({ children }) {
         currentReinstatementSheet,
         setCurrentReinstatementSheet,
         getReinstatementSheet,
-        editReinstatementSheet,
+        editReinstatementSheetInfo,
         downloadReinstatementSheet,
+        createHoleSequence,
       }}
     >
       {children}

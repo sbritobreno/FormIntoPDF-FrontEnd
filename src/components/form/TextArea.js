@@ -1,6 +1,6 @@
 import styles from "./TextArea.module.css";
 
-function TextArea({ title, name, handleChange }) {
+function TextArea({ title, name, handleOnChange }) {
   return (
     <>
       <label>{title}:</label>
@@ -9,7 +9,7 @@ function TextArea({ title, name, handleChange }) {
         rows="2"
         name={name}
         placeholder="*Optional"
-        onChange={handleChange}
+        onChange={handleOnChange}
         autoComplete="off"
       ></textarea>
     </>

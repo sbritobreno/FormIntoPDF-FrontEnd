@@ -8,7 +8,7 @@ import { RiCloseLine } from "react-icons/ri";
 import { BsLayersHalf } from "react-icons/bs";
 
 function Map() {
-  // use this state to return to the previous page (NewForm or EditForm)
+  // use this state to return to the previous page
   const { state } = useLocation();
   const [libraries] = useState(["places"]);
   const { isLoaded } = useLoadScript({
@@ -18,14 +18,13 @@ function Map() {
 
   if (!isLoaded) return <div>Loading...</div>;
 
-  return <LoadMap page_link={state?.page_link} />;
+  return <LoadMap originPage={state?.originPage} />;
 }
 
-function LoadMap({ page_link }) {
+function LoadMap({ originPage }) {
   const [center, setCenter] = useState({ lat: 53.3498114, lng: -6.2602525 });
   const [zoom, setZoom] = useState(12);
   const [selected, setSelected] = useState(null);
-  const [location, setLocation] = useState("");
   const [mapType, setMapType] = useState("roadmap");
   const navigate = useNavigate();
   const { setFlashMessage } = useFlashMessage();
@@ -55,18 +54,14 @@ function LoadMap({ page_link }) {
   };
 
   function onSave() {
-    if (location && selected) {
-      navigate(page_link, {
+    if (selected) {
+      navigate(originPage, {
         state: {
-          location: location,
           coordinates: `${selected.lat} ${selected.lng}`,
         },
       });
     } else {
-      let msgType = "error";
-      let msgText = "Set address and coordinates before saving!";
-
-      setFlashMessage(msgText, msgType);
+      setFlashMessage("Set coordinates before saving!", "error");
     }
   }
 
@@ -93,7 +88,6 @@ function LoadMap({ page_link }) {
           setCenter={setCenter}
           setSelected={setSelected}
           selected={selected}
-          setLocation={setLocation}
         />
       </div>
 
@@ -122,13 +116,10 @@ function LoadMap({ page_link }) {
       </GoogleMap>
       <div className={styles.btns_container}>
         <BsLayersHalf
-          style={{...style, padding: "4px"}}
+          style={{ ...style, padding: "4px" }}
           onClick={changeMapView}
         />
-        <RiCloseLine
-          style={style}
-          onClick={() => navigate(-1)}
-        />
+        <RiCloseLine style={style} onClick={() => navigate(-1)} />
       </div>
       <button className={styles.btn_save} onClick={onSave}>
         Save

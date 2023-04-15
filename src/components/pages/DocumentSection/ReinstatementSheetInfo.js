@@ -9,7 +9,7 @@ function ReinstatementSheetInfo() {
     currentReinstatementSheet,
     setCurrentReinstatementSheet,
     getReinstatementSheet,
-    editReinstatementSheet,
+    editReinstatementSheetInfo,
   } = useContext(DocumentContext);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ function ReinstatementSheetInfo() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    editReinstatementSheet(id, currentReinstatementSheet);
+    editReinstatementSheetInfo(id, currentReinstatementSheet);
     navigate(`/document/${id}/update/reinstatementsheet_table`);
   }
 
