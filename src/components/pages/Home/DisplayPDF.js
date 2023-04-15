@@ -1,13 +1,18 @@
 import styles from "./Home.module.css";
-import { useState, useContext, useRef } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { DocumentContext } from "../../../context/DocumentContext";
 import { useNavigate } from "react-router-dom";
 import Pagination from "../../layout/Pagination";
 import pdf_img from "../../../assets/pdf_img.png";
 
 function DisplayPDF() {
-  const { documentList, removeDocument, downloadPDF, attachFile } =
-    useContext(DocumentContext);
+  const {
+    documentList,
+    getDocumentList,
+    removeDocument,
+    downloadPDF,
+    attachFile,
+  } = useContext(DocumentContext);
   const navigate = useNavigate();
   const checkbox = useRef(null);
   const [searchfield, setSearchfield] = useState("");
@@ -16,6 +21,11 @@ function DisplayPDF() {
   const resultsPerPage = 5;
   let numberOfPages = 1;
   const hiddenFileInput = useRef([]);
+  const [rerender, setRerender] = useState(false); // create a state variable
+
+  useEffect(() => {
+    getDocumentList();
+  }, [rerender]);
 
   const filteredDocuments = searchFilter();
 
@@ -76,6 +86,11 @@ function DisplayPDF() {
     const formData = new FormData();
     formData.append("file", e.target.files[0]);
     attachFile(id, formData);
+  }
+
+  async function HandleremoveDocument(id) {
+    await removeDocument(id);
+    setRerender(!rerender);
   }
 
   return (
@@ -148,7 +163,7 @@ function DisplayPDF() {
                   </button>
                   <button
                     className={styles.pdf_btn_remove}
-                    onClick={() => removeDocument(doc.id)}
+                    onClick={() => HandleremoveDocument(doc.id)}
                   >
                     Remove
                   </button>

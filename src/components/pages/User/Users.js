@@ -1,16 +1,26 @@
 import styles from "./Users.module.css";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { UserContext } from "../../../context/UserContext";
 import Pagination from "../../layout/Pagination";
 
 function Users() {
-  const { userList, toggleUserAdmin, currentUser, deleteUserAccountByAdmin } =
-    useContext(UserContext);
+  const {
+    userList,
+    getUsersList,
+    toggleUserAdmin,
+    currentUser,
+    deleteUserAccountByAdmin,
+  } = useContext(UserContext);
   const [page, setPage] = useState(1);
   const resultsPerPage = 2;
   let numberOfPages = 1;
   const [searchfieldName, setSearchfieldName] = useState("");
   const filteredUser = searchFilter();
+  const [rerender, setRerender] = useState(false); // create a state variable
+
+  useEffect(() => {
+    getUsersList();
+  }, [rerender]);
 
   function searchFilter() {
     // filter by Name
@@ -40,8 +50,9 @@ function Users() {
     setSearchfieldName(event.target.value);
   }
 
-  function handleToggle(id) {
-    toggleUserAdmin(id);
+  async function handleToggle(id) {
+    await toggleUserAdmin(id);
+    setRerender(!rerender);
   }
 
   return (

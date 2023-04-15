@@ -150,11 +150,26 @@ svg {
 .reinstatement_img_all,
 .preview_form_images {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
   border: 1px solid #777;
   border-radius: 10px;
   margin-bottom: 1em;
+}
+
+.holesequence_number_parent {
+  position: relative;
+}
+
+.holesequence_number {
+  position: absolute;
+  top: 0.7em;
+  left: 0.7em;
+  background-color: white;
+  height: 20px;
+  width: 20px;
+  border-radius: 10px;
+  text-align: center;
+  z-index: 10;
 }
 
 .reinstatement_img_all img,

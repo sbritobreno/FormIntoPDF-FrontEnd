@@ -12,7 +12,7 @@ function NewReinstatementSheetHoleSequence() {
   const {
     currentReinstatementSheet,
     getReinstatementSheet,
-    createHoleSequence,
+    createHoleSequence
   } = useContext(DocumentContext);
   // This state come from map component with location and coordinates
   const { state } = useLocation();
@@ -63,7 +63,7 @@ function NewReinstatementSheetHoleSequence() {
   async function handleClickRemoveImage(index) {
     const newArray = preview.filter((item, i) => i !== index);
     setPreview(newArray);
-    setNewHoleSequence({ ...newHoleSequence, images: preview });
+    setNewHoleSequence({ ...newHoleSequence, images: newArray });
   }
 
   async function handleSubmit(e) {

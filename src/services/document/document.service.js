@@ -13,8 +13,8 @@ export default function DocumentService() {
   const { setFlashMessage } = useFlashMessage();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Get list of documents
+  // Get list of documents
+  async function getDocumentList() {
     api
       .get("/document/all_documents", {
         headers: {
@@ -27,7 +27,7 @@ export default function DocumentService() {
       .catch((err) => {
         return err.response.data;
       });
-  }, [token]);
+  }
 
   async function getDocument(id) {
     await api
@@ -185,11 +185,36 @@ export default function DocumentService() {
       });
 
     setFlashMessage(data.message, msgType);
-    navigate(`/document/${id}/update/reinstatementsheet_table`);
+    if (msgType === "success")
+      navigate(`/document/${id}/update/reinstatementsheet_table`);
+  }
+
+  async function editHoleSequence(id) {}
+
+  
+  async function removeHoleSequence(id) {
+    let msgType = "success";
+
+    const data = await api
+      .delete(`/document/remove_holesequence/${id}`, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+        },
+      })
+      .then((response) => {
+        return response.data;
+      })
+      .catch((err) => {
+        msgType = "error";
+        return err.response.data;
+      });
+
+    setFlashMessage(data.message, msgType);
   }
 
   return {
     documentList,
+    getDocumentList,
     currentDocument,
     setCurrentDocument,
     getDocument,
@@ -202,5 +227,7 @@ export default function DocumentService() {
     editReinstatementSheetInfo,
     downloadReinstatementSheet,
     createHoleSequence,
+    editHoleSequence,
+    removeHoleSequence,
   };
 }

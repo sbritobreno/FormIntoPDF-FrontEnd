@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import styles from "./Doc.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { DocumentContext } from "../../../context/DocumentContext";
@@ -11,14 +11,17 @@ import {
 
 function ReinstatementSheetTable() {
   const navigate = useNavigate();
-  const { currentReinstatementSheet, getReinstatementSheet } = useContext(DocumentContext);
+  const {
+    currentReinstatementSheet,
+    getReinstatementSheet,
+    removeHoleSequence,
+  } = useContext(DocumentContext);
   const { id } = useParams();
+  const [rerender, setRerender] = useState(false); // create a state variable
 
   useEffect(() => {
     getReinstatementSheet(id);
-  }, [id]);
-
-  function deleteHoleSequence(index) {}
+  }, [id, rerender]);
 
   function navigateTo() {
     if (navigate(-1).pathname.includes("/update")) {
@@ -26,6 +29,11 @@ function ReinstatementSheetTable() {
     } else {
       navigate("/home");
     }
+  }
+
+  async function handleRemoveHoleSequence(id) {
+    await removeHoleSequence(id);
+    setRerender(!rerender); // update state variable to trigger rerender
   }
 
   const styleBtnClose = {
@@ -59,9 +67,11 @@ function ReinstatementSheetTable() {
             </tr>
             <tr>
               <td>{currentReinstatementSheet?.esbn_hole_number}</td>
-              <td>{currentReinstatementSheet?.esbn_hole_number}</td>
-              <td>{currentReinstatementSheet?.esbn_hole_number}</td>
-              <td>{currentReinstatementSheet?.esbn_hole_number}</td>
+              <td>{currentReinstatementSheet?.location}</td>
+              <td>
+                {currentReinstatementSheet?.local_authority_licence_number}
+              </td>
+              <td>{currentReinstatementSheet?.traffic_impact_number}</td>
               <td className={styles.btn}>
                 <RiEdit2Line
                   style={styleIcons}
@@ -88,35 +98,33 @@ function ReinstatementSheetTable() {
               <th>Edit</th>
               <th>Delete</th>
             </tr>
-            {currentReinstatementSheet?.hole_sequences?.map(
-              (element, key) => (
-                <tr key={key}>
-                  <td>{(key + 1).toString()}</td>
-                  <td>{element.coordinates}</td>
-                  <td>{element.surface_category}</td>
-                  <td>{element.length}</td>
-                  <td>{element.width}</td>
-                  <td>{element.area}</td>
-                  <td>{element.reinstatement}</td>
-                  <td>{element.status}</td>
-                  <td>{element.date_complete}</td>
-                  <td className={styles.btn}>
-                    <RiEdit2Line
-                      style={styleIcons}
-                      onClick={() =>
-                        navigate(`/document/update/hole_sequence/${element.id}`)
-                      }
-                    />
-                  </td>
-                  <td className={styles.btn}>
-                    <RiDeleteBin5Line
-                      style={styleIcons}
-                      onClick={() => deleteHoleSequence(element.id)}
-                    />
-                  </td>
-                </tr>
-              )
-            )}
+            {currentReinstatementSheet?.hole_sequences?.map((element, key) => (
+              <tr key={key}>
+                <td>{(key + 1).toString()}</td>
+                <td>{element.coordinates}</td>
+                <td>{element.surface_category}</td>
+                <td>{element.length}</td>
+                <td>{element.width}</td>
+                <td>{element.area}</td>
+                <td>{element.reinstatement}</td>
+                <td>{element.status}</td>
+                <td>{element.date_complete}</td>
+                <td className={styles.btn}>
+                  <RiEdit2Line
+                    style={styleIcons}
+                    onClick={() =>
+                      navigate(`/document/update/hole_sequence/${element.id}`)
+                    }
+                  />
+                </td>
+                <td className={styles.btn}>
+                  <RiDeleteBin5Line
+                    style={styleIcons}
+                    onClick={() => handleRemoveHoleSequence(element.id)}
+                  />
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
         <table>
@@ -125,7 +133,9 @@ function ReinstatementSheetTable() {
               <td className={styles.btn}>
                 <RiFileAddLine
                   style={styleIcons}
-                  onClick={() => navigate(`/document/${id}/update/hole_sequence/new`)}
+                  onClick={() =>
+                    navigate(`/document/${id}/update/hole_sequence/new`)
+                  }
                 />
               </td>
             </tr>
@@ -135,29 +145,34 @@ function ReinstatementSheetTable() {
           <tbody>
             <tr>
               <th style={{ width: "120px" }}>Comments:</th>
-              <td>{currentReinstatementSheet?.esbn_hole_number}</td>
+              <td>
+                {currentReinstatementSheet?.hole_sequences?.map(
+                  (element, index) =>
+                    `${index + 1}: ` + element.comments.toString() + ";"
+                )}
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
-      {currentReinstatementSheet?.hole_sequences
-        ?.reinstatement_images ? (
-        <div className={styles.table_images}>
-          <div className={styles.reinstatement_img_all}>
-            {currentReinstatementSheet?.hole_sequences?.reinstatement_images?.map(
-              (image, index) => (
+      <div className={styles.table_images}>
+        <div className={styles.reinstatement_img_all}>
+          {currentReinstatementSheet.hole_sequences?.map((element, index) => {
+            return element.reinstatement_images.map((image) => (
+              <div
+                className={styles.holesequence_number_parent}
+                key={`${image.id}`}
+              >
+                <div className={styles.holesequence_number}>{index + 1}</div>
                 <img
-                  src={`${process.env.REACT_APP_API}/images/documents/${image}`}
+                  src={`${process.env.REACT_APP_API}/images/documents/${image.image}`}
                   alt="job_image"
-                  key={`${index}`}
                 />
-              )
-            )}
-          </div>
+              </div>
+            ));
+          })}
         </div>
-      ) : (
-        ""
-      )}
+      </div>
     </section>
   );
 }

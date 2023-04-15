@@ -6,6 +6,7 @@ const DocumentContext = createContext();
 function DocumentProvider({ children }) {
   const {
     documentList,
+    getDocumentList,
     currentDocument,
     setCurrentDocument,
     getDocument,
@@ -18,12 +19,15 @@ function DocumentProvider({ children }) {
     editReinstatementSheetInfo,
     downloadReinstatementSheet,
     createHoleSequence,
+    editHoleSequence,
+    removeHoleSequence,
   } = DocumentService();
 
   return (
     <DocumentContext.Provider
       value={{
         documentList,
+        getDocumentList,
         currentDocument,
         setCurrentDocument,
         getDocument,
@@ -36,6 +40,8 @@ function DocumentProvider({ children }) {
         editReinstatementSheetInfo,
         downloadReinstatementSheet,
         createHoleSequence,
+        editHoleSequence,
+        removeHoleSequence,
       }}
     >
       {children}

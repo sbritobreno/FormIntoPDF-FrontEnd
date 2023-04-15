@@ -34,24 +34,26 @@ export default function UserService() {
         .catch((err) => {
           return err.response.data;
         });
-
-      // Get list of users
-      api
-        .get("/user/allusers", {
-          headers: {
-            Authorization: `Bearer ${JSON.parse(token)}`,
-          },
-        })
-        .then((response) => {
-          setUserList(response.data.users);
-        })
-        .catch((err) => {
-          return err.response.data;
-        });
     } else {
       navigate("/login");
     }
   }, [navigate, token]);
+
+  // Get list of users
+  async function getUsersList() {
+    api
+      .get("/user/allusers", {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+        },
+      })
+      .then((response) => {
+        setUserList(response.data.users);
+      })
+      .catch((err) => {
+        setFlashMessage(err.response.data.message, "error");
+      });
+  }
 
   async function login(user) {
     let msgText = "You are now logged in!";
@@ -224,6 +226,7 @@ export default function UserService() {
     authenticated,
     isAdmin,
     userList,
+    getUsersList,
     login,
     logout,
     register,
