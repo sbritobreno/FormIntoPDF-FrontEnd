@@ -20,6 +20,7 @@ function DocumentProvider({ children }) {
     downloadReinstatementSheet,
     createHoleSequence,
     editHoleSequence,
+    removeHoleSequenceImage,
     removeHoleSequence,
   } = DocumentService();
 
@@ -41,6 +42,7 @@ function DocumentProvider({ children }) {
         downloadReinstatementSheet,
         createHoleSequence,
         editHoleSequence,
+        removeHoleSequenceImage,
         removeHoleSequence,
       }}
     >

@@ -137,23 +137,37 @@ svg {
 .table_images {
   display: block;
   justify-content: center;
-  margin-inline: 1em;
+  margin-inline: auto;
   overflow: auto;
+  max-width: 90%;
 }
 
-.reinstatement_img_all {
+.reinstatement_img_list {
   margin: 2em auto;
-  min-width: 900px;
-  width: 90%;
 }
 
-.reinstatement_img_all,
+.reinstatement_img_list,
 .preview_form_images {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   border: 1px solid #777;
   border-radius: 10px;
   margin-bottom: 1em;
+}
+
+.reinstatement_img_list {
+  border: none;
+  justify-content: left;
+  flex-wrap: nowrap;
+}
+
+.reinstatement_img_list img,
+.preview_form_images img {
+  width: 130px;
+  height: 130px;
+  border-radius: 10px;
+  margin: 0.5em;
 }
 
 .holesequence_number_parent {
@@ -170,14 +184,6 @@ svg {
   border-radius: 10px;
   text-align: center;
   z-index: 10;
-}
-
-.reinstatement_img_all img,
-.preview_form_images img {
-  width: 130px;
-  height: 130px;
-  border-radius: 10px;
-  margin: 0.5em;
 }
 
 .form_reinstatement input[type="button"] {

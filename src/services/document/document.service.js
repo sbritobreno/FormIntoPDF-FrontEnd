@@ -1,5 +1,5 @@
 import api from "../../utils/api";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import useFlashMessage from "../../hooks/useFlashMessage";
 import { useNavigate } from "react-router-dom";
 
@@ -13,7 +13,6 @@ export default function DocumentService() {
   const { setFlashMessage } = useFlashMessage();
   const navigate = useNavigate();
 
-  // Get list of documents
   async function getDocumentList() {
     api
       .get("/document/all_documents", {
@@ -45,63 +44,48 @@ export default function DocumentService() {
   }
 
   async function removeDocument(id) {
-    let msgType = "success";
-
-    const data = await api
+    await api
       .delete(`/document/remove/${id}`, {
         headers: {
           Authorization: `Bearer ${JSON.parse(token)}`,
         },
       })
       .then((response) => {
-        return response.data;
+        setFlashMessage(response.data.message, "success");
       })
       .catch((err) => {
-        msgType = "error";
-        return err.response.data;
+        setFlashMessage(err.response.data.message, "error");
       });
-
-    setFlashMessage(data.message, msgType);
   }
 
   async function downloadPDF(id) {
-    let msgType = "success";
-
-    const data = await api
+    await api
       .get(`/document/download_pdf/${id}`, {
         headers: {
           Authorization: `Bearer ${JSON.parse(token)}`,
         },
       })
       .then((response) => {
-        return response.data;
+        setFlashMessage(response.data.message, "success");
       })
       .catch((err) => {
-        msgType = "error";
-        return err.response.data;
+        setFlashMessage(err.response.data.message, "error");
       });
-
-    setFlashMessage(data.message, msgType);
   }
 
   async function attachFile(id, file) {
-    let msgType = "success";
-
-    const data = await api
+    await api
       .patch(`/document/attach_file/${id}`, file, {
         headers: {
           Authorization: `Bearer ${JSON.parse(token)}`,
         },
       })
       .then((response) => {
-        return response.data;
+        setFlashMessage(response.data.message, "success");
       })
       .catch((err) => {
-        msgType = "error";
-        return err.response.data;
+        setFlashMessage(err.response.data.message, "error");
       });
-
-    setFlashMessage(data.message, msgType);
   }
 
   async function getReinstatementSheet(id) {
@@ -136,27 +120,21 @@ export default function DocumentService() {
   }
 
   async function downloadReinstatementSheet(id) {
-    let msgType = "success";
-
-    const data = await api
+    await api
       .get(`/document/download/${id}/reinstatementsheet`, {
         headers: {
           Authorization: `Bearer ${JSON.parse(token)}`,
         },
       })
       .then((response) => {
-        return response.data;
+        setFlashMessage(response.data.message, "success");
       })
       .catch((err) => {
-        msgType = "error";
-        return err.response.data;
+        setFlashMessage(err.response.data.message, "error");
       });
-
-    setFlashMessage(data.message, msgType);
   }
 
   async function createHoleSequence(id, holeSequence) {
-    let msgType = "success";
     const formData = new FormData();
 
     Object.keys(holeSequence).forEach((key) => {
@@ -169,7 +147,7 @@ export default function DocumentService() {
       }
     });
 
-    const data = await api
+    await api
       .post(`/document/${id}/new_holesequence`, formData, {
         headers: {
           Authorization: `Bearer ${JSON.parse(token)}`,
@@ -177,39 +155,73 @@ export default function DocumentService() {
         },
       })
       .then((response) => {
-        return response.data;
+        setFlashMessage(response.data.message, "success");
+        navigate(`/document/${id}/update/reinstatementsheet_table`);
       })
       .catch((err) => {
-        msgType = "error";
-        return err.response.data;
+        setFlashMessage(err.response.data.message, "error");
       });
-
-    setFlashMessage(data.message, msgType);
-    if (msgType === "success")
-      navigate(`/document/${id}/update/reinstatementsheet_table`);
   }
 
-  async function editHoleSequence(id) {}
+  async function editHoleSequence(documentId, id, holeSequence) {
+    const formData = new FormData();
 
-  
+    Object.keys(holeSequence).forEach((key) => {
+      if (key === "reinstatement_images") {
+        return;
+      } else if (key === "images") {
+        for (let i = 0; i < holeSequence[key].length; i++) {
+          formData.append("images", holeSequence[key][i]);
+        }
+      } else {
+        formData.append(key, holeSequence[key]);
+      }
+    });
+
+    await api
+      .patch(`document/update_holesequence/${id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        setFlashMessage(response.data.message, "success");
+        navigate(`/document/${documentId}/update/reinstatementsheet_table`);
+      })
+      .catch((err) => {
+        setFlashMessage(err.response.data.message, "error");
+      });
+  }
+
+  async function removeHoleSequenceImage(imageId) {
+    await api
+      .delete(`document/holesequence/remove_image/${imageId}`, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+        },
+      })
+      .then((response) => {
+        setFlashMessage(response.data.message, "success");
+      })
+      .catch((err) => {
+        setFlashMessage(err.response.data.message, "error");
+      });
+  }
+
   async function removeHoleSequence(id) {
-    let msgType = "success";
-
-    const data = await api
+    await api
       .delete(`/document/remove_holesequence/${id}`, {
         headers: {
           Authorization: `Bearer ${JSON.parse(token)}`,
         },
       })
       .then((response) => {
-        return response.data;
+        setFlashMessage(response.data.message, "success");
       })
       .catch((err) => {
-        msgType = "error";
-        return err.response.data;
+        setFlashMessage(err.response.data.message, "error");
       });
-
-    setFlashMessage(data.message, msgType);
   }
 
   return {
@@ -228,6 +240,7 @@ export default function DocumentService() {
     downloadReinstatementSheet,
     createHoleSequence,
     editHoleSequence,
+    removeHoleSequenceImage,
     removeHoleSequence,
   };
 }

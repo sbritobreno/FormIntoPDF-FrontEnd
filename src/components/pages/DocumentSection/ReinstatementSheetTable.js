@@ -21,19 +21,12 @@ function ReinstatementSheetTable() {
 
   useEffect(() => {
     getReinstatementSheet(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, rerender]);
-
-  function navigateTo() {
-    if (navigate(-1).pathname.includes("/update")) {
-      navigate(`/document/${id}/update`);
-    } else {
-      navigate("/home");
-    }
-  }
 
   async function handleRemoveHoleSequence(id) {
     await removeHoleSequence(id);
-    setRerender(!rerender); // update state variable to trigger rerender
+    setRerender(!rerender); // update state variable to run useEffect again
   }
 
   const styleBtnClose = {
@@ -53,7 +46,10 @@ function ReinstatementSheetTable() {
 
   return (
     <section>
-      <RiCloseLine style={styleBtnClose} onClick={navigateTo} />
+      <RiCloseLine
+        style={styleBtnClose}
+        onClick={() => navigate(`/document/${id}/update`)}
+      />
       <h1>Reinstatement Sheet</h1>
       <div className={styles.table}>
         <table>
@@ -113,7 +109,9 @@ function ReinstatementSheetTable() {
                   <RiEdit2Line
                     style={styleIcons}
                     onClick={() =>
-                      navigate(`/document/update/hole_sequence/${element.id}`)
+                      navigate(
+                        `/document/${id}/update/hole_sequence/${element.id}`
+                      )
                     }
                   />
                 </td>
@@ -148,7 +146,7 @@ function ReinstatementSheetTable() {
               <td>
                 {currentReinstatementSheet?.hole_sequences?.map(
                   (element, index) =>
-                    `${index + 1}: ` + element.comments.toString() + ";"
+                    `${index + 1}) ` + element.comments?.toString() + ";   "
                 )}
               </td>
             </tr>
@@ -156,7 +154,7 @@ function ReinstatementSheetTable() {
         </table>
       </div>
       <div className={styles.table_images}>
-        <div className={styles.reinstatement_img_all}>
+        <div className={styles.reinstatement_img_list}>
           {currentReinstatementSheet.hole_sequences?.map((element, index) => {
             return element.reinstatement_images.map((image) => (
               <div

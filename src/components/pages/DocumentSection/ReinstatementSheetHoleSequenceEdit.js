@@ -1,3 +1,4 @@
+import api from "../../../utils/api";
 import { useState, useEffect, useContext, useRef } from "react";
 import styles from "./Doc.module.css";
 import Input from "../../form/Input";
@@ -7,68 +8,92 @@ import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { DocumentContext } from "../../../context/DocumentContext";
 import { MdAddCircle } from "react-icons/md";
 
-function NewReinstatementSheetHoleSequence() {
-  const { id } = useParams();
+function EditReinstatementSheetHoleSequence() {
+  const [token] = useState(localStorage.getItem("token"));
+  const { documentId, id } = useParams();
   const {
     currentReinstatementSheet,
     getReinstatementSheet,
-    createHoleSequence
+    editHoleSequence,
+    removeHoleSequenceImage,
   } = useContext(DocumentContext);
   // This state come from map component with location and coordinates
   const { state } = useLocation();
-  const [newHoleSequence, setNewHoleSequence] = useState({});
-  const hiddenFileInput = useRef(null);
+  const [holeSequence, setHoleSequence] = useState({});
   const [preview, setPreview] = useState([]);
+  const hiddenFileInput = useRef(null);
   const reinstatementOptions = ["Permanent", "Temporary"];
   const statusOptions = ["Completed", "In progress"];
   const navigate = useNavigate();
 
   useEffect(() => {
-    getReinstatementSheet(id);
-    if (state)
-      setNewHoleSequence({
-        ...newHoleSequence,
-        coordinates: state.coordinates,
+    getReinstatementSheet(documentId);
+    api
+      .get(`/document/holesequence/${id}`, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+        },
+      })
+      .then((response) => {
+        setHoleSequence(response.data.holeSequence);
+      })
+      .catch((err) => {
+        return err;
       });
   }, [id]);
 
+  if (state && state.coordinates !== holeSequence.coordinates) {
+    setHoleSequence({ ...holeSequence, coordinates: state.coordinates });
+  }
+
   function handleChange(e) {
-    setNewHoleSequence({ ...newHoleSequence, [e.target.name]: e.target.value });
+    setHoleSequence({ ...holeSequence, [e.target.name]: e.target.value });
   }
 
   function handleReinstatement(e) {
-    setNewHoleSequence({
-      ...newHoleSequence,
+    setHoleSequence({
+      ...holeSequence,
       reinstatement: e.target.options[e.target.selectedIndex].text,
     });
   }
 
   function handleStatus(e) {
-    setNewHoleSequence({
-      ...newHoleSequence,
+    setHoleSequence({
+      ...holeSequence,
       status: e.target.options[e.target.selectedIndex].text,
     });
   }
 
   function onFileChange(e) {
-    setPreview(preview.concat(Array.from(e.target.files)));
-    setNewHoleSequence({ ...newHoleSequence, images: [...e.target.files] });
+    const newArray = preview.concat(Array.from(e.target.files));
+    setPreview(newArray);
+    setHoleSequence({ ...holeSequence, images: newArray });
   }
 
-  async function handleClickAddImage(e) {
+  function handleClickAddImage(e) {
     e.preventDefault();
-    hiddenFileInput.current.click();
+    hiddenFileInput.current.click(); // triggers onFileChange
   }
 
-  async function handleClickRemoveImage(index) {
+  function handleClickRemoveImage(index) {
     const newArray = preview.filter((item, i) => i !== index);
     setPreview(newArray);
-    setNewHoleSequence({ ...newHoleSequence, images: newArray });
+    setHoleSequence({ ...holeSequence, images: newArray });
   }
 
-  async function handleSubmit(e) {
+  // This one removes the images tha are coming from the database not the preview
+  function removeImage(index) {
+    const imageToRemove = holeSequence.reinstatement_images[index];
+    removeHoleSequenceImage(imageToRemove.id);
+    const newArray = holeSequence.reinstatement_images.filter(
+      (item, i) => i !== index
+    );
+    setHoleSequence({ ...holeSequence, reinstatement_images: newArray });
+  }
+
+  function handleSubmit(e) {
     e.preventDefault();
-    createHoleSequence(id, newHoleSequence);
+    editHoleSequence(documentId, id, holeSequence);
   }
 
   return (
@@ -103,7 +128,7 @@ function NewReinstatementSheetHoleSequence() {
             type="text"
             name="coordinates"
             placeholder="Coordinates"
-            value={newHoleSequence.coordinates || ""}
+            value={holeSequence?.coordinates || ""}
             readOnly
           />
         </div>
@@ -114,6 +139,7 @@ function NewReinstatementSheetHoleSequence() {
             type="text"
             name="length"
             placeholder="Type hole length"
+            value={holeSequence?.length || ""}
             handleOnChange={handleChange}
             autoComplete="off"
           />
@@ -122,6 +148,7 @@ function NewReinstatementSheetHoleSequence() {
             type="text"
             name="width"
             placeholder="Type hole width"
+            value={holeSequence?.width || ""}
             handleOnChange={handleChange}
             autoComplete="off"
           />
@@ -130,8 +157,8 @@ function NewReinstatementSheetHoleSequence() {
             type="text"
             name="area"
             value={
-              newHoleSequence.length && newHoleSequence.width
-                ? newHoleSequence.length * newHoleSequence.width
+              holeSequence.length && holeSequence.width
+                ? holeSequence.length * holeSequence.width
                 : ""
             }
             placeholder="Area will be calculated automatically"
@@ -143,6 +170,7 @@ function NewReinstatementSheetHoleSequence() {
           type="text"
           name="surface_category"
           placeholder="e.g. Granite slabs, Concrete footpath etc."
+          value={holeSequence?.surface_category || ""}
           handleOnChange={handleChange}
           autoComplete="off"
         />
@@ -151,34 +179,51 @@ function NewReinstatementSheetHoleSequence() {
           name="reinstatement"
           options={reinstatementOptions}
           handleOnChange={handleReinstatement}
-          value={newHoleSequence.reinstatement || ""}
+          value={holeSequence.reinstatement || ""}
         />
         <Select
           text="Status"
           name="status"
           options={statusOptions}
           handleOnChange={handleStatus}
-          value={newHoleSequence.status || ""}
+          value={holeSequence.status || ""}
         />
         <Input
           text="Completed at"
           type="date"
           name="date_complete"
           handleOnChange={handleChange}
+          value={
+            holeSequence.date_complete
+              ? new Date(holeSequence.date_complete.split(" ")[0])
+                  .toISOString()
+                  .split("T")[0]
+              : ""
+          }
           autoComplete="off"
         />
         <TextArea
           title="Add new comment"
           name="comments"
           handleOnChange={handleChange}
+          value={holeSequence.comments || ""}
         />
         <div className={styles.preview_form_images}>
+          {holeSequence.reinstatement_images?.length > 0 &&
+            holeSequence.reinstatement_images.map((image, index) => (
+              <img
+                src={`${process.env.REACT_APP_API}/images/documents/${image.image}`}
+                alt="job_image"
+                key={`${image.image}`}
+                onClick={() => removeImage(index)}
+              />
+            ))}
           {preview.length > 0 &&
             preview.map((image, index) => (
               <img
                 src={URL.createObjectURL(image)}
                 alt="job_image"
-                key={`${index}`}
+                key={index}
                 onClick={() => handleClickRemoveImage(index)}
               />
             ))}
@@ -210,4 +255,4 @@ function NewReinstatementSheetHoleSequence() {
   );
 }
 
-export default NewReinstatementSheetHoleSequence;
+export default EditReinstatementSheetHoleSequence;

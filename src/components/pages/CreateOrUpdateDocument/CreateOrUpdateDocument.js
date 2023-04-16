@@ -53,7 +53,7 @@ function CreateOrUpdateDocument() {
     let msgText = "A new PDF was created!";
     let msgType = "success";
 
-    navigate("/FormIntoPDF-FrontEnd");
+    navigate("/home");
     setFlashMessage(msgText, msgType);
   }
 

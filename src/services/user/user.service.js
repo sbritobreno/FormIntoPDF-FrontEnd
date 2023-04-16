@@ -56,35 +56,24 @@ export default function UserService() {
   }
 
   async function login(user) {
-    let msgText = "You are now logged in!";
-    let msgType = "success";
-
-    try {
-      const data = await api.post("/user/login", user).then((response) => {
-        msgText = response.data.message;
-        return response.data;
+    await api
+      .post("/user/login", user)
+      .then((response) => {
+        setFlashMessage("You are now logged in!", "success");
+        authUser(response.data);
+      })
+      .catch((err) => {
+        setFlashMessage(err.response.data.message, "error");
       });
-
-      await authUser(data);
-    } catch (error) {
-      msgText = error.response.data.message;
-      msgType = "error";
-    }
-
-    setFlashMessage(msgText, msgType);
   }
 
   async function authUser(data) {
     setAuthenticated(true);
     localStorage.setItem("token", JSON.stringify(data.token));
-
     navigate("/home");
   }
 
   async function logout() {
-    const msgText = "You are now logged out!";
-    const msgType = "success";
-
     setAuthenticated(false);
     setIsAdmin(false);
     setCurrentUser({});
@@ -92,46 +81,40 @@ export default function UserService() {
     api.defaults.headers.Authorization = undefined;
     navigate("/login");
 
-    setFlashMessage(msgText, msgType);
+    setFlashMessage("You are now logged out!", "success");
   }
 
   async function register(user) {
-    let msgText = "A new user was created!";
     let msgType = "success";
 
-    try {
-      await api.post("/user/register", user).then((response) => {
-        return response.data;
+    await api
+      .post("/user/register", user)
+      .then((response) => {
+        setFlashMessage("A new user was created!", msgType);
+      })
+      .catch((err) => {
+        msgType = "error";
+        setFlashMessage(err.response.data.message, msgType);
       });
-    } catch (error) {
-      msgText = error.response.data.message;
-      msgType = "error";
-    }
-
-    setFlashMessage(msgText, msgType);
 
     if (msgType === "error") return false;
     if (msgType === "success") return true;
   }
 
   async function deleteUserAccount() {
-    let msgText = "Account deleted!";
-    let msgType = "success";
+    await api
+      .delete("/user/deleteaccount", {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+        },
+      })
 
-    try {
-      await api
-        .delete("/user/deleteaccount", {
-          headers: {
-            Authorization: `Bearer ${JSON.parse(token)}`,
-          },
-        })
-        .then((response) => {
-          return response.data;
-        });
-    } catch (error) {
-      msgText = error.response.data.message;
-      msgType = "error";
-    }
+      .then((response) => {
+        setFlashMessage("Account deleted!", "success");
+      })
+      .catch((err) => {
+        setFlashMessage(err.response.data.message, "error");
+      });
 
     setAuthenticated(false);
     setIsAdmin(false);
@@ -139,30 +122,21 @@ export default function UserService() {
     localStorage.removeItem("token");
     api.defaults.headers.Authorization = undefined;
     navigate("/login");
-
-    setFlashMessage(msgText, msgType);
   }
 
   async function deleteUserAccountByAdmin(username, id) {
-    let msgText = `${username}'s account deleted!`;
-    let msgType = "success";
-
-    try {
-      await api
-        .delete(`/user/deleteaccount/${id}`, {
-          headers: {
-            Authorization: `Bearer ${JSON.parse(token)}`,
-          },
-        })
-        .then((response) => {
-          return response.data;
-        });
-    } catch (error) {
-      msgText = error.response.data.message;
-      msgType = "error";
-    }
-
-    setFlashMessage(msgText, msgType);
+    await api
+      .delete(`/user/deleteaccount/${id}`, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+        },
+      })
+      .then((response) => {
+        setFlashMessage(`${username}'s account deleted!`, "success");
+      })
+      .catch((err) => {
+        setFlashMessage(err.response.data.message, "error");
+      });
   }
 
   async function resetPassword(user) {
@@ -182,12 +156,10 @@ export default function UserService() {
   }
 
   async function updateProfile(user) {
-    let msgType = "success";
     const formData = new FormData();
-
     Object.keys(user).forEach((key) => formData.append(key, user[key]));
 
-    const data = await api
+    await api
       .patch(`/user/edit`, formData, {
         headers: {
           Authorization: `Bearer ${JSON.parse(token)}`,
@@ -195,14 +167,11 @@ export default function UserService() {
         },
       })
       .then((response) => {
-        return response.data;
+        setFlashMessage(response.data.message, "success");
       })
       .catch((err) => {
-        msgType = "error";
-        return err.response.data;
+        setFlashMessage(err.response.data.message, "error");
       });
-
-    setFlashMessage(data.message, msgType);
   }
 
   async function toggleUserAdmin(id) {
