@@ -16,7 +16,7 @@ import Login from "./components/pages/Auth/Login";
 import Profile from "./components/pages/User/Profile";
 import NewUser from "./components/pages/Auth/NewUser";
 import Users from "./components/pages/User/Users";
-import CreateOrUpdateDocument from "./components/pages/CreateOrUpdateDocument/CreateOrUpdateDocument";
+import AllDocumentSections from "./components/pages/AllDocumentSections/AllDocumentSections";
 import SiteAttendance from "./components/pages/DocumentSection/SiteAttendance";
 import SiteSetup from "./components/pages/DocumentSection/SiteSetup";
 import ApprovedForm from "./components/pages/DocumentSection/ApprovedForm";
@@ -50,12 +50,8 @@ function App() {
                 <Route path="/user/all_users" element={<Users />} />
                 <Route path="/user/profile" element={<Profile />} />
                 <Route
-                  path="/document/new"
-                  element={<CreateOrUpdateDocument />}
-                />
-                <Route
                   path="/document/:id/update"
-                  element={<CreateOrUpdateDocument />}
+                  element={<AllDocumentSections />}
                 />
                 <Route
                   path="/document/new/siteattendance"

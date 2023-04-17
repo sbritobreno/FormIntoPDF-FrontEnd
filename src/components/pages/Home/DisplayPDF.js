@@ -82,10 +82,11 @@ function DisplayPDF() {
     hiddenFileInput[index].click();
   }
 
-  function onFileChange(e, id) {
+  async function onFileChange(e, id) {
     const formData = new FormData();
     formData.append("file", e.target.files[0]);
-    attachFile(id, formData);
+    await attachFile(id, formData);
+    setRerender(!rerender);
   }
 
   async function HandleremoveDocument(id) {

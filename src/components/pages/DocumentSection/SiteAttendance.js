@@ -1,23 +1,37 @@
-import { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import api from "../../../utils/api";
+import { useState, useRef, useEffect, useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { DocumentContext } from "../../../context/DocumentContext";
 import styles from "./Doc.module.css";
 import Input from "../../form/Input";
 import Signature from "../../form/Signature";
 import { RiCloseLine, RiDeleteBin5Line } from "react-icons/ri";
 
 function SiteAttendance() {
+  const [token] = useState(localStorage.getItem("token"));
+  const { id } = useParams();
+  const { addAttendance, removeAttendance } = useContext(DocumentContext);
   const navigate = useNavigate();
   const inputs = useRef([]);
   const [displayAttendanceList, setDisplayAttendanceList] = useState(false);
+  const [attendanceList, setAttendanceList] = useState([]);
   const [newAttendance, setNewAttendance] = useState({});
-  const [attendanceList, setAttendanceList] = useState([
-    { name_print: "brddd", time_in: 10, time_out: 12 },
-    { name_print: "breno", time_in: 10, time_out: 12 },
-    { name_print: "breno", time_in: 10, time_out: 12 },
-    { name_print: "breno", time_in: 10, time_out: 12 },
-    { name_print: "breno", time_in: 10, time_out: 12 },
-    { name_print: "breno", time_in: 10, time_out: 12 },
-  ]);
+  const [rerender, setRerender] = useState(false); // create a state variable
+
+  useEffect(() => {
+    api
+      .get(`/document/get/${id}`, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+        },
+      })
+      .then((response) => {
+        setAttendanceList(response.data.document.site_attendances);
+      })
+      .catch((err) => {
+        return err.response.data.message;
+      });
+  }, [id, token, rerender]);
 
   function handleChange(e) {
     setNewAttendance({ ...newAttendance, [e.target.name]: e.target.value });
@@ -25,35 +39,38 @@ function SiteAttendance() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setAttendanceList([...attendanceList, newAttendance]);
-    setNewAttendance({});
+    let successful;
 
-    const inputNumber = Object.keys(inputs);
-    inputNumber.forEach((index) => {
-      if (+index === 4) {
-        const canvas = inputs[index].childNodes[0];
-        const context = canvas.getContext("2d");
-        context.clearRect(0, 0, canvas.width, canvas.height);
-      }
-      inputs[index].value = "";
-    });
+    await await addAttendance(id, newAttendance).then(
+      (res) => (successful = res)
+    );
+
+    if (successful) {
+      setNewAttendance({});
+      setRerender(!rerender);
+
+      // Clear input fields
+      const inputNumber = Object.keys(inputs);
+      inputNumber.forEach((index) => {
+        if (+index === 4) {
+          const canvas = inputs[index].childNodes[0];
+          const context = canvas.getContext("2d");
+          context.clearRect(0, 0, canvas.width, canvas.height);
+        }
+        inputs[index].value = "";
+      });
+    }
   }
 
-  function saveAttendanceStage() {
-    navigate(-1);
-  }
-
-  function deleteRowAttendance(index) {
-    var array = attendanceList;
-    array.splice(index, 1);
-    setAttendanceList(array);
+  function deleteRowAttendance(personId) {
+    removeAttendance(personId);
     setNewAttendance({});
+    setRerender(!rerender);
   }
 
   function handler(data) {
     if (checkIfSignPadIsEmpty(4))
       setNewAttendance({ ...newAttendance, staff_signature: data.toString() });
-    else console.error("No signature");
   }
 
   function checkIfSignPadIsEmpty(index) {
@@ -92,16 +109,24 @@ function SiteAttendance() {
                   <th>Time In</th>
                   <th>Time Out</th>
                   <th>Signature</th>
+                  <th>Date</th>
                   <th>Delete</th>
                 </tr>
                 {attendanceList.map((person, key) => (
                   <tr key={key}>
-                    <td>{person.name_print}</td>
+                    <td>{person.name}</td>
                     <td>{person.time_in}</td>
                     <td>{person.time_out}</td>
                     <td>
-                      <img src={person.staff_signature} alt="signature" />
+                      <img
+                        src={
+                          person.signature &&
+                          `${process.env.REACT_APP_API}/images/documents/${person.signature}`
+                        }
+                        alt="signature"
+                      />
                     </td>
+                    <td>{person.date}</td>
                     <td className={styles.remove_btn}>
                       <RiDeleteBin5Line
                         style={{
@@ -109,7 +134,7 @@ function SiteAttendance() {
                           color: "var(--primary-color)",
                           cursor: "pointer",
                         }}
-                        onClick={() => deleteRowAttendance(key)}
+                        onClick={() => deleteRowAttendance(person.id)}
                       />
                     </td>
                   </tr>
@@ -124,9 +149,9 @@ function SiteAttendance() {
           <form onSubmit={handleSubmit}>
             <Input
               ref={(el) => (inputs[0] = el)}
-              text="Name Print"
+              text="Name"
               type="text"
-              name="name_print"
+              name="name"
               placeholder="Type staff name"
               handleOnChange={handleChange}
               autoComplete="off"
@@ -171,7 +196,7 @@ function SiteAttendance() {
               className={styles.btn_form_save}
               type="button"
               value="Save"
-              onClick={() => saveAttendanceStage()}
+              onClick={() => navigate(`/document/${id}/update`)}
             />
           </form>
         </section>

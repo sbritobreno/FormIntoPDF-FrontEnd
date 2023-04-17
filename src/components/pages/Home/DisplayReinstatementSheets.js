@@ -25,14 +25,14 @@ function DisplayReinstatementSheets() {
     // filter by Address
     let resultAddress = reinstatementSheets.filter((form) => {
       return form.location
-        .toLowerCase()
+        ?.toLowerCase()
         .includes(searchfield.toLowerCase().trim());
     });
 
     // filter by Date
     let resultDate = reinstatementSheets.filter((form) => {
       return form.createdAt
-        .toLowerCase()
+        ?.toLowerCase()
         .startsWith(searchfield.toLowerCase().trim());
     });
 

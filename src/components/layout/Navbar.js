@@ -2,9 +2,12 @@ import { Link } from "react-router-dom";
 import React, { useContext } from "react";
 import styles from "./Navbar.module.css";
 import { UserContext } from "../../context/UserContext";
+import { DocumentContext } from "../../context/DocumentContext";
+import img from "../../assets/profile_img_default.png";
 
 function Navbar() {
   const { isAdmin, logout, currentUser } = useContext(UserContext);
+  const { newDocument } = useContext(DocumentContext);
 
   return (
     <nav className={styles.navbar_container}>
@@ -14,7 +17,9 @@ function Navbar() {
         </div>
         <ul>
           <li className={styles.new_link}>
-            <Link to="/document/new">New document +</Link>
+            <Link to="#" onClick={() => newDocument()}>
+              New document +
+            </Link>
           </li>
           <li>
             <Link to="/home">Home</Link>
@@ -33,7 +38,11 @@ function Navbar() {
           <li className={styles.dropdown}>
             <div className={styles.user_img}>
               <img
-                src={`${process.env.REACT_APP_API}/images/users/${currentUser.image}`}
+                src={
+                  currentUser.image
+                    ? `${process.env.REACT_APP_API}/images/users/${currentUser.image}`
+                    : img
+                }
                 alt="user_image"
               />
             </div>

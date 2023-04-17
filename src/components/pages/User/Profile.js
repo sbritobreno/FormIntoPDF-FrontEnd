@@ -85,7 +85,7 @@ function Profile() {
           text="Password"
           type="password"
           name="password"
-          placeholder="Type temporary password"
+          placeholder="Type new password"
           autoComplete={"new-password"}
           handleOnChange={handleChange}
         />
@@ -93,7 +93,7 @@ function Profile() {
           text="Password Confirmation"
           type="password"
           name="confirmpassword"
-          placeholder="Type temporary password again"
+          placeholder="Type new password again"
           autoComplete={"new-password"}
           handleOnChange={handleChange}
         />

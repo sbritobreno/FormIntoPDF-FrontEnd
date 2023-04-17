@@ -74,7 +74,7 @@ function NewUser() {
           text="Password"
           type="password"
           name="password"
-          placeholder="Type your password"
+          placeholder="Type user password"
           autoComplete={"password"}
           handleOnChange={handleChange}
         />
@@ -83,7 +83,7 @@ function NewUser() {
           text="Confirm password"
           type="password"
           name="confirmpassword"
-          placeholder="Type your password again"
+          placeholder="Type user password again"
           autoComplete={"confirmpassword"}
           handleOnChange={handleChange}
         />

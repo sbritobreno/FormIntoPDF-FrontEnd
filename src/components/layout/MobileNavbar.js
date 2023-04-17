@@ -3,9 +3,11 @@ import React, { useContext, useState } from "react";
 import styles from "./MobileNavbar.module.css";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { UserContext } from "../../context/UserContext";
+import { DocumentContext } from "../../context/DocumentContext";
 
 function MobileNavbar() {
   const { isAdmin, logout, currentUser } = useContext(UserContext);
+  const { newDocument } = useContext(DocumentContext);
   const [dropdownOpen, setMobileDropdownOpen] = useState(false);
   const style = { color: "#fff", fontSize: "2em" };
 
@@ -23,10 +25,10 @@ function MobileNavbar() {
             {dropdownOpen && (
               <div className={styles.dropdown_content}>
                 <Link to="/home">Home</Link>
-                <Link to="/document/new">New document +</Link>
+                <Link to="#" onClick={() => newDocument()}>New document +</Link>
                 <Link to="/user/new">Create new user</Link>
                 {isAdmin && <Link to="/user/all_users">See all users</Link>}
-                {isAdmin && <Link to="/user/profile">{currentUser.name}</Link>} 
+                {isAdmin && <Link to="/user/profile">{currentUser.name}</Link>}
                 <Link to="/login" onClick={logout}>
                   Logout
                 </Link>

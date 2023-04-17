@@ -55,6 +55,11 @@ function Users() {
     setRerender(!rerender);
   }
 
+  async function removeUser(username, userId){
+    await deleteUserAccountByAdmin(username, userId)
+    setRerender(!rerender);
+  }
+
   return (
     <section>
       <div className={styles.users_header}>
@@ -108,7 +113,7 @@ function Users() {
                   </div>
                   <button
                     className={styles.users_btn_remove}
-                    onClick={() => deleteUserAccountByAdmin(user.name, user.id)}
+                    onClick={() => removeUser(user.name, user.id)}
                   >
                     Remove
                   </button>

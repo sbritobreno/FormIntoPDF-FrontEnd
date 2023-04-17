@@ -43,6 +43,58 @@ export default function DocumentService() {
       });
   }
 
+  async function newDocument() {
+    await api
+      .post("/document/new", {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+        },
+      })
+      .then((response) => {
+        navigate(`/document/${response.data.document.id}/update`);
+      })
+      .catch((err) => {
+        return err.response.data;
+      });
+  }
+
+  async function addAttendance(documentId, newAttendandce) {
+    let msgType = "success";
+    await api
+      .post(`/document/${documentId}/add/attendance`, newAttendandce, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        setFlashMessage(response.data.message, msgType);
+      })
+      .catch((err) => {
+        msgType = "error";
+        setFlashMessage(err.response.data.message, msgType);
+      });
+
+    // this boolean will be use on the fron end
+    if (msgType === "error") return false;
+    if (msgType === "success") return true;
+  }
+
+  async function removeAttendance(id) {
+    await api
+      .delete(`/document/remove/attendance/${id}`, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+        },
+      })
+      .then((response) => {
+        setFlashMessage(response.data.message, "success");
+      })
+      .catch((err) => {
+        setFlashMessage(err.response.data.message, "error");
+      });
+  }
+
   async function removeDocument(id) {
     await api
       .delete(`/document/remove/${id}`, {
@@ -230,6 +282,9 @@ export default function DocumentService() {
     currentDocument,
     setCurrentDocument,
     getDocument,
+    newDocument,
+    addAttendance,
+    removeAttendance,
     removeDocument,
     downloadPDF,
     attachFile,
