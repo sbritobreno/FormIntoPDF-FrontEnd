@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import useFlashMessage from "../../../hooks/useFlashMessage";
 import { DocumentContext } from "../../../context/DocumentContext";
 
-function CreateOrUpdateDocument() {
+function AllDocumentSections() {
   const { currentDocument, getDocument } = useContext(DocumentContext);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -17,15 +17,15 @@ function CreateOrUpdateDocument() {
     getDocument(id);
     document.querySelector("main").style.backgroundColor = "transparent";
     document.querySelector("main").style.boxShadow = "unset";
-    
+
     return () => {
       // Anything in here is fired on component unmount.
       document.querySelector("main").style.backgroundColor = "#fff";
       document.querySelector("main").style.boxShadow =
-      "0 0.5rem 1rem rgb(0 0 0 / 15%)";
+        "0 0.5rem 1rem rgb(0 0 0 / 15%)";
     };
   }, [id]);
-  
+
   sectionsCompleted();
   function sectionsCompleted() {
     // Reset values to default
@@ -63,7 +63,7 @@ function CreateOrUpdateDocument() {
 
   function saveDocument() {
     navigate("/home");
-    setFlashMessage("A new PDF was created!", "success");
+    setFlashMessage("A document was saved!", "success");
   }
 
   return (
@@ -149,4 +149,4 @@ function CreateOrUpdateDocument() {
   );
 }
 
-export default CreateOrUpdateDocument;
+export default AllDocumentSections;

@@ -95,6 +95,46 @@ export default function DocumentService() {
       });
   }
 
+  async function updateSiteSetup(document) {
+    const formData = new FormData();
+    Object.keys(document).forEach((key) => {
+      if (
+        key === "approved_forms" ||
+        key === "daily_plant_inspections" ||
+        key === "futher_hazards_and_controls_requireds" ||
+        key === "reinstatement_sheet" ||
+        key === "site_attendances"
+        )
+        return;
+        
+      const value = document[key];
+      if (Array.isArray(value)) {
+        // If the value is an array, loop through each item and append it to the formData
+        value.forEach((item) => {
+          formData.append(`${key}[]`, item); // the server side will parse it back to array :)
+        });
+      } else {
+        // If the value is not an array, append it to the formData with the key
+        formData.append(key, value);
+      }
+    });
+
+    await api
+    .patch(`/document/${document.id}/update/sitesetup`, formData, {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(token)}`,
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((response) => {
+      setFlashMessage(response.data.message, "success");
+      navigate(`/document/${document.id}/update`);
+    })
+    .catch((err) => {
+      setFlashMessage("Something went wrong!", "error");
+    });
+  }
+
   async function removeDocument(id) {
     await api
       .delete(`/document/remove/${id}`, {
@@ -285,6 +325,7 @@ export default function DocumentService() {
     newDocument,
     addAttendance,
     removeAttendance,
+    updateSiteSetup,
     removeDocument,
     downloadPDF,
     attachFile,
