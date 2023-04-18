@@ -6,9 +6,6 @@ import { useNavigate } from "react-router-dom";
 export default function DocumentService() {
   const [token] = useState(localStorage.getItem("token"));
   const [documentList, setDocumentList] = useState([]);
-  const [currentReinstatementSheet, setCurrentReinstatementSheet] = useState(
-    {}
-  );
   const { setFlashMessage } = useFlashMessage();
   const navigate = useNavigate();
 
@@ -99,9 +96,8 @@ export default function DocumentService() {
     const formData = new FormData();
     Object.keys(document).forEach((key) => {
       const value = document[key];
-      if (key === "Hazards") {
-        formData.append(key, JSON.stringify(value));
-      } else if (
+      if (
+        key === "Hazards" ||
         key === "daily_method_statement_and_traffic_management_check" ||
         key === "Emergency" ||
         key === "traffic_management_compliance_checksheet" ||
@@ -144,6 +140,25 @@ export default function DocumentService() {
       })
       .catch((err) => {
         return err.response.data;
+      });
+  }
+
+  async function updateApprovedForm(id, approvedFormList) {
+    const formData = new FormData();
+    formData.append("approvedFormList", JSON.stringify(approvedFormList));
+
+    await api
+      .patch(`/document/${id}/update/approvedform`, formData, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        navigate(`/document/${id}/update`);
+      })
+      .catch((err) => {
+        setFlashMessage("Something went wrong!", "error");
       });
   }
 
@@ -193,18 +208,19 @@ export default function DocumentService() {
   }
 
   async function getReinstatementSheet(id) {
-    await api
+    const data = await api
       .get(`/document/${id}/reinstatementsheet`, {
         headers: {
           Authorization: `Bearer ${JSON.parse(token)}`,
         },
       })
       .then((response) => {
-        setCurrentReinstatementSheet(response.data.reinstatementSheet);
+        return response.data.reinstatementSheet;
       })
       .catch((err) => {
-        setFlashMessage(err.response.data.message, "error");
+        return err.response.data;
       });
+    return data;
   }
 
   async function editReinstatementSheetInfo(id, data) {
@@ -337,11 +353,10 @@ export default function DocumentService() {
     removeAttendance,
     updateSiteSetup,
     updateSiteSetupAddImage,
+    updateApprovedForm,
     removeDocument,
     downloadPDF,
     attachFile,
-    currentReinstatementSheet,
-    setCurrentReinstatementSheet,
     getReinstatementSheet,
     editReinstatementSheetInfo,
     downloadReinstatementSheet,

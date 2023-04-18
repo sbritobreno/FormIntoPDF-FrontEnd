@@ -1,49 +1,73 @@
-import { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useRef, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
+import { DocumentContext } from "../../../context/DocumentContext";
+import useFlashMessage from "../../../hooks/useFlashMessage";
 import styles from "./Doc.module.css";
 import Input from "../../form/Input";
 import { RiCloseLine, RiDeleteBin5Line } from "react-icons/ri";
 import Signature from "../../form/Signature";
 
 function ApprovedForm() {
-  const navigate = useNavigate();
+  const { id } = useParams();
+  const { getDocument, updateApprovedForm } = useContext(DocumentContext);
   const inputs = useRef([]);
   const [displayApprovedFormList, setDisplayApprovedFormList] = useState(false);
   const [newApprovedForm, setNewApprovedForm] = useState({});
-  const [approvedFormList, setApprovedFormList] = useState([
-    {
-      description_location: "D01",
-      date_examination: "10/10/2020",
-      examination_result_state: "okay",
-      inspector_signature: "Breno",
-    },
-    {
-      description_location: "D01",
-      date_examination: "10/10/2020",
-      examination_result_state: "okay",
-      inspector_signature: "Breno",
-    },
-  ]);
+  const [approvedFormList, setApprovedFormList] = useState([]);
+  const { setFlashMessage } = useFlashMessage();
 
-  // useEffect(() => {
-  //   // Anything in here is fired on component mount.
-  //   document.querySelector("body").style.overflowX = "auto";
-
-  //   return () => {
-  //     // Anything in here is fired on component unmount.
-  //     document.querySelector("body").style.overflowX = "hidden";
-  //   };
-  // }, []);
+  useEffect(() => {
+    getDocument(id)
+      .then((res) => setApprovedFormList(res.approved_forms))
+      .catch((err) => {
+        return err;
+      });
+  }, [id]);
 
   function handleChange(e) {
     setNewApprovedForm({ ...newApprovedForm, [e.target.name]: e.target.value });
   }
 
+  function handler(data) {
+    if (checkSignPad(3))
+      setNewApprovedForm({
+        ...newApprovedForm,
+        inspector_signature: data.toString(),
+      });
+  }
+
+  function checkSignPad(index) {
+    const canvas = inputs[index].childNodes[0];
+    const notEmpty = canvas
+      .getContext("2d")
+      .getImageData(0, 0, canvas.width, canvas.height)
+      .data.some((channel) => channel !== 0);
+
+    return notEmpty;
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
-    setApprovedFormList([...approvedFormList, newApprovedForm]);
+    if (
+      !newApprovedForm.description_location ||
+      !newApprovedForm.date_examination ||
+      !newApprovedForm.examination_result_state ||
+      !newApprovedForm.inspector_signature
+    ) {
+      setFlashMessage(
+        "You have to enter all a value to all the fields!",
+        "error"
+      );
+      return;
+    }
+    setApprovedFormList(
+      approvedFormList?.length > 0
+        ? [...approvedFormList, newApprovedForm]
+        : [newApprovedForm]
+    );
     setNewApprovedForm({});
 
+    // Clear inputs
     const inputNumber = Object.keys(inputs);
     inputNumber.forEach((index) => {
       if (+index === 3) {
@@ -56,7 +80,7 @@ function ApprovedForm() {
   }
 
   function saveApprovedFormStage() {
-    navigate(-1);
+    updateApprovedForm(id, approvedFormList);
   }
 
   function deleteRowApprovedForm(index) {
@@ -64,25 +88,6 @@ function ApprovedForm() {
     array.splice(index, 1);
     setApprovedFormList(array);
     setNewApprovedForm({});
-  }
-
-  function handler(data) {
-    if (checkIfSignPadIsEmpty(3))
-      setNewApprovedForm({
-        ...newApprovedForm,
-        inspector_signature: data.toString(),
-      });
-    else console.error("No signature");
-  }
-
-  function checkIfSignPadIsEmpty(index) {
-    const canvas = inputs[index].childNodes[0];
-    const isSignPadEmpty = canvas
-      .getContext("2d")
-      .getImageData(0, 0, canvas.width, canvas.height)
-      .data.some((channel) => channel !== 0);
-
-    return isSignPadEmpty;
   }
 
   const style = {
@@ -112,26 +117,34 @@ function ApprovedForm() {
                   <th>Results of thorough examination</th>
                   <th>Inspector Signature</th>
                 </tr>
-                {approvedFormList.map((formRow, key) => (
-                  <tr key={key}>
-                    <td>{formRow.description_location}</td>
-                    <td>{formRow.date_examination}</td>
-                    <td>{formRow.examination_result_state}</td>
-                    <td>
-                      <img src={formRow.inspector_signature} alt="signature" />
-                    </td>
-                    <td className={styles.remove_btn}>
-                      <RiDeleteBin5Line
-                        style={{
-                          fontSize: "20px",
-                          color: "var(--primary-color)",
-                          cursor: "pointer",
-                        }}
-                        onClick={() => deleteRowApprovedForm(key)}
-                      />
-                    </td>
-                  </tr>
-                ))}
+                {approvedFormList &&
+                  approvedFormList.map((formRow, key) => (
+                    <tr key={key}>
+                      <td>{formRow.description_location}</td>
+                      <td>{formRow.date_examination}</td>
+                      <td>{formRow.examination_result_state}</td>
+                      <td>
+                        <img
+                          src={
+                            formRow.inspector_signature.length > 100 // means the image is still base64
+                              ? formRow.inspector_signature
+                              : `${process.env.REACT_APP_API}/images/documents/${formRow.inspector_signature}`
+                          }
+                          alt="signature"
+                        />
+                      </td>
+                      <td className={styles.remove_btn}>
+                        <RiDeleteBin5Line
+                          style={{
+                            fontSize: "20px",
+                            color: "var(--primary-color)",
+                            cursor: "pointer",
+                          }}
+                          onClick={() => deleteRowApprovedForm(key)}
+                        />
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
