@@ -1,6 +1,12 @@
 import styles from "./HazardCheckboxContainer.module.css";
 
-function HazardCheckboxContainer({ title, name, value, handleOnChange }) {
+function HazardCheckboxContainer({
+  title,
+  name,
+  checked,
+  value,
+  handleOnChange,
+}) {
   return (
     <>
       <div className={styles.hazard_check_container}>
@@ -8,7 +14,7 @@ function HazardCheckboxContainer({ title, name, value, handleOnChange }) {
           type="checkbox"
           name={name}
           onChange={handleOnChange}
-          checked={value}
+          checked={checked}
         />
         <label>{title}</label>
       </div>
@@ -16,6 +22,7 @@ function HazardCheckboxContainer({ title, name, value, handleOnChange }) {
         className={styles.hazard_comments}
         rows="2"
         name={name}
+        value={value}
         placeholder="*Optional"
         onChange={handleOnChange}
         autoComplete="off"

@@ -1,12 +1,13 @@
 import styles from "./AllDocumentSections.module.css";
-import { useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useFlashMessage from "../../../hooks/useFlashMessage";
 import { DocumentContext } from "../../../context/DocumentContext";
 
 function AllDocumentSections() {
-  const { currentDocument, getDocument } = useContext(DocumentContext);
+  const { getDocument } = useContext(DocumentContext);
   const { id } = useParams();
+  const [currentDocument, setCurrentDocument] = useState({});
   const navigate = useNavigate();
   const sectionBtns = useRef([]);
   const { setFlashMessage } = useFlashMessage();
@@ -14,7 +15,11 @@ function AllDocumentSections() {
 
   useEffect(() => {
     // Anything in here is fired on component mount.
-    getDocument(id);
+    getDocument(id)
+      .then((res) => setCurrentDocument(res))
+      .catch((err) => {
+        return err;
+      });
     document.querySelector("main").style.backgroundColor = "transparent";
     document.querySelector("main").style.boxShadow = "unset";
 
@@ -63,7 +68,7 @@ function AllDocumentSections() {
 
   function saveDocument() {
     navigate("/home");
-    setFlashMessage("A document was saved!", "success");
+    setFlashMessage("The document was saved!", "success");
   }
 
   return (

@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 export default function DocumentService() {
   const [token] = useState(localStorage.getItem("token"));
   const [documentList, setDocumentList] = useState([]);
-  const [currentDocument, setCurrentDocument] = useState({});
   const [currentReinstatementSheet, setCurrentReinstatementSheet] = useState(
     {}
   );
@@ -29,18 +28,19 @@ export default function DocumentService() {
   }
 
   async function getDocument(id) {
-    await api
+    const data = await api
       .get(`/document/get/${id}`, {
         headers: {
           Authorization: `Bearer ${JSON.parse(token)}`,
         },
       })
       .then((response) => {
-        setCurrentDocument(response.data.document);
+        return response.data.document;
       })
       .catch((err) => {
-        setFlashMessage(err.response.data.message, "error");
+        return err.response.data;
       });
+    return data;
   }
 
   async function newDocument() {
@@ -98,41 +98,53 @@ export default function DocumentService() {
   async function updateSiteSetup(document) {
     const formData = new FormData();
     Object.keys(document).forEach((key) => {
-      if (
-        key === "approved_forms" ||
-        key === "daily_plant_inspections" ||
-        key === "futher_hazards_and_controls_requireds" ||
-        key === "reinstatement_sheet" ||
-        key === "site_attendances"
-        )
-        return;
-        
       const value = document[key];
-      if (Array.isArray(value)) {
-        // If the value is an array, loop through each item and append it to the formData
-        value.forEach((item) => {
-          formData.append(`${key}[]`, item); // the server side will parse it back to array :)
-        });
+      if (key === "Hazards") {
+        formData.append(key, JSON.stringify(value));
+      } else if (
+        key === "daily_method_statement_and_traffic_management_check" ||
+        key === "Emergency" ||
+        key === "traffic_management_compliance_checksheet" ||
+        key === "traffic_management_slg_checklist"
+      ) {
+        formData.append(key, JSON.stringify(value));
       } else {
-        // If the value is not an array, append it to the formData with the key
-        formData.append(key, value);
+        return;
       }
     });
 
     await api
-    .patch(`/document/${document.id}/update/sitesetup`, formData, {
-      headers: {
-        Authorization: `Bearer ${JSON.parse(token)}`,
-        "Content-Type": "multipart/form-data",
-      },
-    })
-    .then((response) => {
-      setFlashMessage(response.data.message, "success");
-      navigate(`/document/${document.id}/update`);
-    })
-    .catch((err) => {
-      setFlashMessage("Something went wrong!", "error");
-    });
+      .patch(`/document/${document.id}/update/sitesetup`, formData, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        navigate(`/document/${document.id}/update`);
+      })
+      .catch((err) => {
+        setFlashMessage("Something went wrong!", "error");
+      });
+  }
+
+  async function updateSiteSetupAddImage(imageFile, id) {
+    const formData = new FormData();
+    formData.append("image", imageFile);
+
+    await api
+      .patch(`/document/${id}/update/sitesetup/add_sketch_image`, formData, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        return response.data;
+      })
+      .catch((err) => {
+        return err.response.data;
+      });
   }
 
   async function removeDocument(id) {
@@ -319,13 +331,12 @@ export default function DocumentService() {
   return {
     documentList,
     getDocumentList,
-    currentDocument,
-    setCurrentDocument,
     getDocument,
     newDocument,
     addAttendance,
     removeAttendance,
     updateSiteSetup,
+    updateSiteSetupAddImage,
     removeDocument,
     downloadPDF,
     attachFile,

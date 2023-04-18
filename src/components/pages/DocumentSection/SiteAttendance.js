@@ -1,4 +1,3 @@
-import api from "../../../utils/api";
 import { useState, useRef, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { DocumentContext } from "../../../context/DocumentContext";
@@ -8,9 +7,9 @@ import Signature from "../../form/Signature";
 import { RiCloseLine, RiDeleteBin5Line } from "react-icons/ri";
 
 function SiteAttendance() {
-  const [token] = useState(localStorage.getItem("token"));
   const { id } = useParams();
-  const { addAttendance, removeAttendance } = useContext(DocumentContext);
+  const { addAttendance, removeAttendance, getDocument } =
+    useContext(DocumentContext);
   const navigate = useNavigate();
   const inputs = useRef([]);
   const [displayAttendanceList, setDisplayAttendanceList] = useState(false);
@@ -19,19 +18,12 @@ function SiteAttendance() {
   const [rerender, setRerender] = useState(false); // create a state variable
 
   useEffect(() => {
-    api
-      .get(`/document/get/${id}`, {
-        headers: {
-          Authorization: `Bearer ${JSON.parse(token)}`,
-        },
-      })
-      .then((response) => {
-        setAttendanceList(response.data.document.site_attendances);
-      })
+    getDocument(id)
+      .then((res) => setAttendanceList(res.site_attendances))
       .catch((err) => {
-        return err.response.data.message;
+        return err;
       });
-  }, [id, token, rerender]);
+  }, [id, rerender]);
 
   function handleChange(e) {
     setNewAttendance({ ...newAttendance, [e.target.name]: e.target.value });

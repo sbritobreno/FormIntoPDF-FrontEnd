@@ -1,4 +1,3 @@
-import api from "../../../utils/api";
 import { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Input from "../../form/Input";
@@ -8,26 +7,19 @@ import HazardCheckboxContainer from "../../form/HazardCheckboxContainer";
 import { DocumentContext } from "../../../context/DocumentContext";
 
 function SiteSetup() {
-  const [token] = useState(localStorage.getItem("token"));
   const { id } = useParams();
   const [currentDocument, setCurrentDocument] = useState({});
   const [preview, setPreview] = useState("");
-  const { updateSiteSetup } = useContext(DocumentContext);
+  const { updateSiteSetup, updateSiteSetupAddImage, getDocument } =
+    useContext(DocumentContext);
 
   useEffect(() => {
-    api
-      .get(`/document/get/${id}`, {
-        headers: {
-          Authorization: `Bearer ${JSON.parse(token)}`,
-        },
-      })
-      .then((response) => {
-        setCurrentDocument(response.data.document);
-      })
+    getDocument(id)
+      .then((res) => setCurrentDocument(res))
       .catch((err) => {
-        return err.response.data.message;
+        return err;
       });
-  }, [id, token]);
+  }, [id]);
 
   function onFileChange(e) {
     setPreview(e.target.files[0]);
@@ -39,18 +31,27 @@ function SiteSetup() {
 
   function handleChangeHazard(e) {
     const hazardName = e.target.name;
+    const hazard = currentDocument.Hazards.find(
+      (hazard) => hazard.name === hazardName
+    );
     const hazardValue = {
-      checked:
+      value:
         e.target.type === "checkbox"
           ? e.target.checked
-          : currentDocument.Hazards[hazardName]?.checked || false,
-      comment:
-        e.target.type === "textarea"
-          ? e.target.value
-          : currentDocument.Hazards[hazardName]?.comment || "",
+          : hazard?.value || false,
+      control:
+        e.target.type === "textarea" ? e.target.value : hazard?.control || "",
+      name: hazardName,
     };
-    const hazardObject = { [hazardName]: hazardValue };
-    const newHazards = { ...currentDocument.Hazards, ...hazardObject };
+    const hazardIndex = currentDocument.Hazards.findIndex(
+      (hazard) => hazard.name === hazardName
+    );
+    const newHazards = [...currentDocument.Hazards];
+    if (hazardIndex === -1) {
+      newHazards.push(hazardValue);
+    } else {
+      newHazards[hazardIndex] = hazardValue;
+    }
     setCurrentDocument({ ...currentDocument, Hazards: newHazards });
   }
 
@@ -114,6 +115,7 @@ function SiteSetup() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    updateSiteSetupAddImage(currentDocument.permit_to_dig_sketch_image, id);
     updateSiteSetup(currentDocument);
   }
 
@@ -125,111 +127,294 @@ function SiteSetup() {
         <HazardCheckboxContainer
           title={"Pedestrians/Cyclists"}
           name={"hazard_pedestrians_cyclists"}
+          checked={
+            currentDocument.Hazards?.find(
+              (el) => el.name === "hazard_pedestrians_cyclists"
+            )?.value || false
+          }
+          value={
+            currentDocument.Hazards?.find(
+              (el) => el.name === "hazard_pedestrians_cyclists"
+            )?.control
+          }
           handleOnChange={handleChangeHazard}
         />
         <HazardCheckboxContainer
           title={"Road Traffic"}
           name={"road_traffic"}
+          checked={
+            currentDocument.Hazards?.find((el) => el.name === "road_traffic")
+              ?.value || false
+          }
+          value={
+            currentDocument.Hazards?.find((el) => el.name === "road_traffic")
+              ?.control
+          }
           handleOnChange={handleChangeHazard}
         />
         <HazardCheckboxContainer
           title={"Work at Height"}
           name={"work_at_height"}
+          checked={
+            currentDocument.Hazards?.find((el) => el.name === "work_at_height")
+              ?.value || false
+          }
+          value={
+            currentDocument.Hazards?.find((el) => el.name === "work_at_height")
+              ?.control
+          }
           handleOnChange={handleChangeHazard}
         />
         <HazardCheckboxContainer
           title={"U/G services"}
           name={"ug_services"}
+          checked={
+            currentDocument.Hazards?.find((el) => el.name === "ug_services")
+              ?.value || false
+          }
+          value={
+            currentDocument.Hazards?.find((el) => el.name === "ug_services")
+              ?.control
+          }
           handleOnChange={handleChangeHazard}
         />
         <HazardCheckboxContainer
           title={"Overhead Cables"}
           name={"overhead_cables"}
+          checked={
+            currentDocument.Hazards?.find((el) => el.name === "overhead_cables")
+              ?.value || false
+          }
+          value={
+            currentDocument.Hazards?.find((el) => el.name === "overhead_cables")
+              ?.control
+          }
           handleOnChange={handleChangeHazard}
         />
         <HazardCheckboxContainer
           title={"Lifting Operations"}
           name={"lifting_operations"}
+          checked={
+            currentDocument.Hazards?.find(
+              (el) => el.name === "lifting_operations"
+            )?.value || false
+          }
+          value={
+            currentDocument.Hazards?.find(
+              (el) => el.name === "lifting_operations"
+            )?.control
+          }
           handleOnChange={handleChangeHazard}
         />
         <HazardCheckboxContainer
           title={"Abrasive Wheels"}
           name={"abrasive_wheels"}
+          checked={
+            currentDocument.Hazards?.find((el) => el.name === "abrasive_wheels")
+              ?.value || false
+          }
+          value={
+            currentDocument.Hazards?.find((el) => el.name === "abrasive_wheels")
+              ?.control
+          }
           handleOnChange={handleChangeHazard}
         />
         <HazardCheckboxContainer
           title={"Hand Tools"}
           name={"hand_tools"}
+          checked={
+            currentDocument.Hazards?.find((el) => el.name === "hand_tools")
+              ?.value || false
+          }
+          value={
+            currentDocument.Hazards?.find((el) => el.name === "hand_tools")
+              ?.control
+          }
           handleOnChange={handleChangeHazard}
         />
         <HazardCheckboxContainer
           title={"Dust"}
           name={"dust"}
+          checked={
+            currentDocument.Hazards?.find((el) => el.name === "dust")?.value ||
+            false
+          }
+          value={
+            currentDocument.Hazards?.find((el) => el.name === "dust")?.control
+          }
           handleOnChange={handleChangeHazard}
         />
         <HazardCheckboxContainer
           title={"Plant & Equipment"}
           name={"plant_and_equipment"}
+          checked={
+            currentDocument.Hazards?.find(
+              (el) => el.name === "plant_and_equipment"
+            )?.value || false
+          }
+          value={
+            currentDocument.Hazards?.find(
+              (el) => el.name === "plant_and_equipment"
+            )?.control
+          }
           handleOnChange={handleChangeHazard}
         />
         <HazardCheckboxContainer
           title={"Ladders"}
           name={"ladders"}
+          checked={
+            currentDocument.Hazards?.find((el) => el.name === "ladders")
+              ?.value || false
+          }
+          value={
+            currentDocument.Hazards?.find((el) => el.name === "ladders")
+              ?.control
+          }
           handleOnChange={handleChangeHazard}
         />
         <HazardCheckboxContainer
           title={"Work Near Water"}
           name={"work_near_water"}
+          checked={
+            currentDocument.Hazards?.find((el) => el.name === "work_near_water")
+              ?.value || false
+          }
+          value={
+            currentDocument.Hazards?.find((el) => el.name === "work_near_water")
+              ?.control
+          }
           handleOnChange={handleChangeHazard}
         />
         <HazardCheckboxContainer
           title={"Excavation"}
           name={"excavation"}
+          checked={
+            currentDocument.Hazards?.find((el) => el.name === "excavation")
+              ?.value || false
+          }
+          value={
+            currentDocument.Hazards?.find((el) => el.name === "excavation")
+              ?.control
+          }
           handleOnChange={handleChangeHazard}
         />
         <HazardCheckboxContainer
           title={"Falling Objects"}
           name={"falling_objects"}
+          checked={
+            currentDocument.Hazards?.find((el) => el.name === "falling_objects")
+              ?.value || false
+          }
+          value={
+            currentDocument.Hazards?.find((el) => el.name === "falling_objects")
+              ?.control
+          }
           handleOnChange={handleChangeHazard}
         />
         <HazardCheckboxContainer
           title={"Haz Substances"}
           name={"haz_substances"}
+          checked={
+            currentDocument.Hazards?.find((el) => el.name === "haz_substances")
+              ?.value || false
+          }
+          value={
+            currentDocument.Hazards?.find((el) => el.name === "haz_substances")
+              ?.control
+          }
           handleOnChange={handleChangeHazard}
         />
         <HazardCheckboxContainer
           title={"Bitumen Boiler"}
           name={"bitumen_boiler"}
+          checked={
+            currentDocument.Hazards?.find((el) => el.name === "bitumen_boiler")
+              ?.value || false
+          }
+          value={
+            currentDocument.Hazards?.find((el) => el.name === "bitumen_boiler")
+              ?.control
+          }
           handleOnChange={handleChangeHazard}
         />
         <HazardCheckboxContainer
           title={"Noise"}
           name={"noise"}
+          checked={
+            currentDocument.Hazards?.find((el) => el.name === "noise")?.value ||
+            false
+          }
+          value={
+            currentDocument.Hazards?.find((el) => el.name === "noise")?.control
+          }
           handleOnChange={handleChangeHazard}
         />
         <HazardCheckboxContainer
           title={"Concrete/Formwork"}
           name={"concrete_formwork"}
+          checked={
+            currentDocument.Hazards?.find(
+              (el) => el.name === "concrete_formwork"
+            )?.value || false
+          }
+          value={
+            currentDocument.Hazards?.find(
+              (el) => el.name === "concrete_formwork"
+            )?.control
+          }
           handleOnChange={handleChangeHazard}
         />
         <HazardCheckboxContainer
           title={"Slips, trips, falls"}
           name={"slips_trips_falls"}
+          checked={
+            currentDocument.Hazards?.find(
+              (el) => el.name === "slips_trips_falls"
+            )?.value || false
+          }
+          value={
+            currentDocument.Hazards?.find(
+              (el) => el.name === "slips_trips_falls"
+            )?.control
+          }
           handleOnChange={handleChangeHazard}
         />
         <HazardCheckboxContainer
           title={"Hot Works"}
           name={"hot_works"}
+          checked={
+            currentDocument.Hazards?.find((el) => el.name === "hot_works")
+              ?.value || false
+          }
+          value={
+            currentDocument.Hazards?.find((el) => el.name === "hot_works")
+              ?.control
+          }
           handleOnChange={handleChangeHazard}
         />
         <HazardCheckboxContainer
           title={"Manual Handling"}
           name={"manual_handling"}
+          checked={
+            currentDocument.Hazards?.find((el) => el.name === "manual_handling")
+              ?.value || false
+          }
+          value={
+            currentDocument.Hazards?.find((el) => el.name === "manual_handling")
+              ?.control
+          }
           handleOnChange={handleChangeHazard}
         />
         <HazardCheckboxContainer
           title={"Other"}
           name={"other"}
+          checked={
+            currentDocument.Hazards?.find((el) => el.name === "other")?.value ||
+            false
+          }
+          value={
+            currentDocument.Hazards?.find((el) => el.name === "other")?.control
+          }
           handleOnChange={handleChangeHazard}
         />
         <h2 className={styles.form_subheading}>
@@ -239,6 +424,10 @@ function SiteSetup() {
           text="Method Statement being used for today's work"
           type="text"
           name="method_statement_for_the_day"
+          value={
+            currentDocument.daily_method_statement_and_traffic_management_check
+              ?.method_statement_for_the_day || ""
+          }
           placeholder="Type Method Statement being used today"
           handleOnChange={handleDailyMethodStatement}
           autoComplete="off"
@@ -248,6 +437,10 @@ function SiteSetup() {
             "1.Will completion of the task involve any discharges to drains/water course?"
           }
           name={"daily_method_statement_question_one"}
+          checked={
+            currentDocument.daily_method_statement_and_traffic_management_check
+              ?.daily_method_statement_question_one || false
+          }
           handleOnChange={handleDailyMethodStatement}
         />
         <CheckboxContainer
@@ -255,6 +448,10 @@ function SiteSetup() {
             "2.Are spill containment measures available (spill kit, drip tray etc.)?"
           }
           name={"daily_method_statement_question_two"}
+          checked={
+            currentDocument.daily_method_statement_and_traffic_management_check
+              ?.daily_method_statement_question_two || false
+          }
           handleOnChange={handleDailyMethodStatement}
         />
         <CheckboxContainer
@@ -262,6 +459,10 @@ function SiteSetup() {
             "3.Are all fuel containers labelled (diesel, petrol etc)? and safety data sheets on site?"
           }
           name={"daily_method_statement_question_three"}
+          checked={
+            currentDocument.daily_method_statement_and_traffic_management_check
+              ?.daily_method_statement_question_three || false
+          }
           handleOnChange={handleDailyMethodStatement}
         />
         <h2 className={styles.form_subheading}>Emergencies</h2>
@@ -270,12 +471,17 @@ function SiteSetup() {
             "1.Is there an emergency procedure in place and are staff aware of its contents?"
           }
           name={"emergencies_question_one"}
+          checked={currentDocument.Emergency?.emergencies_question_one || false}
           handleOnChange={handleEmergencies}
         />
         <Input
           text="Location of assembly point in the event of an emergency"
           type="text"
           name="emergency_location_of_assembly_point"
+          value={
+            currentDocument.Emergency?.emergency_location_of_assembly_point ||
+            ""
+          }
           placeholder="Type location of assembly point"
           handleOnChange={handleEmergencies}
           autoComplete="off"
@@ -284,6 +490,7 @@ function SiteSetup() {
           text="Name of First Aider"
           type="text"
           name="emergency_name_of_first_aider"
+          value={currentDocument.Emergency?.emergency_name_of_first_aider || ""}
           placeholder="Type the name of the first aider"
           handleOnChange={handleEmergencies}
           autoComplete="off"
@@ -292,6 +499,7 @@ function SiteSetup() {
           text="Name of SLG Operative"
           type="text"
           name="emergency_slg_operative"
+          value={currentDocument.Emergency?.emergency_slg_operative || ""}
           placeholder="Type the name of SLG operative"
           handleOnChange={handleEmergencies}
           autoComplete="off"
@@ -303,6 +511,10 @@ function SiteSetup() {
           text="TMP number set up on site"
           type="text"
           name="traffic_management_compliance_checksheet_tmp_number"
+          value={
+            currentDocument.traffic_management_compliance_checksheet
+              ?.traffic_management_compliance_checksheet_tmp_number || ""
+          }
           placeholder="Type TMP number"
           handleOnChange={handleTrafficManagementComplianceChecksheet}
           autoComplete="off"
@@ -312,11 +524,19 @@ function SiteSetup() {
             "Is traffic management set up as per TMP in use? is TM amendment sheet required?"
           }
           name={"traffic_management_compliance_checksheet_question_one"}
+          checked={
+            currentDocument.traffic_management_compliance_checksheet
+              ?.traffic_management_compliance_checksheet_question_one || false
+          }
           handleOnChange={handleTrafficManagementComplianceChecksheet}
         />
         <CheckboxContainer
           title={"Are parked vehicles preventing proper TMP set up?"}
           name={"traffic_management_compliance_checksheet_question_two"}
+          checked={
+            currentDocument.traffic_management_compliance_checksheet
+              ?.traffic_management_compliance_checksheet_question_two || false
+          }
           handleOnChange={handleTrafficManagementComplianceChecksheet}
         />
         <CheckboxContainer
@@ -324,11 +544,20 @@ function SiteSetup() {
             "Are other local conditions preventing set up of traffic management as per TMP?"
           }
           name={"traffic_management_compliance_checksheet_question_three"}
+          checked={
+            currentDocument.traffic_management_compliance_checksheet
+              ?.traffic_management_compliance_checksheet_question_three || false
+          }
           handleOnChange={handleTrafficManagementComplianceChecksheet}
         />
         <CheckboxContainer
           title={"1.Are all excavations adequately fenced off and or covered?"}
           name={"traffic_management_compliance_checksheet_question_sub_one"}
+          checked={
+            currentDocument.traffic_management_compliance_checksheet
+              ?.traffic_management_compliance_checksheet_question_sub_one ||
+            false
+          }
           handleOnChange={handleTrafficManagementComplianceChecksheet}
         />
         <CheckboxContainer
@@ -336,6 +565,11 @@ function SiteSetup() {
             "2.Are footways/pedestrians walkways free from trip hazards and obstructions?"
           }
           name={"traffic_management_compliance_checksheet_question_sub_two"}
+          checked={
+            currentDocument.traffic_management_compliance_checksheet
+              ?.traffic_management_compliance_checksheet_question_sub_two ||
+            false
+          }
           handleOnChange={handleTrafficManagementComplianceChecksheet}
         />
         <CheckboxContainer
@@ -343,11 +577,21 @@ function SiteSetup() {
             "3.Are all footpath plates properly pinned to the ground surface?"
           }
           name={"traffic_management_compliance_checksheet_question_sub_three"}
+          checked={
+            currentDocument.traffic_management_compliance_checksheet
+              ?.traffic_management_compliance_checksheet_question_sub_three ||
+            false
+          }
           handleOnChange={handleTrafficManagementComplianceChecksheet}
         />
         <CheckboxContainer
           title={"4.Are all required traffic management measures in plate?"}
           name={"traffic_management_compliance_checksheet_question_sub_four"}
+          checked={
+            currentDocument.traffic_management_compliance_checksheet
+              ?.traffic_management_compliance_checksheet_question_sub_four ||
+            false
+          }
           handleOnChange={handleTrafficManagementComplianceChecksheet}
         />
         <h2 className={styles.form_subheading}>
@@ -356,39 +600,62 @@ function SiteSetup() {
         <h3>1.Installation Checks</h3>
         <CheckboxContainer
           title={"Does TM conform to the Design Layout and Parameters?"}
-          name={"traffic_management_slg_checklist_question_1.1.1"}
+          name={"installation_checks_one"}
+          checked={
+            currentDocument.traffic_management_slg_checklist
+              ?.installation_checks_one || false
+          }
           handleOnChange={handleTrafficManagementSLGChecklist}
         />
         <CheckboxContainer
           title={"Have all the hazards been addresses in TM Plan?"}
-          name={"traffic_management_slg_checklist_question_1.1.2"}
+          name={"installation_checks_two"}
+          checked={
+            currentDocument.traffic_management_slg_checklist
+              ?.installation_checks_two || false
+          }
           handleOnChange={handleTrafficManagementSLGChecklist}
         />
         <CheckboxContainer
           title={
             "Has allowance been made for the delivery and removal of materials?"
           }
-          name={"traffic_management_slg_checklist_question_1.1.3"}
+          name={"installation_checks_three"}
+          checked={
+            currentDocument.traffic_management_slg_checklist
+              ?.installation_checks_three || false
+          }
           handleOnChange={handleTrafficManagementSLGChecklist}
         />
-
         <CheckboxContainer
           title={"Is the traffic management for any detour routes in place?"}
-          name={"traffic_management_slg_checklist_question_1.1.4"}
+          name={"installation_checks_four"}
+          checked={
+            currentDocument.traffic_management_slg_checklist
+              ?.installation_checks_four || false
+          }
           handleOnChange={handleTrafficManagementSLGChecklist}
         />
         <CheckboxContainer
           title={
             "Have the Garda been informed of any Traffic Lights / Stop&Go Boards in use?"
           }
-          name={"traffic_management_slg_checklist_question_1.1.5"}
+          name={"installation_checks_five"}
+          checked={
+            currentDocument.traffic_management_slg_checklist
+              ?.installation_checks_five || false
+          }
           handleOnChange={handleTrafficManagementSLGChecklist}
         />
         <CheckboxContainer
           title={
             "Have the Garda been informed of Roadworks Speed Limits being introduced?"
           }
-          name={"traffic_management_slg_checklist_question_1.1.6"}
+          name={"installation_checks_six"}
+          checked={
+            currentDocument.traffic_management_slg_checklist
+              ?.installation_checks_six || false
+          }
           handleOnChange={handleTrafficManagementSLGChecklist}
         />
         <h3>2.Operation Checks</h3>
@@ -396,72 +663,116 @@ function SiteSetup() {
           title={
             "Are safety zones being kept clear of operatives, plant and materials?"
           }
-          name={"traffic_management_slg_checklist_question_2.1.1"}
+          name={"operation_checks_one"}
+          checked={
+            currentDocument.traffic_management_slg_checklist
+              ?.operation_checks_one || false
+          }
           handleOnChange={handleTrafficManagementSLGChecklist}
         />
         <CheckboxContainer
           title={
             "Are all the signs and cones in good condition/ do all the cones have sleeves?"
           }
-          name={"traffic_management_slg_checklist_question_2.1.2"}
+          name={"operation_checks_two"}
+          checked={
+            currentDocument.traffic_management_slg_checklist
+              ?.operation_checks_two || false
+          }
           handleOnChange={handleTrafficManagementSLGChecklist}
         />
         <CheckboxContainer
           title={
             "Are vision lines to signs clear and free from bends, hills, dips, parked vehicles and hedges etc?"
           }
-          name={"traffic_management_slg_checklist_question_2.1.3"}
+          name={"operation_checks_three"}
+          checked={
+            currentDocument.traffic_management_slg_checklist
+              ?.operation_checks_three || false
+          }
           handleOnChange={handleTrafficManagementSLGChecklist}
         />
         <CheckboxContainer
           title={"Will the site be safe at night in wind, fog, snow or rain?"}
-          name={"traffic_management_slg_checklist_question_2.1.4"}
+          name={"operation_checks_four"}
+          checked={
+            currentDocument.traffic_management_slg_checklist
+              ?.operation_checks_four || false
+          }
           handleOnChange={handleTrafficManagementSLGChecklist}
         />
         <CheckboxContainer
           title={
             "Are all misleading permanent signs and road markings covered?"
           }
-          name={"traffic_management_slg_checklist_question_2.1.5"}
+          name={"operation_checks_five"}
+          checked={
+            currentDocument.traffic_management_slg_checklist
+              ?.operation_checks_five || false
+          }
           handleOnChange={handleTrafficManagementSLGChecklist}
         />
         <CheckboxContainer
           title={
             "Is the carriageway/footway being kept clear of mud and surplus equipment?"
           }
-          name={"traffic_management_slg_checklist_question_2.1.6"}
+          name={"operation_checks_six"}
+          checked={
+            currentDocument.traffic_management_slg_checklist
+              ?.operation_checks_six || false
+          }
           handleOnChange={handleTrafficManagementSLGChecklist}
         />
         <CheckboxContainer
           title={
             "Are materials/plant that are left on verges or in layby's being properly guarded and lit?"
           }
-          name={"traffic_management_slg_checklist_question_2.1.7"}
+          name={"operation_checks_seven"}
+          checked={
+            currentDocument.traffic_management_slg_checklist
+              ?.operation_checks_seven || false
+          }
           handleOnChange={handleTrafficManagementSLGChecklist}
         />
         <h3>2.2.Traffic Checks</h3>
         <CheckboxContainer
           title={"Is there safe access adjacent to premises?"}
-          name={"traffic_management_slg_checklist_question_2.2.1"}
+          name={"traffic_checks_one"}
+          checked={
+            currentDocument.traffic_management_slg_checklist
+              ?.traffic_checks_one || false
+          }
           handleOnChange={handleTrafficManagementSLGChecklist}
         />
         <CheckboxContainer
           title={"Does Signing & Guarding meet the (changing) conditions?"}
-          name={"traffic_management_slg_checklist_question_2.2.2"}
+          name={"traffic_checks_two"}
+          checked={
+            currentDocument.traffic_management_slg_checklist
+              ?.traffic_checks_two || false
+          }
           handleOnChange={handleTrafficManagementSLGChecklist}
         />
         <CheckboxContainer
           title={
             "Are traffic control arrangements working at the optimum level to reduce traffic delays?"
           }
-          name={"traffic_management_slg_checklist_question_2.2.3"}
+          name={"traffic_checks_three"}
+          checked={
+            currentDocument.traffic_management_slg_checklist
+              ?.traffic_checks_three || false
+          }
           handleOnChange={handleTrafficManagementSLGChecklist}
         />
         <CheckboxContainer
           title={
             "If present, are the needs of cyclists or horse riders incorporated into the layout?"
           }
-          name={"traffic_management_slg_checklist_question_2.2.4"}
+          name={"traffic_checks_four"}
+          checked={
+            currentDocument.traffic_management_slg_checklist
+              ?.traffic_checks_four || false
+          }
           handleOnChange={handleTrafficManagementSLGChecklist}
         />
         <h3>2.3.Pedestrians & Vulnerable User Checks</h3>
@@ -469,49 +780,81 @@ function SiteSetup() {
           title={
             "Have the needs of pedestrians and vulnerable users been addressed in the layout?"
           }
-          name={"traffic_management_slg_checklist_question_2.3.1"}
+          name={"vulnerable_user_checks_one"}
+          checked={
+            currentDocument.traffic_management_slg_checklist
+              ?.vulnerable_user_checks_one || false
+          }
           handleOnChange={handleTrafficManagementSLGChecklist}
         />
         <CheckboxContainer
           title={
             "If pedestrians route blocked, has a suitable alternative route been provided?"
           }
-          name={"traffic_management_slg_checklist_question_2.3.2"}
+          name={"vulnerable_user_checks_two"}
+          checked={
+            currentDocument.traffic_management_slg_checklist
+              ?.vulnerable_user_checks_two || false
+          }
           handleOnChange={handleTrafficManagementSLGChecklist}
         />
         <CheckboxContainer
           title={"Are pedestrians routes clearly evident/indicated?"}
-          name={"traffic_management_slg_checklist_question_2.3.3"}
+          name={"vulnerable_user_checks_three"}
+          checked={
+            currentDocument.traffic_management_slg_checklist
+              ?.vulnerable_user_checks_three || false
+          }
           handleOnChange={handleTrafficManagementSLGChecklist}
         />
         <CheckboxContainer
           title={
             "If a footway in the road is to be used, are ramps to the kerb provided?"
           }
-          name={"traffic_management_slg_checklist_question_2.3.4"}
+          name={"vulnerable_user_checks_four"}
+          checked={
+            currentDocument.traffic_management_slg_checklist
+              ?.vulnerable_user_checks_four || false
+          }
           handleOnChange={handleTrafficManagementSLGChecklist}
         />
         <CheckboxContainer
           title={"Are pedestrians hazards sufficiently guarded at night?"}
-          name={"traffic_management_slg_checklist_question_2.3.5"}
+          name={"vulnerable_user_checks_five"}
+          checked={
+            currentDocument.traffic_management_slg_checklist
+              ?.vulnerable_user_checks_five || false
+          }
           handleOnChange={handleTrafficManagementSLGChecklist}
         />
         <h3>3.Work Complete Checks</h3>
         <CheckboxContainer
           title={"Have all the signs, cones, barriers and lamps been removed?"}
-          name={"traffic_management_slg_checklist_question_3.1.1"}
+          name={"work_complete_checks_one"}
+          checked={
+            currentDocument.traffic_management_slg_checklist
+              ?.work_complete_checks_one || false
+          }
           handleOnChange={handleTrafficManagementSLGChecklist}
         />
         <CheckboxContainer
           title={"Have any covered permanent signs been restored?"}
-          name={"traffic_management_slg_checklist_question_3.1.2"}
+          name={"work_complete_checks_two"}
+          checked={
+            currentDocument.traffic_management_slg_checklist
+              ?.work_complete_checks_two || false
+          }
           handleOnChange={handleTrafficManagementSLGChecklist}
         />
         <CheckboxContainer
           title={
             "Have the Garda been informed of any Traffic Lights / Stop&Go removed?"
           }
-          name={"traffic_management_slg_checklist_question_3.1.3"}
+          name={"work_complete_checks_three"}
+          checked={
+            currentDocument.traffic_management_slg_checklist
+              ?.work_complete_checks_three || false
+          }
           handleOnChange={handleTrafficManagementSLGChecklist}
         />
         <h2 className={styles.form_subheading}>Permit To Dig Checklist</h2>
@@ -525,7 +868,7 @@ function SiteSetup() {
           type="file"
           name="permit_to_dig_sketch_image"
           onChange={onFileChange}
-        />
+        />{" "}
         <div className={styles.preview_image}>
           {(currentDocument.permit_to_dig_sketch_image || preview) && (
             <img
