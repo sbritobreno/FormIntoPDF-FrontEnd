@@ -1,7 +1,7 @@
 import api from "../../utils/api";
 import { useState } from "react";
 import useFlashMessage from "../../hooks/useFlashMessage";
-import { useNavigate } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 
 export default function DocumentService() {
   const [token] = useState(localStorage.getItem("token"));
@@ -156,6 +156,37 @@ export default function DocumentService() {
       })
       .then((response) => {
         navigate(`/document/${id}/update`);
+      })
+      .catch((err) => {
+        setFlashMessage("Something went wrong!", "error");
+      });
+  }
+
+  async function updateForms(id, newDocument) {
+    const formData = new FormData();
+    Object.keys(newDocument).forEach((key) => {
+      const value = newDocument[key];
+      if (
+        key === "hot_work_permit" ||
+        key === "daily_plant_inspections" ||
+        key === "near_miss_report" ||
+        key === "futher_hazards_and_controls_requireds"
+      ) {
+        formData.append(key, JSON.stringify(value));
+      } else {
+        return;
+      }
+    });
+
+    await api
+      .patch(`/document/${id}/update/forms`, formData, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        //navigate(`/document/${id}/update`);
       })
       .catch((err) => {
         setFlashMessage("Something went wrong!", "error");
@@ -354,6 +385,7 @@ export default function DocumentService() {
     updateSiteSetup,
     updateSiteSetupAddImage,
     updateApprovedForm,
+    updateForms,
     removeDocument,
     downloadPDF,
     attachFile,
