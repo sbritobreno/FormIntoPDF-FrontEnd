@@ -43,28 +43,16 @@ function Forms() {
 
   function handleDailyPlantInspection(e, fieldName) {
     const dailyPlantInspectionName = e.target.name;
-    const index = findIndexByObjectName(
-      currentDocument.daily_plant_inspections,
-      fieldName
+    const index = currentDocument.daily_plant_inspections?.findIndex(
+      (el) => el.tool_name === fieldName
     );
-
-    function findIndexByObjectName(array, targetName) {
-      for (let i = 0; i < array.length; i++) {
-        const objName = Object.keys(array[i])[0]; // get the name of the current object in the array
-        if (objName === targetName) {
-          return i; // return the index of the matching object
-        }
-      }
-      return -1; // if no object matches the target name, return -1 to indicate failure
-    }
 
     const dailyPlantInspectionObject =
       index >= 0
         ? currentDocument.daily_plant_inspections[index]
-        : { [fieldName]: {} };
+        : { tool_name: fieldName };
 
-    dailyPlantInspectionObject[fieldName][dailyPlantInspectionName] =
-      e.target.checked;
+    dailyPlantInspectionObject[dailyPlantInspectionName] = e.target.checked;
 
     const newDailyPlantInspection = [
       ...currentDocument.daily_plant_inspections,
@@ -80,6 +68,12 @@ function Forms() {
       ...currentDocument,
       daily_plant_inspections: newDailyPlantInspection,
     });
+  }
+
+  function getWeekdaysList(toolName) {
+    return currentDocument.daily_plant_inspections?.filter(
+      (el) => el.tool_name === toolName
+    )[0];
   }
 
   function handlerNearMissReport(e) {
@@ -182,11 +176,11 @@ function Forms() {
 
   function increaseHazardAndControlsQuantity(e) {
     e.preventDefault();
-    const index = +currentDocument.futher_hazards_and_controls_requireds?.length - 1;
-    const lastOnList = currentDocument.futher_hazards_and_controls_requireds[index]
-    if (
-      Object.keys(lastOnList).length === 0
-    ) {
+    const index =
+      +currentDocument.futher_hazards_and_controls_requireds?.length - 1;
+    const lastOnList =
+      currentDocument.futher_hazards_and_controls_requireds[index];
+    if (Object.keys(lastOnList).length === 0) {
       setFlashMessage(
         'You have to finish the previous "futher hazard" before!',
         "error"
@@ -198,7 +192,9 @@ function Forms() {
     const newfutherHazardss = [
       ...currentDocument.futher_hazards_and_controls_requireds,
     ];
-    newfutherHazardss[+currentDocument.futher_hazards_and_controls_requireds?.length] = futherHazardsValue;
+    newfutherHazardss[
+      +currentDocument.futher_hazards_and_controls_requireds?.length
+    ] = futherHazardsValue;
     setCurrentDocument({
       ...currentDocument,
       futher_hazards_and_controls_requireds: newfutherHazardss,
@@ -415,9 +411,7 @@ function Forms() {
         <DPICheckboxForm
           title={"1. Flashing Beacon"}
           name={"flashing_beacon"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "Flashing Beacon"
-          )}
+          list={getWeekdaysList("Flashing Beacon")}
           handleOnChange={(e) =>
             handleDailyPlantInspection(e, "Flashing Beacon")
           }
@@ -425,17 +419,13 @@ function Forms() {
         <DPICheckboxForm
           title={"2. Mirrors"}
           name={"mirrors"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "Mirrors"
-          )}
+          list={getWeekdaysList("Mirrors")}
           handleOnChange={(e) => handleDailyPlantInspection(e, "Mirrors")}
         />
         <DPICheckboxForm
           title={"3. Reverse Camera"}
           name={"reverse_camera"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "Reverse Camera"
-          )}
+          list={getWeekdaysList("Reverse Camera")}
           handleOnChange={(e) =>
             handleDailyPlantInspection(e, "Reverse Camera")
           }
@@ -443,57 +433,43 @@ function Forms() {
         <DPICheckboxForm
           title={"4. Wipers"}
           name={"wipers"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "Wipers"
-          )}
+          list={getWeekdaysList("Wipers")}
           handleOnChange={(e) => handleDailyPlantInspection(e, "Wipers")}
         />
         <DPICheckboxForm
           title={"5. Lights"}
           name={"lights"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "Lights"
-          )}
+          list={getWeekdaysList("Lights")}
           handleOnChange={(e) => handleDailyPlantInspection(e, "Lights")}
         />
         <DPICheckboxForm
           title={"6. Horn"}
           name={"horn"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "Horn"
-          )}
+          list={getWeekdaysList("Horn")}
           handleOnChange={(e) => handleDailyPlantInspection(e, "Horn")}
         />
         <DPICheckboxForm
           title={"7. Lab belt"}
           name={"lab_belt"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "Lab belt"
-          )}
+          list={getWeekdaysList("Lab belt")}
           handleOnChange={(e) => handleDailyPlantInspection(e, "Lab belt")}
         />
         <DPICheckboxForm
           title={"8. Steps"}
           name={"steps"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "Steps"
-          )}
+          list={getWeekdaysList("Steps")}
           handleOnChange={(e) => handleDailyPlantInspection(e, "Steps")}
         />
         <DPICheckboxForm
           title={"9. Hand Rails"}
           name={"hand_rails"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "Hand Rails"
-          )}
+          list={getWeekdaysList("Hand Rails")}
           handleOnChange={(e) => handleDailyPlantInspection(e, "Hand Rails")}
         />
         <DPICheckboxForm
           title={"10. Emergency Stop"}
           name={"emergency_stop"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "Emergency Stop"
-          )}
+          list={getWeekdaysList("Emergency Stop")}
           handleOnChange={(e) =>
             handleDailyPlantInspection(e, "Emergency Stop")
           }
@@ -501,41 +477,31 @@ function Forms() {
         <DPICheckboxForm
           title={"11. Hand Brake"}
           name={"hand_brake"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "Hand Brake"
-          )}
+          list={getWeekdaysList("Hand Brake")}
           handleOnChange={(e) => handleDailyPlantInspection(e, "Hand Brake")}
         />
         <DPICheckboxForm
           title={"12. Brakes"}
           name={"brakes"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "Brakes"
-          )}
+          list={getWeekdaysList("Brakes")}
           handleOnChange={(e) => handleDailyPlantInspection(e, "Brakes")}
         />
         <DPICheckboxForm
           title={"13. Drivers Seat"}
           name={"drivers_seat"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "Drivers Seat"
-          )}
+          list={getWeekdaysList("Drivers Seat")}
           handleOnChange={(e) => handleDailyPlantInspection(e, "Drivers Seat")}
         />
         <DPICheckboxForm
           title={"14. Windows"}
           name={"windows"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "Windows"
-          )}
+          list={getWeekdaysList("Windows")}
           handleOnChange={(e) => handleDailyPlantInspection(e, "Windows")}
         />
         <DPICheckboxForm
           title={"15. Fire Extinguisher"}
           name={"fire_extinguisher"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "Fire Extinguisher"
-          )}
+          list={getWeekdaysList("Fire Extinguisher")}
           handleOnChange={(e) =>
             handleDailyPlantInspection(e, "Fire Extinguisher")
           }
@@ -543,9 +509,7 @@ function Forms() {
         <DPICheckboxForm
           title={"16. Guards in Place"}
           name={"guards_in_place"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "Guards in Place"
-          )}
+          list={getWeekdaysList("Guards in Place")}
           handleOnChange={(e) =>
             handleDailyPlantInspection(e, "Guards in Place")
           }
@@ -553,9 +517,7 @@ function Forms() {
         <DPICheckboxForm
           title={"17. Gas Bottles Secure"}
           name={"gas_bottles_secure"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "Gas Bottles Secure"
-          )}
+          list={getWeekdaysList("Gas Bottles Secure")}
           handleOnChange={(e) =>
             handleDailyPlantInspection(e, "Gas Bottles Secure")
           }
@@ -563,9 +525,7 @@ function Forms() {
         <DPICheckboxForm
           title={"18. Battery Condition"}
           name={"battery_condition"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "Battery Condition"
-          )}
+          list={getWeekdaysList("Battery Condition")}
           handleOnChange={(e) =>
             handleDailyPlantInspection(e, "Battery Condition")
           }
@@ -573,25 +533,19 @@ function Forms() {
         <DPICheckboxForm
           title={"19. Tyres"}
           name={"tyres"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "Tyres"
-          )}
+          list={getWeekdaysList("Tyres")}
           handleOnChange={(e) => handleDailyPlantInspection(e, "Tyres")}
         />
         <DPICheckboxForm
           title={"20. Steering"}
           name={"steering"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "Steering"
-          )}
+          list={getWeekdaysList("Steering")}
           handleOnChange={(e) => handleDailyPlantInspection(e, "Steering")}
         />
         <DPICheckboxForm
           title={"21. Quick Hitch Pin"}
           name={"quick_hitch_pin"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "Quick Hitch Pin"
-          )}
+          list={getWeekdaysList("Quick Hitch Pin")}
           handleOnChange={(e) =>
             handleDailyPlantInspection(e, "Quick Hitch Pin")
           }
@@ -599,25 +553,19 @@ function Forms() {
         <DPICheckboxForm
           title={"22. FOPS"}
           name={"fops"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "FOPS"
-          )}
+          list={getWeekdaysList("FOPS")}
           handleOnChange={(e) => handleDailyPlantInspection(e, "FOPS")}
         />
         <DPICheckboxForm
           title={"23. ROPS"}
           name={"rops"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "ROPS"
-          )}
+          list={getWeekdaysList("ROPS")}
           handleOnChange={(e) => handleDailyPlantInspection(e, "ROPS")}
         />
         <DPICheckboxForm
           title={"24. Straps in good condition"}
           name={"straps_in_good_condition"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "Straps in good condition"
-          )}
+          list={getWeekdaysList("Straps in good condition")}
           handleOnChange={(e) =>
             handleDailyPlantInspection(e, "Straps in good condition")
           }
@@ -625,9 +573,7 @@ function Forms() {
         <DPICheckboxForm
           title={"25. Transmission Oil"}
           name={"transmission_oil"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "Transmission Oil"
-          )}
+          list={getWeekdaysList("Transmission Oil")}
           handleOnChange={(e) =>
             handleDailyPlantInspection(e, "Transmission Oil")
           }
@@ -635,41 +581,31 @@ function Forms() {
         <DPICheckboxForm
           title={"26. Engine Oil"}
           name={"engine_oil"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "Engine Oil"
-          )}
+          list={getWeekdaysList("Engine Oil")}
           handleOnChange={(e) => handleDailyPlantInspection(e, "Engine Oil")}
         />
         <DPICheckboxForm
           title={"27. Hydraulic Oil"}
           name={"hydraulic_oil"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "Hydraulic Oil"
-          )}
+          list={getWeekdaysList("Hydraulic Oil")}
           handleOnChange={(e) => handleDailyPlantInspection(e, "Hydraulic Oil")}
         />
         <DPICheckboxForm
           title={"28. Water"}
           name={"water"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "Water"
-          )}
+          list={getWeekdaysList("Water")}
           handleOnChange={(e) => handleDailyPlantInspection(e, "Water")}
         />
         <DPICheckboxForm
           title={"29. Fuel"}
           name={"fuel"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "Fuel"
-          )}
+          list={getWeekdaysList("Fuel")}
           handleOnChange={(e) => handleDailyPlantInspection(e, "Fuel")}
         />
         <DPICheckboxForm
           title={"30. Brake Fluid"}
           name={"brake_fluid"}
-          list={currentDocument.daily_plant_inspections?.filter(
-            (el) => el.tool_name === "Brake Fluid"
-          )}
+          list={getWeekdaysList("Brake Fluid")}
           handleOnChange={(e) => handleDailyPlantInspection(e, "Brake Fluid")}
         />
 
@@ -689,7 +625,10 @@ function Forms() {
         <TextArea
           title={"Suggestions to prevent Reoccurance"}
           name={"suggestion_to_prevent_reoccurance_comments"}
-          value={currentDocument.near_miss_report?.suggestion_to_prevent_reoccurance_comments || ""}
+          value={
+            currentDocument.near_miss_report
+              ?.suggestion_to_prevent_reoccurance_comments || ""
+          }
           handleOnChange={handlerNearMissReport}
         />
         <Signature
@@ -700,15 +639,17 @@ function Forms() {
           Identify any futher Hazards and what controls are required
         </h2>
         <div className={styles.hazard_and_controls_container}>
-          {currentDocument.futher_hazards_and_controls_requireds?.map((el, index) => (
-            <HazardAndControls
-              key={index}
-              name={+index}
-              nameValue={el?.name || ""}
-              controlValue={el?.control_required || ""}
-              handleOnChange={handleFutherHazards}
-            />
-          ))}
+          {currentDocument.futher_hazards_and_controls_requireds?.map(
+            (el, index) => (
+              <HazardAndControls
+                key={index}
+                name={+index}
+                nameValue={el?.name || ""}
+                controlValue={el?.control_required || ""}
+                handleOnChange={handleFutherHazards}
+              />
+            )
+          )}
         </div>
         <button
           className={styles.add_hazard_controls}

@@ -1,33 +1,36 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { DocumentContext } from "../../../context/DocumentContext";
 import styles from "./Doc.module.css";
 import Input from "../../form/Input";
 
 function ReinstatementSheetInfo() {
-  const {
-    currentReinstatementSheet,
-    setCurrentReinstatementSheet,
-    getReinstatementSheet,
-    editReinstatementSheetInfo,
-  } = useContext(DocumentContext);
   const { id } = useParams();
+  const { getReinstatementSheet, editReinstatementSheetInfo } =
+    useContext(DocumentContext);
+  const [reinstatementSheet, setReinstatementSheet] = useState({});
+  const [rerender, setRerender] = useState(false); // create a state variable
   const navigate = useNavigate();
 
   useEffect(() => {
-    getReinstatementSheet(id);
-  }, [id]);
+    getReinstatementSheet(id)
+      .then((res) => setReinstatementSheet(res))
+      .catch((err) => {
+        return err;
+      });
+  }, [id, rerender]);
+  console.log(reinstatementSheet)
 
   function handleChange(e) {
-    setCurrentReinstatementSheet({
-      ...currentReinstatementSheet,
+    setReinstatementSheet({
+      ...reinstatementSheet,
       [e.target.name]: e.target.value,
     });
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
-    editReinstatementSheetInfo(id, currentReinstatementSheet);
+    await editReinstatementSheetInfo(id, reinstatementSheet);
     navigate(`/document/${id}/update/reinstatementsheet_table`);
   }
 
@@ -41,7 +44,7 @@ function ReinstatementSheetInfo() {
           type="text"
           name="esbn_hole_number"
           placeholder="Type ESBN hole number"
-          value={currentReinstatementSheet.esbn_hole_number || ""}
+          value={reinstatementSheet?.esbn_hole_number || ""}
           handleOnChange={handleChange}
           autoComplete="off"
         />
@@ -50,7 +53,7 @@ function ReinstatementSheetInfo() {
           type="text"
           name="location"
           placeholder="Type address"
-          value={currentReinstatementSheet.location || ""}
+          value={reinstatementSheet?.location || ""}
           handleOnChange={handleChange}
           autoComplete="off"
         />
@@ -59,7 +62,7 @@ function ReinstatementSheetInfo() {
           type="text"
           name="local_authority_licence_number"
           placeholder="Type local authority licence number"
-          value={currentReinstatementSheet.local_authority_licence_number || ""}
+          value={reinstatementSheet?.local_authority_licence_number || ""}
           handleOnChange={handleChange}
           autoComplete="off"
         />
@@ -68,7 +71,7 @@ function ReinstatementSheetInfo() {
           type="text"
           name="traffic_impact_number"
           placeholder="Type traffic impact number"
-          value={currentReinstatementSheet.traffic_impact_number || ""}
+          value={reinstatementSheet?.traffic_impact_number || ""}
           handleOnChange={handleChange}
           autoComplete="off"
         />

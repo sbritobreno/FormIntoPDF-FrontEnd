@@ -11,18 +11,20 @@ import {
 
 function ReinstatementSheetTable() {
   const navigate = useNavigate();
-  const {
-    currentReinstatementSheet,
-    getReinstatementSheet,
-    removeHoleSequence,
-  } = useContext(DocumentContext);
+  const { getReinstatementSheet, removeHoleSequence } =
+    useContext(DocumentContext);
   const { id } = useParams();
+  const [reinstatementSheet, setReinstatementSheet] = useState(null);
   const [rerender, setRerender] = useState(false); // create a state variable
 
   useEffect(() => {
-    getReinstatementSheet(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    getReinstatementSheet(id)
+      .then((res) => setReinstatementSheet(res))
+      .catch((err) => {
+        return err;
+      });
   }, [id, rerender]);
+  console.log(reinstatementSheet)
 
   async function handleRemoveHoleSequence(id) {
     await removeHoleSequence(id);
@@ -62,12 +64,12 @@ function ReinstatementSheetTable() {
               <th>Edit</th>
             </tr>
             <tr>
-              <td>{currentReinstatementSheet?.esbn_hole_number}</td>
-              <td>{currentReinstatementSheet?.location}</td>
+              <td>{reinstatementSheet?.esbn_hole_number}</td>
+              <td>{reinstatementSheet?.location}</td>
               <td>
-                {currentReinstatementSheet?.local_authority_licence_number}
+                {reinstatementSheet?.local_authority_licence_number}
               </td>
-              <td>{currentReinstatementSheet?.traffic_impact_number}</td>
+              <td>{reinstatementSheet?.traffic_impact_number}</td>
               <td className={styles.btn}>
                 <RiEdit2Line
                   style={styleIcons}
@@ -94,7 +96,7 @@ function ReinstatementSheetTable() {
               <th>Edit</th>
               <th>Delete</th>
             </tr>
-            {currentReinstatementSheet?.hole_sequences?.map((element, key) => (
+            {reinstatementSheet?.hole_sequences?.map((element, key) => (
               <tr key={key}>
                 <td>{(key + 1).toString()}</td>
                 <td>{element.coordinates}</td>
@@ -144,7 +146,7 @@ function ReinstatementSheetTable() {
             <tr>
               <th style={{ width: "120px" }}>Comments:</th>
               <td>
-                {currentReinstatementSheet?.hole_sequences?.map(
+                {reinstatementSheet?.hole_sequences?.map(
                   (element, index) =>
                     `${index + 1}) ` + element.comments?.toString() + ";   "
                 )}
@@ -155,7 +157,7 @@ function ReinstatementSheetTable() {
       </div>
       <div className={styles.table_images}>
         <div className={styles.reinstatement_img_list}>
-          {currentReinstatementSheet.hole_sequences?.map((element, index) => {
+          {reinstatementSheet?.hole_sequences?.map((element, index) => {
             return element.reinstatement_images.map((image) => (
               <div
                 className={styles.holesequence_number_parent}

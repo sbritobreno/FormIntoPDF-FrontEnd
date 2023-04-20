@@ -1,25 +1,41 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
+import { DocumentContext } from "../../../context/DocumentContext";
 import styles from "./Doc.module.css";
 import Input from "../../form/Input";
 
 function MethodStatements() {
-  const navigate = useNavigate();
-  const [form, setForm] = useState({});
+  const { id } = useParams();
+  const { getDocument, updateMethodStatements } = useContext(DocumentContext);
+  const [methodStatements, setMethodStatements] = useState({});
   const [preview, setPreview] = useState("");
+
+  useEffect(() => {
+    getDocument(id)
+      .then((res) => setMethodStatements(res.method_statements_job_information))
+      .catch((err) => {
+        return err;
+      });
+  }, [id]);
 
   function onFileChange(e) {
     setPreview(e.target.files[0]);
-    setForm({ ...form, [e.target.name]: e.target.files[0] });
+    setMethodStatements({
+      ...methodStatements,
+      [e.target.name]: e.target.files[0],
+    });
   }
 
   function handleChange(e) {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setMethodStatements({
+      ...methodStatements,
+      [e.target.name]: e.target.value,
+    });
   }
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
-    navigate(-1);
+    updateMethodStatements(id, methodStatements)
   }
 
   return (
@@ -32,6 +48,7 @@ function MethodStatements() {
           type="text"
           name="ms_id"
           placeholder="Type MS ID"
+          value={methodStatements.ms_id || ""} 
           handleOnChange={handleChange}
           autoComplete="off"
         />
@@ -40,6 +57,7 @@ function MethodStatements() {
           type="text"
           name="ms_revision"
           placeholder="Type revision"
+          value={methodStatements.ms_revision || ""} 
           handleOnChange={handleChange}
           autoComplete="off"
         />
@@ -47,6 +65,7 @@ function MethodStatements() {
           text="Project"
           type="text"
           name="ms_project"
+          value={methodStatements.ms_project || ""} 
           placeholder="Type project"
           handleOnChange={handleChange}
           autoComplete="off"
@@ -55,6 +74,7 @@ function MethodStatements() {
           text="Site"
           type="text"
           name="ms_site"
+          value={methodStatements.ms_site || ""} 
           placeholder="Type site"
           handleOnChange={handleChange}
           autoComplete="off"
@@ -63,6 +83,7 @@ function MethodStatements() {
           text="Client"
           type="text"
           name="ms_client"
+          value={methodStatements.ms_client || ""} 
           placeholder="Type client"
           handleOnChange={handleChange}
           autoComplete="off"
@@ -77,14 +98,14 @@ function MethodStatements() {
           onChange={onFileChange}
         />
         <div className={styles.preview_image}>
-          {(form.image || preview) && (
+          {(methodStatements?.loc_photograph_image || preview) && (
             <img
               src={
                 preview
                   ? URL.createObjectURL(preview)
-                  : `${process.env.REACT_APP_API}/images/users/${form.image}`
+                  : `${process.env.REACT_APP_API}/images/documents/${methodStatements?.loc_photograph_image}`
               }
-              alt="Sketch img"
+              alt="Location img"
             />
           )}
         </div>
