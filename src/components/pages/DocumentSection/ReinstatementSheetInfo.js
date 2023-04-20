@@ -9,7 +9,6 @@ function ReinstatementSheetInfo() {
   const { getReinstatementSheet, editReinstatementSheetInfo } =
     useContext(DocumentContext);
   const [reinstatementSheet, setReinstatementSheet] = useState({});
-  const [rerender, setRerender] = useState(false); // create a state variable
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,8 +17,7 @@ function ReinstatementSheetInfo() {
       .catch((err) => {
         return err;
       });
-  }, [id, rerender]);
-  console.log(reinstatementSheet)
+  }, [id]);
 
   function handleChange(e) {
     setReinstatementSheet({

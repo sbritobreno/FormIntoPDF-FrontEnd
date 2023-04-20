@@ -10,12 +10,12 @@ import { MdAddCircle } from "react-icons/md";
 function NewReinstatementSheetHoleSequence() {
   const { id } = useParams();
   const {
-    currentReinstatementSheet,
     getReinstatementSheet,
     createHoleSequence,
   } = useContext(DocumentContext);
   // This state come from map component with location and coordinates
   const { state } = useLocation();
+  const [reinstatementSheet, setReinstatementSheet] = useState({});
   const [newHoleSequence, setNewHoleSequence] = useState({});
   const hiddenFileInput = useRef(null);
   const [preview, setPreview] = useState([]);
@@ -24,7 +24,11 @@ function NewReinstatementSheetHoleSequence() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getReinstatementSheet(id);
+    getReinstatementSheet(id)
+    .then((res) => setReinstatementSheet(res))
+    .catch((err) => {
+      return err;
+    });
     if (state)
       setNewHoleSequence({
         ...newHoleSequence,
@@ -93,7 +97,7 @@ function NewReinstatementSheetHoleSequence() {
             type="text"
             name="location"
             value={
-              currentReinstatementSheet.location ||
+              reinstatementSheet?.location ||
               "Location should be set on Reinstatement sheet information"
             }
             readOnly

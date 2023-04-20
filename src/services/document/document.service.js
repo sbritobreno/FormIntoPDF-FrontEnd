@@ -197,7 +197,7 @@ export default function DocumentService() {
     const formData = new FormData();
 
     Object.keys(methodStatements).forEach((key) => {
-        formData.append(key, methodStatements[key]);
+      formData.append(key, methodStatements[key]);
     });
 
     await api
@@ -271,7 +271,7 @@ export default function DocumentService() {
         return response.data.reinstatementSheet;
       })
       .catch((err) => {
-        return err.response.data;
+        return err.response.data.message;
       });
     return data;
   }
@@ -305,6 +305,23 @@ export default function DocumentService() {
       .catch((err) => {
         setFlashMessage(err.response.data.message, "error");
       });
+  }
+
+  async function getHoleSequence(id) {
+    const data = await api
+      .get(`/document/holesequence/${id}`, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+        },
+      })
+      .then((response) => {
+        return response.data.holeSequence;
+      })
+      .catch((err) => {
+        return err;
+      });
+
+    return data;
   }
 
   async function createHoleSequence(id, holeSequence) {
@@ -415,6 +432,7 @@ export default function DocumentService() {
     getReinstatementSheet,
     editReinstatementSheetInfo,
     downloadReinstatementSheet,
+    getHoleSequence,
     createHoleSequence,
     editHoleSequence,
     removeHoleSequenceImage,

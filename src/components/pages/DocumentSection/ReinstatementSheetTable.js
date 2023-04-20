@@ -14,7 +14,7 @@ function ReinstatementSheetTable() {
   const { getReinstatementSheet, removeHoleSequence } =
     useContext(DocumentContext);
   const { id } = useParams();
-  const [reinstatementSheet, setReinstatementSheet] = useState(null);
+  const [reinstatementSheet, setReinstatementSheet] = useState({});
   const [rerender, setRerender] = useState(false); // create a state variable
 
   useEffect(() => {
@@ -24,7 +24,6 @@ function ReinstatementSheetTable() {
         return err;
       });
   }, [id, rerender]);
-  console.log(reinstatementSheet)
 
   async function handleRemoveHoleSequence(id) {
     await removeHoleSequence(id);

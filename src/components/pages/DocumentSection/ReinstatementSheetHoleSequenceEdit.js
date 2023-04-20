@@ -1,4 +1,3 @@
-import api from "../../../utils/api";
 import { useState, useEffect, useContext, useRef } from "react";
 import styles from "./Doc.module.css";
 import Input from "../../form/Input";
@@ -9,14 +8,14 @@ import { DocumentContext } from "../../../context/DocumentContext";
 import { MdAddCircle } from "react-icons/md";
 
 function EditReinstatementSheetHoleSequence() {
-  const [token] = useState(localStorage.getItem("token"));
   const { documentId, id } = useParams();
   const {
-    currentReinstatementSheet,
     getReinstatementSheet,
+    getHoleSequence,
     editHoleSequence,
     removeHoleSequenceImage,
   } = useContext(DocumentContext);
+  const [reinstatementSheet, setReinstatementSheet] = useState({});
   // This state come from map component with location and coordinates
   const { state } = useLocation();
   const [holeSequence, setHoleSequence] = useState({});
@@ -27,16 +26,13 @@ function EditReinstatementSheetHoleSequence() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getReinstatementSheet(documentId);
-    api
-      .get(`/document/holesequence/${id}`, {
-        headers: {
-          Authorization: `Bearer ${JSON.parse(token)}`,
-        },
-      })
-      .then((response) => {
-        setHoleSequence(response.data.holeSequence);
-      })
+    getReinstatementSheet(documentId)
+      .then((res) => setReinstatementSheet(res))
+      .catch((err) => {
+        return err;
+      });
+    getHoleSequence(id)
+      .then((res) => setHoleSequence(res))
       .catch((err) => {
         return err;
       });
@@ -117,7 +113,7 @@ function EditReinstatementSheetHoleSequence() {
             type="text"
             name="location"
             value={
-              currentReinstatementSheet.location ||
+              reinstatementSheet.location ||
               "Location should be set on Reinstatement sheet information"
             }
             readOnly

@@ -48,7 +48,7 @@ function MethodStatements() {
           type="text"
           name="ms_id"
           placeholder="Type MS ID"
-          value={methodStatements.ms_id || ""} 
+          value={methodStatements?.ms_id || ""} 
           handleOnChange={handleChange}
           autoComplete="off"
         />
@@ -57,7 +57,7 @@ function MethodStatements() {
           type="text"
           name="ms_revision"
           placeholder="Type revision"
-          value={methodStatements.ms_revision || ""} 
+          value={methodStatements?.ms_revision || ""} 
           handleOnChange={handleChange}
           autoComplete="off"
         />
@@ -65,7 +65,7 @@ function MethodStatements() {
           text="Project"
           type="text"
           name="ms_project"
-          value={methodStatements.ms_project || ""} 
+          value={methodStatements?.ms_project || ""} 
           placeholder="Type project"
           handleOnChange={handleChange}
           autoComplete="off"
@@ -74,7 +74,7 @@ function MethodStatements() {
           text="Site"
           type="text"
           name="ms_site"
-          value={methodStatements.ms_site || ""} 
+          value={methodStatements?.ms_site || ""} 
           placeholder="Type site"
           handleOnChange={handleChange}
           autoComplete="off"
@@ -83,7 +83,7 @@ function MethodStatements() {
           text="Client"
           type="text"
           name="ms_client"
-          value={methodStatements.ms_client || ""} 
+          value={methodStatements?.ms_client || ""} 
           placeholder="Type client"
           handleOnChange={handleChange}
           autoComplete="off"
