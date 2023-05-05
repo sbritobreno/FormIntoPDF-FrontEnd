@@ -44,6 +44,7 @@ function Profile() {
         <Input
           text="Image"
           type="file"
+          accept=".png,.jpg"
           name="image"
           handleOnChange={onFileChange}
         />

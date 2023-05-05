@@ -139,7 +139,7 @@ export default function DocumentService() {
         return response.data;
       })
       .catch((err) => {
-        return err.response.data;
+        return err.response.data.message;
       });
   }
 
@@ -232,16 +232,23 @@ export default function DocumentService() {
 
   async function downloadPDF(id) {
     await api
-      .get(`/document/download_pdf/${id}`, {
+      .get(`/pdf/download/${id}`, {
         headers: {
           Authorization: `Bearer ${JSON.parse(token)}`,
         },
+        responseType: "blob", // Set the response type to blob to receive binary data
       })
       .then((response) => {
-        setFlashMessage(response.data.message, "success");
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "document.pdf");
+        document.body.appendChild(link);
+        link.click();
+        setFlashMessage("PDF downloaded successfully!", "success");
       })
       .catch((err) => {
-        setFlashMessage(err.response.data.message, "error");
+        setFlashMessage("Something went wrong!", "error");
       });
   }
 
@@ -256,7 +263,7 @@ export default function DocumentService() {
         setFlashMessage(response.data.message, "success");
       })
       .catch((err) => {
-        setFlashMessage(err.response.data.message, "error");
+        setFlashMessage("Something went wrong!", "error");
       });
   }
 
@@ -294,16 +301,23 @@ export default function DocumentService() {
 
   async function downloadReinstatementSheet(id) {
     await api
-      .get(`/document/download/${id}/reinstatementsheet`, {
+      .get(`/pdf/download/${id}/reinstatementsheet`, {
         headers: {
           Authorization: `Bearer ${JSON.parse(token)}`,
         },
+        responseType: "blob", // Set the response type to blob to receive binary data
       })
       .then((response) => {
-        setFlashMessage(response.data.message, "success");
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "reinstatementSheet.pdf");
+        document.body.appendChild(link);
+        link.click();
+        setFlashMessage("PDF downloaded successfully!", "success");
       })
       .catch((err) => {
-        setFlashMessage(err.response.data.message, "error");
+        setFlashMessage("Something went wrong!", "error");
       });
   }
 
@@ -349,7 +363,7 @@ export default function DocumentService() {
         navigate(`/document/${id}/update/reinstatementsheet_table`);
       })
       .catch((err) => {
-        setFlashMessage(err.response.data.message, "error");
+        setFlashMessage("Something went wrong!", "error");
       });
   }
 
@@ -369,7 +383,7 @@ export default function DocumentService() {
     });
 
     await api
-      .patch(`document/update_holesequence/${id}`, formData, {
+      .patch(`document/${documentId}/update_holesequence/${id}`, formData, {
         headers: {
           Authorization: `Bearer ${JSON.parse(token)}`,
           "Content-Type": "multipart/form-data",
@@ -380,7 +394,7 @@ export default function DocumentService() {
         navigate(`/document/${documentId}/update/reinstatementsheet_table`);
       })
       .catch((err) => {
-        setFlashMessage(err.response.data.message, "error");
+        setFlashMessage("Something went wrong!", "error");
       });
   }
 

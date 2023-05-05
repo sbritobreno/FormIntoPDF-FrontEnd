@@ -54,7 +54,7 @@ function DisplayReinstatementSheets() {
 
   function setupFilter(list) {
     const result = list.filter((sheet) => {
-      return sheet.esbn_hole_number === null;
+      return sheet.esbn_hole_number === null || sheet.esbn_hole_number === "";
     });
 
     return result;

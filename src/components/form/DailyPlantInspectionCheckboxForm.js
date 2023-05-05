@@ -4,7 +4,7 @@ function DPICheckboxForm({ title, handleOnChange, list }) {
   const monday = list?.monday || false;
   const tuesday = list?.tuesday || false;
   const wednesday = list?.wednesday || false;
-  const thrusday = list?.thrusday || false;
+  const thursday = list?.thursday || false;
   const friday = list?.friday || false;
   const saturday = list?.saturday || false;
   const sunday = list?.sunday || false;
@@ -44,8 +44,8 @@ function DPICheckboxForm({ title, handleOnChange, list }) {
           <label className={styles.dpi_label}>Thurs</label>
           <input
             type="checkbox"
-            name={`thrusday`}
-            checked={thrusday}
+            name={`thursday`}
+            checked={thursday}
             onChange={handleOnChange}
           />
         </div>

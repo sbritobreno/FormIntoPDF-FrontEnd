@@ -203,6 +203,7 @@ function NewReinstatementSheetHoleSequence() {
           <input
             type="file"
             name="images"
+            accept=".png,.jpg"
             ref={hiddenFileInput}
             onChange={onFileChange}
             style={{ display: "none" }}

@@ -145,6 +145,7 @@ function DisplayPDF() {
                     <input
                       type="file"
                       name="file"
+                      accept=".pdf"
                       ref={(el) => (hiddenFileInput[index] = el)}
                       onChange={(e) => onFileChange(e, doc.id)}
                       style={{ display: "none" }}

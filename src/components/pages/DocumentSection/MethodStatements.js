@@ -94,6 +94,7 @@ function MethodStatements() {
           className={styles.single_image}
           text="Image"
           type="file"
+          accept=".png,.jpg"
           name="loc_photograph_image"
           onChange={onFileChange}
         />

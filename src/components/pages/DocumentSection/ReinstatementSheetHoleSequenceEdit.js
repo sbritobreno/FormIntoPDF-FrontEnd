@@ -77,7 +77,7 @@ function EditReinstatementSheetHoleSequence() {
     setHoleSequence({ ...holeSequence, images: newArray });
   }
 
-  // This one removes the images tha are coming from the database not the preview
+  // This one removes the images that are coming from the database not the preview
   function removeImage(index) {
     const imageToRemove = holeSequence.reinstatement_images[index];
     removeHoleSequenceImage(imageToRemove.id);
@@ -239,6 +239,7 @@ function EditReinstatementSheetHoleSequence() {
           <input
             type="file"
             name="images"
+            accept=".png,.jpg"
             ref={hiddenFileInput}
             onChange={onFileChange}
             style={{ display: "none" }}

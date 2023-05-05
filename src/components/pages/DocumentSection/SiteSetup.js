@@ -866,6 +866,7 @@ function SiteSetup() {
           className={styles.single_image}
           text="Image"
           type="file"
+          accept=".png,.jpg"
           name="permit_to_dig_sketch_image"
           onChange={onFileChange}
         />{" "}

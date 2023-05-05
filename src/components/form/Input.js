@@ -13,6 +13,7 @@ function Inputt(
     multiple,
     autoComplete,
     readOnly,
+    accept,
   },
   ref
 ) {
@@ -22,6 +23,7 @@ function Inputt(
       <input
         ref={ref}
         type={type}
+        accept={accept}
         name={name}
         id={name}
         placeholder={placeholder}

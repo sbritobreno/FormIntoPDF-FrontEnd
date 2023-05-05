@@ -176,17 +176,23 @@ function Forms() {
 
   function increaseHazardAndControlsQuantity(e) {
     e.preventDefault();
-    const index =
+    const listLegth =
+      currentDocument.futher_hazards_and_controls_requireds?.length;
+    const lastItem =
       +currentDocument.futher_hazards_and_controls_requireds?.length - 1;
-    const lastOnList =
-      currentDocument.futher_hazards_and_controls_requireds[index];
-    if (Object.keys(lastOnList).length === 0) {
-      setFlashMessage(
-        'You have to finish the previous "futher hazard" before!',
-        "error"
-      );
-      return;
+
+    if (listLegth > 0) {
+      const lastOnList =
+        currentDocument.futher_hazards_and_controls_requireds[lastItem];
+      if (Object.keys(lastOnList).length === 0) {
+        setFlashMessage(
+          'You have to finish the previous "futher hazard" before!',
+          "error"
+        );
+        return;
+      }
     }
+    console.log("fdsdf");
 
     let futherHazardsValue = {};
     const newfutherHazardss = [
@@ -449,10 +455,10 @@ function Forms() {
           handleOnChange={(e) => handleDailyPlantInspection(e, "Horn")}
         />
         <DPICheckboxForm
-          title={"7. Lab belt"}
-          name={"lab_belt"}
-          list={getWeekdaysList("Lab belt")}
-          handleOnChange={(e) => handleDailyPlantInspection(e, "Lab belt")}
+          title={"7. Lap belt"}
+          name={"lap_belt"}
+          list={getWeekdaysList("Lap belt")}
+          handleOnChange={(e) => handleDailyPlantInspection(e, "Lap belt")}
         />
         <DPICheckboxForm
           title={"8. Steps"}
