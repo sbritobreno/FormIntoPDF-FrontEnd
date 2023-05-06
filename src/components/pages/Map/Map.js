@@ -6,6 +6,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import useFlashMessage from "../../../hooks/useFlashMessage";
 import { RiCloseLine } from "react-icons/ri";
 import { BsLayersHalf } from "react-icons/bs";
+import Spinner from "../../layout/Spinner";
 
 function Map() {
   // use this state to return to the previous page
@@ -16,7 +17,7 @@ function Map() {
     libraries,
   });
 
-  if (!isLoaded) return <div>Loading...</div>;
+  if (!isLoaded) return <Spinner />;
 
   return <LoadMap originPage={state?.originPage} />;
 }

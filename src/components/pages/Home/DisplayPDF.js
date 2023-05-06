@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import ConfirmWindow from "../Extras/ConfirmWindow";
 import Pagination from "../../layout/Pagination";
 import pdf_img from "../../../assets/pdf_img.png";
+import Spinner from "../../layout/Spinner";
 
 function DisplayPDF() {
   const {
@@ -27,6 +28,7 @@ function DisplayPDF() {
   const btnText = "Delete Document";
   const message = "Are you sure you want to delete this document ?";
   const [documentToBeDeletedId, setDocumentToBeDeletedId] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getDocumentList();
@@ -108,8 +110,14 @@ function DisplayPDF() {
     setRerender(!rerender);
   }
 
+  async function handleDownload(docId) {
+    setIsLoading(true);
+    downloadPDF(docId).then(() => setIsLoading(false));
+  }
+
   return (
     <section>
+      {isLoading && <Spinner />}
       {confirmWindowOpen && (
         <ConfirmWindow
           message={message}
@@ -180,7 +188,7 @@ function DisplayPDF() {
                   </button>
                   <button
                     className={styles.pdf_btn_download}
-                    onClick={() => downloadPDF(doc.id)}
+                    onClick={() => handleDownload(doc.id)}
                   >
                     Download
                   </button>

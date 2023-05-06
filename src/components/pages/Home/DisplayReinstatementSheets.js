@@ -4,6 +4,7 @@ import { DocumentContext } from "../../../context/DocumentContext";
 import { useNavigate } from "react-router-dom";
 import Pagination from "../../layout/Pagination";
 import form_img from "../../../assets/form_img.png";
+import Spinner from "../../layout/Spinner";
 
 function DisplayReinstatementSheets() {
   const { documentList, downloadReinstatementSheet } =
@@ -18,6 +19,7 @@ function DisplayReinstatementSheets() {
   const [page, setPage] = useState(1);
   const resultsPerPage = 5;
   let numberOfPages = 1;
+  const [isLoading, setIsLoading] = useState(false);
 
   const filteredReinstatementSheets = searchFilter();
 
@@ -69,8 +71,14 @@ function DisplayReinstatementSheets() {
     setFilter(checkbox.current.checked);
   }
 
+  async function handleDownload(docId) {
+    setIsLoading(true);
+    downloadReinstatementSheet(docId).then(() => setIsLoading(false));
+  }
+
   return (
     <section>
+      {isLoading && <Spinner />}
       <div className={styles.search_box}>
         <input
           className={styles.search}
@@ -127,7 +135,7 @@ function DisplayReinstatementSheets() {
                   </button>
                   <button
                     className={styles.pdf_btn_download}
-                    onClick={() => downloadReinstatementSheet(form.DocumentId)}
+                    onClick={() => handleDownload(form.DocumentId)}
                   >
                     Download
                   </button>
