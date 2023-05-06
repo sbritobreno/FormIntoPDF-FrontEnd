@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { DocumentContext } from "../../../context/DocumentContext";
+import ConfirmWindow from "../Extras/ConfirmWindow";
 import styles from "./Doc.module.css";
 import Input from "../../form/Input";
 import Signature from "../../form/Signature";
@@ -16,6 +17,10 @@ function SiteAttendance() {
   const [attendanceList, setAttendanceList] = useState([]);
   const [newAttendance, setNewAttendance] = useState({});
   const [rerender, setRerender] = useState(false); // create a state variable
+  const [attendanceToBeDeletedId, setAttendanceToBeDeletedId] = useState(null);
+  const [confirmWindowOpen, setConfirmWindowOpen] = useState(false);
+  const btnText = "Remove";
+  const message = "Are you sure you want to remove this attendance ?";
 
   useEffect(() => {
     getDocument(id)
@@ -55,7 +60,16 @@ function SiteAttendance() {
   }
 
   function deleteRowAttendance(personId) {
-    removeAttendance(personId);
+    setAttendanceToBeDeletedId(personId);
+    setConfirmWindowOpen(true);
+  }
+
+  async function confirmAction(confirmed = false) {
+    setConfirmWindowOpen(false);
+    if (confirmed) {
+      await removeAttendance(attendanceToBeDeletedId);
+    }
+    setAttendanceToBeDeletedId(null);
     setNewAttendance({});
     setRerender(!rerender);
   }
@@ -88,6 +102,13 @@ function SiteAttendance() {
     <>
       {displayAttendanceList ? (
         <>
+          {confirmWindowOpen && (
+            <ConfirmWindow
+              message={message}
+              btnText={btnText}
+              actionResponse={confirmAction}
+            />
+          )}
           <RiCloseLine
             style={style}
             onClick={() => setDisplayAttendanceList(false)}

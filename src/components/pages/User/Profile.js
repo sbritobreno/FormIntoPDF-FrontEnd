@@ -3,11 +3,15 @@ import styles from "./Profile.module.css";
 import Input from "../../form/Input";
 import user_img from "../../../assets/profile_img_default.png";
 import { UserContext } from "../../../context/UserContext";
+import ConfirmWindow from "../Extras/ConfirmWindow";
 
 function Profile() {
-  const { deleteUserAccount, currentUser, setCurrentUser, updateProfile } =
+  const { currentUser, setCurrentUser, updateProfile, deleteUserAccount } =
     useContext(UserContext);
   const [preview, setPreview] = useState("");
+  const [confirmWindowOpen, setConfirmWindowOpen] = useState(false);
+  const btnText = "Delete Account";
+  const message = "Are you sure you want to delete your account ?";
 
   function onFileChange(e) {
     setPreview(e.target.files[0]);
@@ -23,8 +27,22 @@ function Profile() {
     updateProfile(currentUser);
   }
 
+  async function confirmAction(confirmed = false) {
+    setConfirmWindowOpen(false);
+    if (confirmed) {
+      await deleteUserAccount();
+    }
+  }
+
   return (
     <section>
+      {confirmWindowOpen && (
+        <ConfirmWindow
+          message={message}
+          btnText={btnText}
+          actionResponse={confirmAction}
+        />
+      )}
       <div className={styles.profile_header}>
         <h1>Profile</h1>
         <div className={styles.preview_image}>
@@ -102,7 +120,7 @@ function Profile() {
         <button
           type="button"
           className={styles.btn2}
-          onClick={deleteUserAccount}
+          onClick={() => setConfirmWindowOpen(true)}
         >
           Delete Account
         </button>

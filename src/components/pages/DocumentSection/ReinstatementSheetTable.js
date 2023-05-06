@@ -2,6 +2,7 @@ import { useEffect, useContext, useState } from "react";
 import styles from "./Doc.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { DocumentContext } from "../../../context/DocumentContext";
+import ConfirmWindow from "../Extras/ConfirmWindow";
 import {
   RiCloseLine,
   RiDeleteBin5Line,
@@ -16,6 +17,10 @@ function ReinstatementSheetTable() {
   const { id } = useParams();
   const [reinstatementSheet, setReinstatementSheet] = useState({});
   const [rerender, setRerender] = useState(false); // create a state variable
+  const [holeSeqToBeDeletedId, setHoleSeqToBeDeletedId] = useState(null);
+  const [confirmWindowOpen, setConfirmWindowOpen] = useState(false);
+  const btnText = "Remove";
+  const message = "Are you sure you want to remove this hole sequence ?";
 
   useEffect(() => {
     getReinstatementSheet(id)
@@ -25,8 +30,19 @@ function ReinstatementSheetTable() {
       });
   }, [id, rerender]);
 
-  async function handleRemoveHoleSequence(id) {
-    await removeHoleSequence(id);
+  function handleRemoveHoleSequence(id) {
+    setHoleSeqToBeDeletedId(id);
+    setConfirmWindowOpen(true);
+  }
+
+  async function confirmAction(confirmed = false) {
+    setConfirmWindowOpen(false);
+
+    if (confirmed) {
+      await removeHoleSequence(holeSeqToBeDeletedId);
+    }
+
+    setHoleSeqToBeDeletedId(null);
     setRerender(!rerender); // update state variable to run useEffect again
   }
 
@@ -47,6 +63,13 @@ function ReinstatementSheetTable() {
 
   return (
     <section>
+      {confirmWindowOpen && (
+        <ConfirmWindow
+          message={message}
+          btnText={btnText}
+          actionResponse={confirmAction}
+        />
+      )}
       <RiCloseLine
         style={styleBtnClose}
         onClick={() => navigate(`/document/${id}/update`)}
@@ -65,9 +88,7 @@ function ReinstatementSheetTable() {
             <tr>
               <td>{reinstatementSheet?.esbn_hole_number}</td>
               <td>{reinstatementSheet?.location}</td>
-              <td>
-                {reinstatementSheet?.local_authority_licence_number}
-              </td>
+              <td>{reinstatementSheet?.local_authority_licence_number}</td>
               <td>{reinstatementSheet?.traffic_impact_number}</td>
               <td className={styles.btn}>
                 <RiEdit2Line

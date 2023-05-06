@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { DocumentContext } from "../../../context/DocumentContext";
 import useFlashMessage from "../../../hooks/useFlashMessage";
+import ConfirmWindow from "../Extras/ConfirmWindow";
 import styles from "./Doc.module.css";
 import Input from "../../form/Input";
 import { RiCloseLine, RiDeleteBin5Line } from "react-icons/ri";
@@ -15,6 +16,11 @@ function ApprovedForm() {
   const [newApprovedForm, setNewApprovedForm] = useState({});
   const [approvedFormList, setApprovedFormList] = useState([]);
   const { setFlashMessage } = useFlashMessage();
+  const [rowIndexToBeDeleted, setRowIndexToBeDeleted] = useState(null);
+  const [confirmWindowOpen, setConfirmWindowOpen] = useState(false);
+  const btnText = "Remove";
+  const message =
+    "Are you sure you want to remove this row from Approved Form ?";
 
   useEffect(() => {
     getDocument(id)
@@ -84,9 +90,19 @@ function ApprovedForm() {
   }
 
   function deleteRowApprovedForm(index) {
-    var array = approvedFormList;
-    array.splice(index, 1);
-    setApprovedFormList(array);
+    setRowIndexToBeDeleted(index);
+    setConfirmWindowOpen(true);
+  }
+
+  async function confirmAction(confirmed = false) {
+    setConfirmWindowOpen(false);
+    if (confirmed) {
+      var array = approvedFormList;
+      array.splice(rowIndexToBeDeleted, 1);
+      setApprovedFormList(array);
+      setNewApprovedForm({});
+    }
+    setRowIndexToBeDeleted(null);
     setNewApprovedForm({});
   }
 
@@ -103,6 +119,13 @@ function ApprovedForm() {
     <>
       {displayApprovedFormList ? (
         <>
+          {confirmWindowOpen && (
+            <ConfirmWindow
+              message={message}
+              btnText={btnText}
+              actionResponse={confirmAction}
+            />
+          )}
           <RiCloseLine
             style={style}
             onClick={() => setDisplayApprovedFormList(false)}

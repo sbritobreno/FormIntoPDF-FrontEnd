@@ -2,6 +2,7 @@ import styles from "./Home.module.css";
 import { useState, useEffect, useContext, useRef } from "react";
 import { DocumentContext } from "../../../context/DocumentContext";
 import { useNavigate } from "react-router-dom";
+import ConfirmWindow from "../Extras/ConfirmWindow";
 import Pagination from "../../layout/Pagination";
 import pdf_img from "../../../assets/pdf_img.png";
 
@@ -9,8 +10,8 @@ function DisplayPDF() {
   const {
     documentList,
     getDocumentList,
-    removeDocument,
     downloadPDF,
+    removeDocument,
     attachFile,
   } = useContext(DocumentContext);
   const navigate = useNavigate();
@@ -22,6 +23,10 @@ function DisplayPDF() {
   let numberOfPages = 1;
   const hiddenFileInput = useRef([]);
   const [rerender, setRerender] = useState(false); // create a state variable
+  const [confirmWindowOpen, setConfirmWindowOpen] = useState(false);
+  const btnText = "Delete Document";
+  const message = "Are you sure you want to delete this document ?";
+  const [documentToBeDeletedId, setDocumentToBeDeletedId] = useState(null);
 
   useEffect(() => {
     getDocumentList();
@@ -90,12 +95,28 @@ function DisplayPDF() {
   }
 
   async function HandleremoveDocument(id) {
-    await removeDocument(id);
+    setDocumentToBeDeletedId(id);
+    setConfirmWindowOpen(true);
+  }
+
+  async function confirmAction(confirmed = false) {
+    setConfirmWindowOpen(false);
+    if (confirmed) {
+      await removeDocument(documentToBeDeletedId);
+    }
+    setDocumentToBeDeletedId(null);
     setRerender(!rerender);
   }
 
   return (
     <section>
+      {confirmWindowOpen && (
+        <ConfirmWindow
+          message={message}
+          btnText={btnText}
+          actionResponse={confirmAction}
+        />
+      )}
       <div className={styles.search_box}>
         <input
           className={styles.search}

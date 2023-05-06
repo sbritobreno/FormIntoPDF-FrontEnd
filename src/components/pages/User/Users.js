@@ -2,6 +2,7 @@ import styles from "./Users.module.css";
 import { useState, useContext, useEffect } from "react";
 import { UserContext } from "../../../context/UserContext";
 import Pagination from "../../layout/Pagination";
+import ConfirmWindow from "../Extras/ConfirmWindow";
 
 function Users() {
   const {
@@ -17,6 +18,13 @@ function Users() {
   const [searchfieldName, setSearchfieldName] = useState("");
   const filteredUser = searchFilter();
   const [rerender, setRerender] = useState(false); // create a state variable
+
+  const [userToBeDeleted, setUserToBeDeleted] = useState({});
+  const [confirmWindowOpen, setConfirmWindowOpen] = useState(false);
+  const btnText = "Delete Account";
+  const message = `Are you sure you want to remove ${
+    userToBeDeleted?.name?.split(" ")[0]
+  }'s account ?`;
 
   useEffect(() => {
     getUsersList();
@@ -55,13 +63,29 @@ function Users() {
     setRerender(!rerender);
   }
 
-  async function removeUser(username, userId){
-    await deleteUserAccountByAdmin(username, userId)
+  function removeUser(username, userId) {
+    setUserToBeDeleted({ name: username, id: userId });
+    setConfirmWindowOpen(true);
+  }
+
+  async function confirmAction(confirm = false) {
+    setConfirmWindowOpen(false);
+    if (confirm) {
+      await deleteUserAccountByAdmin(userToBeDeleted.name, userToBeDeleted.id);
+    }
+    setUserToBeDeleted({});
     setRerender(!rerender);
   }
 
   return (
     <section>
+      {confirmWindowOpen && (
+        <ConfirmWindow
+          message={message}
+          btnText={btnText}
+          actionResponse={confirmAction}
+        />
+      )}
       <div className={styles.users_header}>
         <h1>See here all Users!</h1>
         <p>Edit and/or delete any User.</p>

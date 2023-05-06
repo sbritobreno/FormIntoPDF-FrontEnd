@@ -5,6 +5,7 @@ import TextArea from "../../form/TextArea";
 import Select from "../../form/Select";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { DocumentContext } from "../../../context/DocumentContext";
+import ConfirmWindow from "../Extras/ConfirmWindow";
 import { MdAddCircle } from "react-icons/md";
 
 function EditReinstatementSheetHoleSequence() {
@@ -24,6 +25,10 @@ function EditReinstatementSheetHoleSequence() {
   const reinstatementOptions = ["Permanent", "Temporary"];
   const statusOptions = ["Completed", "In progress"];
   const navigate = useNavigate();
+  const [imageToBeDeleted, setImageToBeDeleted] = useState({});
+  const [confirmWindowOpen, setConfirmWindowOpen] = useState(false);
+  const btnText = "Remove Image";
+  const message = "Are you sure you want to remove this image ?";
 
   useEffect(() => {
     getReinstatementSheet(documentId)
@@ -72,19 +77,38 @@ function EditReinstatementSheetHoleSequence() {
   }
 
   function handleClickRemoveImage(index) {
-    const newArray = preview.filter((item, i) => i !== index);
-    setPreview(newArray);
-    setHoleSequence({ ...holeSequence, images: newArray });
+    setConfirmWindowOpen(true);
+    setImageToBeDeleted({ index: index, stored: "preview" });
   }
 
   // This one removes the images that are coming from the database not the preview
   function removeImage(index) {
-    const imageToRemove = holeSequence.reinstatement_images[index];
-    removeHoleSequenceImage(imageToRemove.id);
-    const newArray = holeSequence.reinstatement_images.filter(
-      (item, i) => i !== index
-    );
-    setHoleSequence({ ...holeSequence, reinstatement_images: newArray });
+    setConfirmWindowOpen(true);
+    setImageToBeDeleted({ index: index, stored: "database" });
+  }
+
+  async function confirmAction(confirmed = false) {
+    setConfirmWindowOpen(false);
+
+    if (confirmed && imageToBeDeleted.stored === "preview") {
+      const newArray = preview.filter(
+        (item, i) => i !== imageToBeDeleted.index
+      );
+      setPreview(newArray);
+      setHoleSequence({ ...holeSequence, images: newArray });
+    }
+
+    if (confirmed && imageToBeDeleted.stored === "database") {
+      const imageToRemove =
+        holeSequence.reinstatement_images[imageToBeDeleted.index];
+      const newArray = await holeSequence.reinstatement_images.filter(
+        (item, i) => i !== imageToBeDeleted.index
+      );
+      setHoleSequence({ ...holeSequence, reinstatement_images: newArray });
+      await removeHoleSequenceImage(imageToRemove.id);
+    }
+
+    setImageToBeDeleted({});
   }
 
   function handleSubmit(e) {
@@ -94,6 +118,13 @@ function EditReinstatementSheetHoleSequence() {
 
   return (
     <section className={styles.form_container}>
+      {confirmWindowOpen && (
+        <ConfirmWindow
+          message={message}
+          btnText={btnText}
+          actionResponse={confirmAction}
+        />
+      )}
       <h1>Reinstatement Sheet</h1>
       <form onSubmit={handleSubmit} className={styles.form_reinstatement}>
         {/* That would be actually a simple button to set location and coordinates on the form */}
