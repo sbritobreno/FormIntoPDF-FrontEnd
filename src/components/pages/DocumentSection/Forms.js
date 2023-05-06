@@ -217,6 +217,7 @@ function Forms() {
           text="Site"
           type="text"
           name="site"
+          maxlength={"60"}
           placeholder="Type site"
           value={currentDocument.hot_work_permit?.site || ""}
           handleOnChange={handleHotWorkPermit}
@@ -226,6 +227,7 @@ function Forms() {
           text="Floor/Level"
           type="text"
           name="floor_level"
+          maxlength={"60"}
           placeholder="Type floor/level"
           value={currentDocument.hot_work_permit?.floor_level || ""}
           handleOnChange={handleHotWorkPermit}
@@ -235,6 +237,7 @@ function Forms() {
           text="Nature of work (include exact location)"
           type="text"
           name="nature_of_work"
+          maxlength={"60"}
           placeholder="Type nature of work"
           value={currentDocument.hot_work_permit?.nature_of_work || ""}
           handleOnChange={handleHotWorkPermit}
@@ -343,6 +346,7 @@ function Forms() {
           text="Company"
           type="text"
           name="permit_issued_by_company"
+          maxlength={"50"}
           placeholder="Type company name"
           value={
             currentDocument.hot_work_permit?.permit_issued_by_company || ""
@@ -354,6 +358,7 @@ function Forms() {
           text="Name"
           type="text"
           name="permit_issued_by_person"
+          maxlength={"50"}
           placeholder="Type name"
           value={currentDocument.hot_work_permit?.permit_issued_by_person || ""}
           handleOnChange={handleHotWorkPermit}
@@ -368,6 +373,7 @@ function Forms() {
           text="Company"
           type="text"
           name="permit_received_by_company"
+          maxlength={"50"}
           placeholder="Type company name"
           value={
             currentDocument.hot_work_permit?.permit_received_by_company || ""
@@ -379,6 +385,7 @@ function Forms() {
           text="Name"
           type="text"
           name="permit_received_by_person"
+          maxlength={"50"}
           placeholder="Type name"
           value={
             currentDocument.hot_work_permit?.permit_received_by_person || ""
@@ -404,6 +411,7 @@ function Forms() {
           text="Name"
           type="text"
           name="final_check_name"
+          maxlength={"50"}
           placeholder="Type name"
           value={currentDocument.hot_work_permit?.final_check_name || ""}
           handleOnChange={handleHotWorkPermit}
@@ -619,6 +627,7 @@ function Forms() {
         <TextArea
           title={"Details of Near Miss"}
           name={"details_comments"}
+          maxlength={"220"}
           value={currentDocument.near_miss_report?.details_comments || ""}
           handleOnChange={handlerNearMissReport}
         />

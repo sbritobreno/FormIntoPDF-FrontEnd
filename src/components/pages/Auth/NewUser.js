@@ -42,6 +42,7 @@ function NewUser() {
           text="Name"
           type="text"
           name="name"
+          maxlength={"50"}
           placeholder="Type user's name"
           handleOnChange={handleChange}
         />
@@ -50,6 +51,7 @@ function NewUser() {
           text="E-mail"
           type="email"
           name="email"
+          maxlength={"70"}
           placeholder="Type user's e-mail"
           handleOnChange={handleChange}
         />
@@ -58,6 +60,7 @@ function NewUser() {
           text="Phone"
           type="text"
           name="phone"
+          maxlength={"20"}
           placeholder="Type user's phone"
           handleOnChange={handleChange}
         />
@@ -66,6 +69,7 @@ function NewUser() {
           text="Role"
           type="text"
           name="role"
+          maxlength={"50"}
           placeholder="Type user's role"
           handleOnChange={handleChange}
         />

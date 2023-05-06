@@ -424,6 +424,7 @@ function SiteSetup() {
           text="Method Statement being used for today's work"
           type="text"
           name="method_statement_for_the_day"
+          maxlength={"80"}
           value={
             currentDocument.daily_method_statement_and_traffic_management_check
               ?.method_statement_for_the_day || ""
@@ -478,6 +479,7 @@ function SiteSetup() {
           text="Location of assembly point in the event of an emergency"
           type="text"
           name="emergency_location_of_assembly_point"
+          maxlength={"80"}
           value={
             currentDocument.Emergency?.emergency_location_of_assembly_point ||
             ""
@@ -490,6 +492,7 @@ function SiteSetup() {
           text="Name of First Aider"
           type="text"
           name="emergency_name_of_first_aider"
+          maxlength={"80"}
           value={currentDocument.Emergency?.emergency_name_of_first_aider || ""}
           placeholder="Type the name of the first aider"
           handleOnChange={handleEmergencies}
@@ -499,6 +502,7 @@ function SiteSetup() {
           text="Name of SLG Operative"
           type="text"
           name="emergency_slg_operative"
+          maxlength={"80"}
           value={currentDocument.Emergency?.emergency_slg_operative || ""}
           placeholder="Type the name of SLG operative"
           handleOnChange={handleEmergencies}
@@ -511,6 +515,7 @@ function SiteSetup() {
           text="TMP number set up on site"
           type="text"
           name="traffic_management_compliance_checksheet_tmp_number"
+          maxlength={"80"}
           value={
             currentDocument.traffic_management_compliance_checksheet
               ?.traffic_management_compliance_checksheet_tmp_number || ""

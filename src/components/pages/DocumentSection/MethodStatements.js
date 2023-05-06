@@ -47,6 +47,7 @@ function MethodStatements() {
           text="MS ID"
           type="text"
           name="ms_id"
+          maxlength={"40"}
           placeholder="Type MS ID"
           value={methodStatements?.ms_id || ""} 
           handleOnChange={handleChange}
@@ -56,6 +57,7 @@ function MethodStatements() {
           text="Revision"
           type="text"
           name="ms_revision"
+          maxlength={"40"}
           placeholder="Type revision"
           value={methodStatements?.ms_revision || ""} 
           handleOnChange={handleChange}
@@ -65,6 +67,7 @@ function MethodStatements() {
           text="Project"
           type="text"
           name="ms_project"
+          maxlength={"40"}
           value={methodStatements?.ms_project || ""} 
           placeholder="Type project"
           handleOnChange={handleChange}
@@ -74,6 +77,7 @@ function MethodStatements() {
           text="Site"
           type="text"
           name="ms_site"
+          maxlength={"40"}
           value={methodStatements?.ms_site || ""} 
           placeholder="Type site"
           handleOnChange={handleChange}
@@ -83,6 +87,7 @@ function MethodStatements() {
           text="Client"
           type="text"
           name="ms_client"
+          maxlength={"40"}
           value={methodStatements?.ms_client || ""} 
           placeholder="Type client"
           handleOnChange={handleChange}

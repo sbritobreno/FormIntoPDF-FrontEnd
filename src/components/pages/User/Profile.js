@@ -70,6 +70,7 @@ function Profile() {
           text="Name"
           type="text"
           name="name"
+          maxlength={"50"}
           value={currentUser.name || ""}
           placeholder="Type user name"
           handleOnChange={handleChange}
@@ -78,6 +79,7 @@ function Profile() {
           text="E-mail"
           type="email"
           name="email"
+          maxlength={"70"}
           value={currentUser.email || ""}
           autoComplete={"email"}
           placeholder="Type user email"
@@ -87,6 +89,7 @@ function Profile() {
           text="Role"
           type="text"
           name="role"
+          maxlength={"50"}
           value={currentUser.role || ""}
           autoComplete={"role"}
           handleOnChange={handleChange}
@@ -96,6 +99,7 @@ function Profile() {
           text="Phone"
           type="text"
           name="phone"
+          maxlength={"20"}
           value={currentUser.phone || ""}
           placeholder="Type user phone number"
           handleOnChange={handleChange}

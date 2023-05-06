@@ -165,6 +165,7 @@ function EditReinstatementSheetHoleSequence() {
             text="Length"
             type="text"
             name="length"
+            maxlength={"3"}
             placeholder="Type hole length"
             value={holeSequence?.length || ""}
             handleOnChange={handleChange}
@@ -174,6 +175,7 @@ function EditReinstatementSheetHoleSequence() {
             text="Width"
             type="text"
             name="width"
+            maxlength={"3"}
             placeholder="Type hole width"
             value={holeSequence?.width || ""}
             handleOnChange={handleChange}
@@ -232,6 +234,7 @@ function EditReinstatementSheetHoleSequence() {
         <TextArea
           title="Add new comment"
           name="comments"
+          maxlength={"200"}
           handleOnChange={handleChange}
           value={holeSequence.comments || ""}
         />

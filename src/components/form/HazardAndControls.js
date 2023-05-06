@@ -8,12 +8,14 @@ function HazardAndControls({ name, handleOnChange, nameValue, controlValue }) {
         name={name + "_name"}
         placeholder="*Optional"
         value={nameValue || ""}
+        maxLength={"50"}
         onChange={handleOnChange}
         autoComplete="off"
       />
       <label>Controls:</label>
       <textarea
         rows="2"
+        maxLength={"200"}
         name={name + "_control_required"}
         placeholder="*Optional"
         value={controlValue || ""}

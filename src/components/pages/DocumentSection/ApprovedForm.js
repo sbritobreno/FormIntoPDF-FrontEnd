@@ -181,6 +181,7 @@ function ApprovedForm() {
               text="Description or Location"
               type="text"
               name="description_location"
+              maxlength={"80"}
               placeholder="Type description or location"
               handleOnChange={handleChange}
               autoComplete="off"
@@ -198,6 +199,7 @@ function ApprovedForm() {
               text="Results of thorough examination"
               type="text"
               name="examination_result_state"
+              maxlength={"80"}
               placeholder="Type results of thorough examination"
               handleOnChange={handleChange}
               autoComplete="off"
