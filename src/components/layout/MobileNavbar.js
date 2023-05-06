@@ -5,6 +5,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { UserContext } from "../../context/UserContext";
 import { DocumentContext } from "../../context/DocumentContext";
 import ConfirmWindow from "../pages/Extras/ConfirmWindow";
+import logo from "../../assets/full_logo.png";
 
 function MobileNavbar() {
   const { isAdmin, logout, currentUser } = useContext(UserContext);
@@ -39,7 +40,7 @@ function MobileNavbar() {
       )}
       <div className={styles.navbar}>
         <div className={styles.navbar_logo}>
-          <h2>Form Into PDF</h2>
+        <img src={logo} alt="KendraForm2PDF" />
         </div>
         <div>
           <div className={styles.dropdown}>

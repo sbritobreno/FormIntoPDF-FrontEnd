@@ -13,10 +13,17 @@
   z-index: 5;
 }
 
-.logo {
-  margin: 2.5em;
+.logo_container{
+  width: 85vw;
+  max-width: 350px;
+  margin-inline: auto;
   text-align: center;
-  color: #fff;
+  margin-block: 3em 2em;
+}
+
+.logo {
+  height: 100px;
+  width: auto;
 }
 
 .form_container {
@@ -64,5 +71,4 @@
 /* ###########################         Mobile/Tablet           ##################################### */
 
 @media (max-width: 767px) {
-  
 }

@@ -5,6 +5,7 @@ import { UserContext } from "../../context/UserContext";
 import { DocumentContext } from "../../context/DocumentContext";
 import ConfirmWindow from "../pages/Extras/ConfirmWindow";
 import img from "../../assets/profile_img_default.png";
+import logo from "../../assets/full_logo.png";
 
 function Navbar() {
   const { isAdmin, logout, currentUser } = useContext(UserContext);
@@ -31,7 +32,7 @@ function Navbar() {
       )}
       <div className={styles.navbar}>
         <div className={styles.navbar_logo}>
-          <h2>Form Into PDF</h2>
+          <img src={logo} alt="KendraForm2PDF" />
         </div>
         <ul>
           <li className={styles.new_link}>

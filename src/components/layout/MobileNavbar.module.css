@@ -19,11 +19,10 @@
   color: #fff;
 }
 
-.navbar_logo {
-  display: flex;
-  padding-inline: 0.5em;
-  align-items: center;
-  margin-inline: 0.5em;
+.navbar_logo img {
+  height: 30px;
+  width: auto;
+  margin: 1em;
 }
 
 .navbar_logo h2 {

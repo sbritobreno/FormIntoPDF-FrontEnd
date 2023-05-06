@@ -3,6 +3,7 @@ import Input from "../../form/Input";
 import { Link } from "react-router-dom";
 import styles from "./Login.module.css";
 import { UserContext } from "../../../context/UserContext";
+import logo from "../../../assets/full_logo.png";
 
 function Login() {
   const [user, setUser] = useState({});
@@ -29,7 +30,9 @@ function Login() {
 
   return (
     <section className={styles.overlay}>
-      <h1 className={styles.logo}>Form Into PDF</h1>
+      <div className={styles.logo_container}>
+        <img className={styles.logo} src={logo} alt="KendraForm2PDF" />
+      </div>
       <div className={styles.form_container}>
         <h1>Login</h1>
         <form onSubmit={handleSubmit}>
