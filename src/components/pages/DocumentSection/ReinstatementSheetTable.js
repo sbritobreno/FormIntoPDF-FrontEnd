@@ -126,7 +126,9 @@ function ReinstatementSheetTable() {
                 <td>{element.area}</td>
                 <td>{element.reinstatement}</td>
                 <td>{element.status}</td>
-                <td>{element.date_complete}</td>
+                <td>
+                  {new Date(element.date_complete).toLocaleDateString("en-GB")}
+                </td>
                 <td className={styles.btn}>
                   <RiEdit2Line
                     style={styleIcons}

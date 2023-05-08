@@ -41,7 +41,7 @@ function ReinstatementSheetInfo() {
           text="ESBN Hole No."
           type="text"
           name="esbn_hole_number"
-          maxlength={"6"}
+          maxLength={"6"}
           placeholder="Type ESBN hole number"
           value={reinstatementSheet?.esbn_hole_number || ""}
           handleOnChange={handleChange}
@@ -51,7 +51,7 @@ function ReinstatementSheetInfo() {
           text="Address"
           type="text"
           name="location"
-          maxlength={"40"}
+          maxLength={"40"}
           placeholder="Type address"
           value={reinstatementSheet?.location || ""}
           handleOnChange={handleChange}
@@ -61,7 +61,7 @@ function ReinstatementSheetInfo() {
           text="Local Authority Licence No. T4/T2"
           type="text"
           name="local_authority_licence_number"
-          maxlength={"6"}
+          maxLength={"6"}
           placeholder="Type local authority licence number"
           value={reinstatementSheet?.local_authority_licence_number || ""}
           handleOnChange={handleChange}
@@ -71,7 +71,7 @@ function ReinstatementSheetInfo() {
           text="Traffic Impact No."
           type="text"
           name="traffic_impact_number"
-          maxlength={"6"}
+          maxLength={"6"}
           placeholder="Type traffic impact number"
           value={reinstatementSheet?.traffic_impact_number || ""}
           handleOnChange={handleChange}

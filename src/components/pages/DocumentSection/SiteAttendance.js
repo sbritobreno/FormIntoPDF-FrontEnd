@@ -139,7 +139,7 @@ function SiteAttendance() {
                         alt="signature"
                       />
                     </td>
-                    <td>{person.date}</td>
+                    <td>{new Date(person.date).toLocaleDateString("en-GB")}</td>
                     <td className={styles.remove_btn}>
                       <RiDeleteBin5Line
                         style={{
@@ -165,7 +165,7 @@ function SiteAttendance() {
               text="Name"
               type="text"
               name="name"
-              maxlength={"40"}
+              maxLength={"40"}
               placeholder="Type staff name max 50 char"
               handleOnChange={handleChange}
               autoComplete="off"

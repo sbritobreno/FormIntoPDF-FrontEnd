@@ -14,7 +14,7 @@ function Inputt(
     autoComplete,
     readOnly,
     accept,
-    maxlength,
+    maxLength,
   },
   ref
 ) {
@@ -26,7 +26,7 @@ function Inputt(
         type={type}
         accept={accept}
         name={name}
-        maxlength={maxlength}
+        maxLength={maxLength}
         id={name}
         placeholder={placeholder}
         onChange={handleOnChange}

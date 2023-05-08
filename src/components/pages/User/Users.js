@@ -3,6 +3,7 @@ import { useState, useContext, useEffect } from "react";
 import { UserContext } from "../../../context/UserContext";
 import Pagination from "../../layout/Pagination";
 import ConfirmWindow from "../Extras/ConfirmWindow";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 function Users() {
   const {
@@ -21,13 +22,26 @@ function Users() {
 
   const [userToBeDeleted, setUserToBeDeleted] = useState({});
   const [confirmWindowOpen, setConfirmWindowOpen] = useState(false);
-  const btnText = "Delete Account";
+  const btnText = "Delete";
   const message = `Are you sure you want to remove ${
     userToBeDeleted?.name?.split(" ")[0]
   }'s account ?`;
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     getUsersList();
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    setIsMobile(mediaQuery.matches);
+
+    const handleResize = () => {
+      setIsMobile(mediaQuery.matches);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, [rerender]);
 
   function searchFilter() {
@@ -139,7 +153,7 @@ function Users() {
                     className={styles.users_btn_remove}
                     onClick={() => removeUser(user.name, user.id)}
                   >
-                    Remove
+                    {isMobile ? <RiDeleteBin6Line /> : "Remove"}
                   </button>
                 </div>
               </div>

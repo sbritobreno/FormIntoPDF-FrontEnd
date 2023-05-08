@@ -72,7 +72,7 @@ function LoadMap({ originPage }) {
   }
 
   const style = {
-    margin: "5px 15px",
+    margin: "5px 0 0 0",
     fontSize: "34px",
     color: "var(--primary-color)",
     cursor: "pointer",

@@ -6,6 +6,10 @@ import ConfirmWindow from "../Extras/ConfirmWindow";
 import Pagination from "../../layout/Pagination";
 import pdf_img from "../../../assets/pdf_img.png";
 import Spinner from "../../layout/Spinner";
+import { MdAttachFile } from "react-icons/md";
+import { RxUpdate } from "react-icons/rx";
+import { FiDownload } from "react-icons/fi";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 function DisplayPDF() {
   const {
@@ -20,18 +24,31 @@ function DisplayPDF() {
   const [searchfield, setSearchfield] = useState("");
   const [filter, setFilter] = useState(false);
   const [page, setPage] = useState(1);
-  const resultsPerPage = 5;
+  const resultsPerPage = 10;
   let numberOfPages = 1;
   const hiddenFileInput = useRef([]);
   const [rerender, setRerender] = useState(false); // create a state variable
   const [confirmWindowOpen, setConfirmWindowOpen] = useState(false);
-  const btnText = "Delete Document";
+  const btnText = "Delete";
   const message = "Are you sure you want to delete this document ?";
   const [documentToBeDeletedId, setDocumentToBeDeletedId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     getDocumentList();
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    setIsMobile(mediaQuery.matches);
+
+    const handleResize = () => {
+      setIsMobile(mediaQuery.matches);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, [rerender]);
 
   const filteredDocuments = searchFilter();
@@ -46,7 +63,8 @@ function DisplayPDF() {
 
     // filter by Date
     let resultDate = documentList.filter((doc) => {
-      return doc.createdAt
+      return new Date(doc.createdAt)
+        .toLocaleDateString("en-GB")
         .toLowerCase()
         .startsWith(searchfield.toLowerCase().trim());
     });
@@ -153,14 +171,20 @@ function DisplayPDF() {
                     <span className="bold">PDF name: </span> {doc.created_by}
                   </p>
                   <p>
-                    <span className="bold">Date: </span> {doc.createdAt}
+                    <span className="bold">Date: </span>{" "}
+                    {new Date(doc.createdAt).toLocaleDateString("en-GB")}
                   </p>
                   <p>
-                    <span className="bold">Address: </span> {doc.createdAt}
+                    <span className="bold">Address: </span>{" "}
+                    {doc.reinstatement_sheet?.location}
                   </p>
                   <p>
                     <span className="bold">Last updated by: </span>
                     {doc.last_updated_by}
+                  </p>
+                  <p>
+                    <span className="bold">File attached: </span>
+                    {doc.file_attached ? doc.file_attached : "No file attached"}
                   </p>
                 </div>
                 <div className={styles.pdf_card_buttons}>
@@ -169,7 +193,7 @@ function DisplayPDF() {
                       className={styles.pdf_btn_attach_file}
                       onClick={(e) => handleClickAttachFile(e, index)}
                     >
-                      {doc.file_attached ? "Replace File" : "Add File"}
+                      {isMobile ? <MdAttachFile /> : "Attach File"}
                     </button>
                     <input
                       type="file"
@@ -184,19 +208,19 @@ function DisplayPDF() {
                     className={styles.pdf_btn_edit}
                     onClick={() => navigate(`/document/${doc.id}/update`)}
                   >
-                    Update
+                    {isMobile ? <RxUpdate /> : "Update"}
                   </button>
                   <button
                     className={styles.pdf_btn_download}
                     onClick={() => handleDownload(doc.id)}
                   >
-                    Download
+                    {isMobile ? <FiDownload /> : "Download"}
                   </button>
                   <button
                     className={styles.pdf_btn_remove}
                     onClick={() => HandleremoveDocument(doc.id)}
                   >
-                    Remove
+                    {isMobile ? <RiDeleteBin6Line /> : "Remove"}
                   </button>
                 </div>
               </div>

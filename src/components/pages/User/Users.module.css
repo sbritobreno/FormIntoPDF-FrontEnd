@@ -66,6 +66,7 @@
 
 .users_details p {
   margin: 0.2em;
+  word-break: break-all;
 }
 
 .users_card_buttons {
@@ -74,7 +75,7 @@
 
 .users_card_buttons button {
   float: right;
-  width: 8em;
+  width: 100px;
   height: 2em;
   margin: 0.3em;
   border-radius: 5px;
@@ -112,6 +113,7 @@
   opacity: 0;
   width: 0;
   height: 0;
+  margin-inline: auto;
 }
 
 .slider {
@@ -171,5 +173,15 @@ input:checked + .slider:before {
 
   .users_container button {
     width: 7em;
+  }
+  
+  .users_card_buttons button {
+    float: right;
+    width: 50px;
+  }
+
+  .switch {
+    display: block;
+    margin-inline: auto;
   }
 }

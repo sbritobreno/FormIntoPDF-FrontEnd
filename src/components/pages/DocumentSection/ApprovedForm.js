@@ -139,12 +139,17 @@ function ApprovedForm() {
                   <th>Date of Examination</th>
                   <th>Results of thorough examination</th>
                   <th>Inspector Signature</th>
+                  <th>Delete</th>
                 </tr>
                 {approvedFormList &&
                   approvedFormList.map((formRow, key) => (
                     <tr key={key}>
                       <td>{formRow.description_location}</td>
-                      <td>{formRow.date_examination}</td>
+                      <td>
+                        {new Date(formRow.date_examination).toLocaleDateString(
+                          "en-GB"
+                        )}
+                      </td>
                       <td>{formRow.examination_result_state}</td>
                       <td>
                         <img
@@ -181,7 +186,7 @@ function ApprovedForm() {
               text="Description or Location"
               type="text"
               name="description_location"
-              maxlength={"80"}
+              maxLength={"80"}
               placeholder="Type description or location"
               handleOnChange={handleChange}
               autoComplete="off"
@@ -199,7 +204,7 @@ function ApprovedForm() {
               text="Results of thorough examination"
               type="text"
               name="examination_result_state"
-              maxlength={"80"}
+              maxLength={"80"}
               placeholder="Type results of thorough examination"
               handleOnChange={handleChange}
               autoComplete="off"

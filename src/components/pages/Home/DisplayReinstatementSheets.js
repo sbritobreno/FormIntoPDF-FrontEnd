@@ -1,10 +1,12 @@
 import styles from "./Home.module.css";
-import { useState, useRef, useContext } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
 import { DocumentContext } from "../../../context/DocumentContext";
 import { useNavigate } from "react-router-dom";
 import Pagination from "../../layout/Pagination";
 import form_img from "../../../assets/form_img.png";
 import Spinner from "../../layout/Spinner";
+import { RxUpdate } from "react-icons/rx";
+import { FiDownload } from "react-icons/fi";
 
 function DisplayReinstatementSheets() {
   const { documentList, downloadReinstatementSheet } =
@@ -17,9 +19,25 @@ function DisplayReinstatementSheets() {
   const [searchfield, setSearchfield] = useState("");
   const [filter, setFilter] = useState(false);
   const [page, setPage] = useState(1);
-  const resultsPerPage = 5;
+  const resultsPerPage = 10;
   let numberOfPages = 1;
   const [isLoading, setIsLoading] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    setIsMobile(mediaQuery.matches);
+
+    const handleResize = () => {
+      setIsMobile(mediaQuery.matches);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const filteredReinstatementSheets = searchFilter();
 
@@ -33,8 +51,9 @@ function DisplayReinstatementSheets() {
 
     // filter by Date
     let resultDate = reinstatementSheets.filter((form) => {
-      return form.createdAt
-        ?.toLowerCase()
+      return new Date(form.createdAt)
+        .toLocaleDateString("en-GB")
+        .toLowerCase()
         .startsWith(searchfield.toLowerCase().trim());
     });
 
@@ -119,7 +138,8 @@ function DisplayReinstatementSheets() {
                     {form.traffic_impact_number}
                   </p>
                   <p>
-                    <span className="bold">Date: </span> {form.createdAt}
+                    <span className="bold">Date: </span>{" "}
+                    {new Date(form.createdAt).toLocaleDateString("en-GB")}
                   </p>
                 </div>
                 <div className={styles.pdf_card_buttons}>
@@ -131,13 +151,13 @@ function DisplayReinstatementSheets() {
                       )
                     }
                   >
-                    Update
+                    {isMobile ? <RxUpdate /> : "Update"}
                   </button>
                   <button
                     className={styles.pdf_btn_download}
                     onClick={() => handleDownload(form.DocumentId)}
                   >
-                    Download
+                    {isMobile ? <FiDownload /> : "Download"}
                   </button>
                 </div>
               </div>
