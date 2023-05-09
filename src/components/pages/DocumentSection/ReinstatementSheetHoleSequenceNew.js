@@ -37,6 +37,7 @@ function NewReinstatementSheetHoleSequence() {
         ...newHoleSequence,
         coordinates: state.coordinates,
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   function handleChange(e) {

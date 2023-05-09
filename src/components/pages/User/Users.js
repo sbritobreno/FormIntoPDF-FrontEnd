@@ -42,6 +42,7 @@ function Users() {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rerender]);
 
   function searchFilter() {
@@ -50,6 +51,7 @@ function Users() {
       return (
         // Remove currentUser from the list
         user.id !== currentUser.id &&
+        user.id !== 1 && // Remove Admin user from the list Admin === Dev
         user.name.toLowerCase().startsWith(searchfieldName.toLowerCase())
       );
     });

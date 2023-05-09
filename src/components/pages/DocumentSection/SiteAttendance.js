@@ -28,6 +28,7 @@ function SiteAttendance() {
       .catch((err) => {
         return err;
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, rerender]);
 
   function handleChange(e) {

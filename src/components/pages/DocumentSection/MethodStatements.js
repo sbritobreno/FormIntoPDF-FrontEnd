@@ -16,6 +16,7 @@ function MethodStatements() {
       .catch((err) => {
         return err;
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   function onFileChange(e) {

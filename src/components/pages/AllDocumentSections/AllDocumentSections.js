@@ -29,6 +29,7 @@ function AllDocumentSections() {
       document.querySelector("main").style.boxShadow =
         "0 0.5rem 1rem rgb(0 0 0 / 15%)";
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   sectionsCompleted();
