@@ -635,12 +635,14 @@ function Forms() {
         <TextArea
           title={"Actions Taken (if any)"}
           name={"actions_taken_comments"}
+          maxLength={"220"}
           value={currentDocument.near_miss_report?.actions_taken_comments || ""}
           handleOnChange={handlerNearMissReport}
         />
         <TextArea
           title={"Suggestions to prevent Reoccurance"}
           name={"suggestion_to_prevent_reoccurance_comments"}
+          maxLength={"220"}
           value={
             currentDocument.near_miss_report
               ?.suggestion_to_prevent_reoccurance_comments || ""

@@ -169,10 +169,12 @@ function ReinstatementSheetTable() {
             <tr>
               <th style={{ width: "120px" }}>Comments:</th>
               <td>
-                {reinstatementSheet?.hole_sequences?.map(
-                  (element, index) =>
-                    `${index + 1}) ` + element.comments?.toString() + ";   "
-                )}
+                {reinstatementSheet?.hole_sequences?.map((element, index) => (
+                  <div key={index}>
+                    {`${index + 1}) `}
+                    {element.comments?.toString()};<br />
+                  </div>
+                ))}
               </td>
             </tr>
           </tbody>

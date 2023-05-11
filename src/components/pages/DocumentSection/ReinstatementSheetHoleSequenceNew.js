@@ -199,6 +199,7 @@ function NewReinstatementSheetHoleSequence() {
         <TextArea
           title="Add new comment"
           name="comments"
+          maxLength={"200"}
           handleOnChange={handleChange}
         />
         <div className={styles.preview_form_images}>
