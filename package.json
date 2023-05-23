@@ -1,6 +1,7 @@
 {
   "name": "form_into_pdf-frontend",
   "version": "0.1.0",
+  "homepage": "https://kendra-form2pdf.netlify.app/",
   "private": true,
   "dependencies": {
     "@reach/combobox": "^0.18.0",
