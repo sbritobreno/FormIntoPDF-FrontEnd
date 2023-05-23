@@ -1,6 +1,6 @@
 {
-  "name": "form_into_pdf-frontend",
-  "homepage": "https://sbritobreno.github.io/home",
+  "name": "form_to_pdf-frontend",
+  "homepage": "https://sbritobreno.github.io/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

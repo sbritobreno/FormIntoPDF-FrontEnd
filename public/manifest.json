@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Form2PDF App",
+  "name": "Form to PDF",
   "icons": [
     {
       "src": "favicon.ico",

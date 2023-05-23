@@ -70,7 +70,7 @@ export default function UserService() {
   async function authUser(data) {
     setAuthenticated(true);
     localStorage.setItem("token", JSON.stringify(data.token));
-    navigate("/home");
+    navigate("/");
   }
 
   async function logout() {
