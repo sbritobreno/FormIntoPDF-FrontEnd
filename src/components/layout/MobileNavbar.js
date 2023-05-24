@@ -49,7 +49,7 @@ function MobileNavbar() {
             </Link>
             {dropdownOpen && (
               <div className={styles.dropdown_content}>
-                <Link to="/home">Home</Link>
+                <Link to="/">Home</Link>
                 <Link to="#" onClick={openWindow}>
                   New document +
                 </Link>

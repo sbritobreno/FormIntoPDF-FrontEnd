@@ -41,7 +41,7 @@ function Navbar() {
             </Link>
           </li>
           <li>
-            <Link to="/home">Home</Link>
+            <Link to="/">Home</Link>
           </li>
           {isAdmin ? (
             <li className={styles.dropdown}>

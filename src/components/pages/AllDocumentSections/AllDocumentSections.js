@@ -68,7 +68,7 @@ function AllDocumentSections() {
   }
 
   function saveDocument() {
-    navigate("/home");
+    navigate("/");
     setFlashMessage("The document was saved!", "success");
   }
 
@@ -144,9 +144,7 @@ function AllDocumentSections() {
           ref={(el) => (sectionBtns[6] = el)}
           disabled={numberOfSectionsCompleted >= 1 ? false : true}
           className={styles.submit_btn}
-          onClick={() => {
-            saveDocument();
-          }}
+          onClick={saveDocument}
         >
           Save
         </button>
