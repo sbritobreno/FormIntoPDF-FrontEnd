@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useContext, useState } from "react";
 import styles from "./Navbar.module.css";
 import { UserContext } from "../../context/UserContext";
@@ -13,6 +13,7 @@ function Navbar() {
   const [confirmWindowOpen, setConfirmWindowOpen] = useState(false);
   const btnText = "Create New";
   const message = "Are you sure you want to create a new document ?";
+  const navigate = useNavigate();
 
   async function confirmAction(confirmed = false) {
     setConfirmWindowOpen(false);
@@ -31,7 +32,7 @@ function Navbar() {
         />
       )}
       <div className={styles.navbar}>
-        <div className={styles.navbar_logo}>
+        <div className={styles.navbar_logo} onClick={() => navigate("/")}>
           <img src={logo} alt="KendraForm2PDF" />
         </div>
         <ul>

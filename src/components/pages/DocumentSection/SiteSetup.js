@@ -114,10 +114,10 @@ function SiteSetup() {
     });
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    updateSiteSetupAddImage(currentDocument.permit_to_dig_sketch_image, id);
-    updateSiteSetup(currentDocument);
+    await updateSiteSetupAddImage(currentDocument.permit_to_dig_sketch_image, id);
+    await updateSiteSetup(currentDocument);
   }
 
   return (

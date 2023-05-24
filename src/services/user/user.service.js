@@ -170,7 +170,7 @@ export default function UserService() {
         setFlashMessage(response.data.message, "success");
       })
       .catch((err) => {
-        setFlashMessage("Something went wrong!", "error");
+        setFlashMessage(err.response.data.message, "error");
       });
   }
 

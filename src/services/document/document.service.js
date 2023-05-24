@@ -211,7 +211,6 @@ export default function DocumentService() {
         navigate(`/document/${id}/update`);
       })
       .catch((err) => {
-        console.log(err)
         setFlashMessage("Something went wrong!", "error");
       });
   }
@@ -364,7 +363,7 @@ export default function DocumentService() {
         navigate(`/document/${id}/update/reinstatementsheet_table`);
       })
       .catch((err) => {
-        setFlashMessage("Something went wrong!", "error");
+        setFlashMessage(err.response.data.message, "error");
       });
   }
 

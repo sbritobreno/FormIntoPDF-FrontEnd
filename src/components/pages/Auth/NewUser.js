@@ -51,6 +51,7 @@ function NewUser() {
           text="E-mail"
           type="email"
           name="email"
+          autocomplete="off"
           maxlength={"70"}
           placeholder="Type user's e-mail"
           handleOnChange={handleChange}
@@ -78,6 +79,7 @@ function NewUser() {
           text="Password"
           type="password"
           name="password"
+          autocomplete="off"
           placeholder="Type user password"
           autoComplete={"password"}
           handleOnChange={handleChange}
@@ -87,6 +89,7 @@ function NewUser() {
           text="Confirm password"
           type="password"
           name="confirmpassword"
+          autocomplete="off"
           placeholder="Type user password again"
           autoComplete={"confirmpassword"}
           handleOnChange={handleChange}

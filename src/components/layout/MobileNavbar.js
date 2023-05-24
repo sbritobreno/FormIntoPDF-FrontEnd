@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useContext, useState } from "react";
 import styles from "./MobileNavbar.module.css";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -14,6 +14,7 @@ function MobileNavbar() {
   const [confirmWindowOpen, setConfirmWindowOpen] = useState(false);
   const btnText = "Create New";
   const message = "Are you sure you want to create a new document ?";
+  const navigate = useNavigate();
 
   function openWindow() {
     setConfirmWindowOpen(true);
@@ -39,8 +40,8 @@ function MobileNavbar() {
         />
       )}
       <div className={styles.navbar}>
-        <div className={styles.navbar_logo}>
-        <img src={logo} alt="KendraForm2PDF" />
+        <div className={styles.navbar_logo} onClick={() => navigate("/")}>
+          <img src={logo} alt="KendraForm2PDF" />
         </div>
         <div>
           <div className={styles.dropdown}>
