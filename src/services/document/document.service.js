@@ -211,8 +211,8 @@ export default function DocumentService() {
         navigate(`/document/${id}/update`);
       })
       .catch((err) => {
-        console.log(err.response.data.message)
-        setFlashMessage(err.response.data.message, "error");
+        console.log(err)
+        setFlashMessage("Something went wrong!", "error");
       });
   }
 
