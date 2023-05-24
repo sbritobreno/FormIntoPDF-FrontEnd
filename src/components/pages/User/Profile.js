@@ -97,7 +97,7 @@ function Profile() {
         />
         <Input
           text="Phone"
-          type="tel"
+          type="text"
           name="phone"
           maxLength={"20"}
           value={currentUser.phone || ""}

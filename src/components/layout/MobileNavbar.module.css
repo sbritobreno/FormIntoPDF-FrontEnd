@@ -23,6 +23,7 @@
   height: 30px;
   width: auto;
   margin: 1em;
+  cursor: pointer;
 }
 
 .navbar_logo h2 {

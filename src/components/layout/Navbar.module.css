@@ -24,6 +24,7 @@
   display: flex;
   padding-inline: 1em;
   align-items: center;
+  cursor: pointer;
 }
 
 .navbar_logo img {
