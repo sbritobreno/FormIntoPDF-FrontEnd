@@ -193,7 +193,6 @@ function Forms() {
         return;
       }
     }
-    console.log("fdsdf");
 
     let futherHazardsValue = {};
     const newfutherHazardss = [
