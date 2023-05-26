@@ -18,6 +18,19 @@
   height: 100%;
 }
 
+.label_image {
+ display: flex;
+ align-items: center;
+}
+
+.label_image label {
+  margin: 0;
+}
+
+.signature_image {
+  height: calc(25px + (40 - 25) * ((100vw - 320px) / (1920 - 320)) );
+}
+
 .btn_save,
 .btn_clear {
   width: 100px;

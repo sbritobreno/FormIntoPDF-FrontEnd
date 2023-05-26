@@ -23,7 +23,7 @@ function Forms() {
       .catch((err) => {
         return err;
       });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   function handleHotWorkPermit(e) {
@@ -185,7 +185,10 @@ function Forms() {
     if (listLegth > 0) {
       const lastOnList =
         currentDocument.futher_hazards_and_controls_requireds[lastItem];
-      if (Object.keys(lastOnList).length === 0) {
+      if (
+        Object.values(lastOnList)[1] === null &&
+        Object.values(lastOnList)[2] === null
+      ) {
         setFlashMessage(
           'You have to finish the previous "futher hazard" before!',
           "error"
@@ -366,6 +369,9 @@ function Forms() {
         />
         <Signature
           ref={(el) => (inputs[0] = el)}
+          signImg={
+            currentDocument.hot_work_permit?.permit_issued_by_person_signature
+          }
           handleChange={handlerIssuedByCompanySign}
         />
         <h4>Permit received by:</h4>
@@ -395,6 +401,9 @@ function Forms() {
         />
         <Signature
           ref={(el) => (inputs[1] = el)}
+          signImg={
+            currentDocument.hot_work_permit?.permit_received_by_person_signature
+          }
           handleChange={handlerReceivedByCompanySign}
         />
         <h3>PART 4 - Final Check Up</h3>
@@ -419,6 +428,7 @@ function Forms() {
         />
         <Signature
           ref={(el) => (inputs[2] = el)}
+          signImg={currentDocument.hot_work_permit?.final_check_signature}
           handleChange={handlerFinalCheckUpSign}
         />
         <h2 className={styles.form_subheading}>Daily Plant Inspection</h2>
@@ -650,6 +660,7 @@ function Forms() {
         />
         <Signature
           ref={(el) => (inputs[3] = el)}
+          signImg={currentDocument.near_miss_report?.report_signature}
           handleChange={handlerNearMissReportSign}
         />
         <h2 className={styles.form_subheading}>
