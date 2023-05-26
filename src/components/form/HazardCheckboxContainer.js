@@ -23,7 +23,7 @@ function HazardCheckboxContainer({
         rows="2"
         name={name}
         value={value}
-        maxlength="55"
+        maxLength="48"
         placeholder="*Optional"
         onChange={handleOnChange}
         autoComplete="off"

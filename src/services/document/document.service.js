@@ -101,7 +101,8 @@ export default function DocumentService() {
         key === "daily_method_statement_and_traffic_management_check" ||
         key === "Emergency" ||
         key === "traffic_management_compliance_checksheet" ||
-        key === "traffic_management_slg_checklist"
+        key === "traffic_management_slg_checklist" ||
+        key === "job_specific_safety_plan"
       ) {
         formData.append(key, JSON.stringify(value));
       } else {

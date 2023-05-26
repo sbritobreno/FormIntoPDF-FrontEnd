@@ -166,8 +166,8 @@ function SiteAttendance() {
               text="Name"
               type="text"
               name="name"
-              maxLength={"40"}
-              placeholder="Type staff name max 50 char"
+              maxLength={"30"}
+              placeholder="Type staff name"
               handleOnChange={handleChange}
               autoComplete="off"
             />

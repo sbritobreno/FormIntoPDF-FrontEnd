@@ -59,7 +59,7 @@ function Navbar() {
             <div className={styles.user_img}>
               <img
                 src={
-                  currentUser.image
+                  `${process.env.REACT_APP_API}/images/users/${currentUser.image}`
                     ? `${process.env.REACT_APP_API}/images/users/${currentUser.image}`
                     : img
                 }

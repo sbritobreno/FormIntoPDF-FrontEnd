@@ -19,7 +19,7 @@ function SiteSetup() {
       .catch((err) => {
         return err;
       });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   function onFileChange(e) {
@@ -27,6 +27,17 @@ function SiteSetup() {
     setCurrentDocument({
       ...currentDocument,
       [e.target.name]: e.target.files[0],
+    });
+  }
+
+  function handleChange(e) {
+    const value =
+      e.target.type === "checkbox" ? e.target.checked : e.target.value;
+    let jobSSPlan = currentDocument.job_specific_safety_plan || {};
+    jobSSPlan[e.target.name] = value;
+    setCurrentDocument({
+      ...currentDocument,
+      job_specific_safety_plan: jobSSPlan,
     });
   }
 
@@ -116,7 +127,10 @@ function SiteSetup() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    await updateSiteSetupAddImage(currentDocument.permit_to_dig_sketch_image, id);
+    await updateSiteSetupAddImage(
+      currentDocument.permit_to_dig_sketch_image,
+      id
+    );
     await updateSiteSetup(currentDocument);
   }
 
@@ -124,6 +138,113 @@ function SiteSetup() {
     <section className={styles.form_container}>
       <h1>Site Setup</h1>
       <form onSubmit={handleSubmit}>
+        <h2 className={styles.form_subheading}>Job Specific Safety Plan</h2>
+        <Input
+          text="Date"
+          type="date"
+          name="date"
+          value={
+            currentDocument?.job_specific_safety_plan?.date
+              ? new Date(
+                  currentDocument.job_specific_safety_plan.date.split(" ")[0]
+                )
+                  .toISOString()
+                  .split("T")[0]
+              : ""
+          }
+          handleOnChange={handleChange}
+          autoComplete="off"
+        />
+        <Input
+          text="Crew Leader"
+          type="text"
+          name="crew_leader"
+          value={currentDocument.job_specific_safety_plan?.crew_leader || ""}
+          maxLength={"30"}
+          placeholder="Type crew leader name"
+          handleOnChange={handleChange}
+          autoComplete="off"
+        />
+        <Input
+          text="Project Number"
+          type="text"
+          name="project_number"
+          value={currentDocument.job_specific_safety_plan?.project_number || ""}
+          maxLength={"30"}
+          placeholder="Type project number"
+          handleOnChange={handleChange}
+          autoComplete="off"
+        />
+        <h3>
+          Services identified on site after CAT scanning and complete a permit
+        </h3>
+        <CheckboxContainer
+          bold={true}
+          title={"Eletricity"}
+          name={"services_eletricity"}
+          checked={
+            currentDocument.job_specific_safety_plan?.services_eletricity ||
+            false
+          }
+          handleOnChange={handleChange}
+        />
+        <CheckboxContainer
+          bold={true}
+          title={"Traffic Lights "}
+          name={"services_traffic_lights"}
+          checked={
+            currentDocument.job_specific_safety_plan?.services_traffic_lights ||
+            false
+          }
+          handleOnChange={handleChange}
+        />
+        <CheckboxContainer
+          bold={true}
+          title={"Public Light"}
+          name={"services_public_light"}
+          checked={
+            currentDocument.job_specific_safety_plan?.services_public_light ||
+            false
+          }
+          handleOnChange={handleChange}
+        />
+        <CheckboxContainer
+          bold={true}
+          title={"Gas"}
+          name={"services_gas"}
+          checked={
+            currentDocument.job_specific_safety_plan?.services_gas || false
+          }
+          handleOnChange={handleChange}
+        />
+        <CheckboxContainer
+          bold={true}
+          title={"Telecom"}
+          name={"services_telecom"}
+          checked={
+            currentDocument.job_specific_safety_plan?.services_telecom || false
+          }
+          handleOnChange={handleChange}
+        />
+        <CheckboxContainer
+          bold={true}
+          title={"Water"}
+          name={"services_water"}
+          checked={
+            currentDocument.job_specific_safety_plan?.services_water || false
+          }
+          handleOnChange={handleChange}
+        />
+        <CheckboxContainer
+          bold={true}
+          title={"No services found"}
+          name={"services_no_services_found"}
+          checked={
+            currentDocument.job_specific_safety_plan
+              ?.services_no_services_found || false
+          }
+          handleOnChange={handleChange}
+        />
         <h2 className={styles.form_subheading}>Hazards</h2>
         <HazardCheckboxContainer
           title={"Pedestrians/Cyclists"}
@@ -425,7 +546,7 @@ function SiteSetup() {
           text="Method Statement being used for today's work"
           type="text"
           name="method_statement_for_the_day"
-          maxLength={"80"}
+          maxLength={"75"}
           value={
             currentDocument.daily_method_statement_and_traffic_management_check
               ?.method_statement_for_the_day || ""
@@ -480,7 +601,7 @@ function SiteSetup() {
           text="Location of assembly point in the event of an emergency"
           type="text"
           name="emergency_location_of_assembly_point"
-          maxLength={"80"}
+          maxLength={"75"}
           value={
             currentDocument.Emergency?.emergency_location_of_assembly_point ||
             ""
@@ -493,7 +614,7 @@ function SiteSetup() {
           text="Name of First Aider"
           type="text"
           name="emergency_name_of_first_aider"
-          maxLength={"80"}
+          maxLength={"75"}
           value={currentDocument.Emergency?.emergency_name_of_first_aider || ""}
           placeholder="Type the name of the first aider"
           handleOnChange={handleEmergencies}
@@ -503,7 +624,7 @@ function SiteSetup() {
           text="Name of SLG Operative"
           type="text"
           name="emergency_slg_operative"
-          maxLength={"80"}
+          maxLength={"75"}
           value={currentDocument.Emergency?.emergency_slg_operative || ""}
           placeholder="Type the name of SLG operative"
           handleOnChange={handleEmergencies}
@@ -516,7 +637,7 @@ function SiteSetup() {
           text="TMP number set up on site"
           type="text"
           name="traffic_management_compliance_checksheet_tmp_number"
-          maxLength={"80"}
+          maxLength={"75"}
           value={
             currentDocument.traffic_management_compliance_checksheet
               ?.traffic_management_compliance_checksheet_tmp_number || ""

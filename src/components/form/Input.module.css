@@ -8,6 +8,7 @@
   padding: 0.7em;
   border: 1px solid #777;
   border-radius: 5px;
+  word-break: break-all;
 }
 
 .form_control input::placeholder {

@@ -9,6 +9,7 @@
   border-radius: 5px;
   margin-top: 0.3em;
   margin-bottom: 1em;
+  word-break: break-all;
   resize: none;
 }
 
@@ -32,5 +33,4 @@
 /* ###########################         Mobile/Tablet           ##################################### */
 
 @media (max-width: 767px) {
-  
 }
