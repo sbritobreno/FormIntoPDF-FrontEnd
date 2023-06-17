@@ -28,7 +28,7 @@
 }
 
 .signature_image {
-  height: calc(25px + (40 - 25) * ((100vw - 320px) / (1920 - 320)) );
+  height: calc(20px + (30 - 20) * ((100vw - 320px) / (1920 - 320)) );
 }
 
 .btn_save,
